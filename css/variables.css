@@ -1,0 +1,66 @@
+/* =========================================================
+   VARIABLES.CSS
+   Tokens de diseño de Asgard Nutrición Deportiva.
+   Paleta: piedra rúnica oscura + oro y cobre envejecidos.
+   Cambia aquí para afectar a todo el sitio.
+   ========================================================= */
+
+:root {
+  /* --- Color: superficies (piedra) --- */
+  --color-bg: #14120f;            /* fondo general, negro piedra */
+  --color-bg-alt: #1c1915;        /* franjas / secciones alternas */
+  --color-surface: #221e18;       /* tarjetas, cabeceras de tarjeta */
+  --color-surface-raised: #2a251d;/* elementos elevados, hover */
+  --color-border: #3c352a;        /* líneas y bordes sutiles */
+  --color-border-strong: #56492f; /* bordes con más presencia */
+
+  /* --- Color: metales (acento) --- */
+  --color-gold: #c9a24b;          /* oro envejecido, acento principal */
+  --color-gold-bright: #e3c273;   /* oro para hover / foco */
+  --color-copper: #a3592f;        /* cobre, acento secundario */
+  --color-copper-dark: #7c4423;   /* cobre oscuro, sombras de acento */
+
+  /* --- Color: texto --- */
+  --color-text: #ece3d1;          /* texto principal, pergamino claro */
+  --color-text-muted: #b3a891;    /* texto secundario */
+  --color-text-faint: #79705f;    /* texto terciario, metadatos */
+  --color-text-on-gold: #1c1712;  /* texto sobre fondos dorados */
+
+  /* --- Tipografía --- */
+  --font-display: "Caudex", "Georgia", serif;
+  --font-body: "Caudex", "Georgia", serif;
+
+  --fs-hero: clamp(2.4rem, 6vw, 4.4rem);
+  --fs-h1: clamp(2rem, 4.4vw, 3rem);
+  --fs-h2: clamp(1.5rem, 3vw, 2.1rem);
+  --fs-h3: clamp(1.15rem, 2vw, 1.4rem);
+  --fs-body: 1.06rem;
+  --fs-small: 0.9rem;
+  --fs-eyebrow: 0.85rem;
+
+  --lh-tight: 1.15;
+  --lh-heading: 1.3;
+  --lh-body: 1.75;
+
+  /* --- Espaciado --- */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.75rem;
+  --space-lg: 3rem;
+  --space-xl: 5rem;
+  --space-2xl: 7.5rem;
+
+  /* --- Layout --- */
+  --content-width: 1120px;
+  --content-width-narrow: 740px;
+  --radius-sm: 3px;
+  --radius-md: 6px;
+
+  /* --- Sombra --- */
+  --shadow-card: 0 14px 34px rgba(0, 0, 0, 0.45);
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+
+  /* --- Transición --- */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur: 200ms;
+}
