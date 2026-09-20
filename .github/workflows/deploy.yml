@@ -1,7 +1,7 @@
 name: Construir y publicar el sitio
 
 # Se ejecuta automáticamente cada vez que se sube (push) algo a la
-# rama "master" — incluida una nueva entrada del blog. No hace falta
+# rama "main" — incluida una nueva entrada del blog. No hace falta
 # lanzarlo a mano.
 on:
   push:
