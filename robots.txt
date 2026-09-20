@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://zeitgeist2018.github.io/asgard-nutricion-avila-web/sitemap.xml
