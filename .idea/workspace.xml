@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="449462f2-267b-4a8d-be62-685165304f66" name="Changes" comment="Improve publisher">
-      <change beforePath="$PROJECT_DIR$/publisher/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/publisher/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/test.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/test.jpeg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +29,7 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -265,7 +267,15 @@
       <option name="project" value="LOCAL" />
       <updated>1789925112137</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Improve publisher">
+      <option name="closed" value="true" />
+      <created>1789925671717</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1789925671717</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
