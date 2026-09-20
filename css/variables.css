@@ -1,30 +1,29 @@
 /* =========================================================
    VARIABLES.CSS
    Tokens de diseño de Asgard Nutrición Deportiva.
-   Paleta: piedra rúnica oscura + oro y cobre envejecidos.
+   Paleta simplificada: negro casi puro + blanco casi puro,
+   con un único color de acento (oro) para enlaces y detalles.
    Cambia aquí para afectar a todo el sitio.
    ========================================================= */
 
 :root {
-  /* --- Color: superficies (piedra) --- */
-  --color-bg: #14120f;            /* fondo general, negro piedra */
-  --color-bg-alt: #1c1915;        /* franjas / secciones alternas */
-  --color-surface: #221e18;       /* tarjetas, cabeceras de tarjeta */
-  --color-surface-raised: #2a251d;/* elementos elevados, hover */
-  --color-border: #3c352a;        /* líneas y bordes sutiles */
-  --color-border-strong: #56492f; /* bordes con más presencia */
+  /* --- Color: superficies --- */
+  --color-bg: #0b0b0a;            /* fondo general, negro casi puro */
+  --color-bg-alt: #121211;        /* franjas / secciones alternas */
+  --color-surface: #161615;       /* tarjetas, cabeceras de tarjeta */
+  --color-surface-raised: #1c1c1a;/* elementos elevados, hover */
+  --color-border: #2c2c29;        /* líneas y bordes sutiles */
+  --color-border-strong: #40403b; /* bordes con más presencia */
 
-  /* --- Color: metales (acento) --- */
-  --color-gold: #c9a24b;          /* oro envejecido, acento principal */
+  /* --- Color: acento (único) --- */
+  --color-gold: #c9a24b;          /* oro envejecido, único acento del sitio */
   --color-gold-bright: #e3c273;   /* oro para hover / foco */
-  --color-copper: #a3592f;        /* cobre, acento secundario */
-  --color-copper-dark: #7c4423;   /* cobre oscuro, sombras de acento */
 
   /* --- Color: texto --- */
-  --color-text: #ece3d1;          /* texto principal, pergamino claro */
-  --color-text-muted: #b3a891;    /* texto secundario */
-  --color-text-faint: #79705f;    /* texto terciario, metadatos */
-  --color-text-on-gold: #1c1712;  /* texto sobre fondos dorados */
+  --color-text: #f7f5ef;          /* texto principal, blanco casi puro */
+  --color-text-muted: #b9b6ac;    /* texto secundario */
+  --color-text-faint: #7d7a71;    /* texto terciario, metadatos */
+  --color-text-on-gold: #17140e;  /* texto sobre fondos dorados */
 
   /* --- Tipografía --- */
   --font-display: "Caudex", "Georgia", serif;
@@ -57,7 +56,7 @@
   --radius-md: 6px;
 
   /* --- Sombra --- */
-  --shadow-card: 0 14px 34px rgba(0, 0, 0, 0.45);
+  --shadow-card: 0 14px 34px rgba(0, 0, 0, 0.5);
   --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.03);
 
   /* --- Transición --- */

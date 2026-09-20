@@ -48,7 +48,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-sm);
-  color: var(--color-copper);
+  color: var(--color-gold);
   margin-block: var(--space-lg);
 }
 
@@ -231,6 +231,190 @@
   overflow: hidden;
   border: 1px solid var(--color-border);
   box-shadow: var(--shadow-card);
+}
+
+/* ---------- Cuadrícula de productos ---------- */
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-sm);
+}
+
+@media (max-width: 900px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 620px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.product-tile {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+
+.product-tile:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-border-strong);
+}
+
+.product-tile__media {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-sm);
+  background: var(--color-bg-alt);
+}
+
+.product-tile__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.product-tile__name {
+  padding: 0.7rem 0.85rem 0.9rem;
+  font-size: 0.86rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* ---------- Franja de marcas ---------- */
+
+.brand-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+  padding-block: var(--space-md);
+}
+
+.brand-strip__logo {
+  height: 56px;
+  max-width: 160px;
+  object-fit: contain;
+  filter: grayscale(100%) brightness(1.6) contrast(0.9);
+  opacity: 0.75;
+  transition: filter var(--dur) var(--ease), opacity var(--dur) var(--ease);
+}
+
+.brand-strip__logo:hover {
+  filter: none;
+  opacity: 1;
+}
+
+/* ---------- Galería de productos ---------- */
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-sm);
+}
+
+@media (max-width: 900px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 620px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.product-tile {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+
+.product-tile:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-border-strong);
+}
+
+.product-tile__media {
+  aspect-ratio: 1 / 1;
+  background: var(--color-bg-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-sm);
+}
+
+.product-tile__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.product-tile__name {
+  padding: 0.7rem 0.85rem 0.9rem;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+  border-top: 1px solid var(--color-border);
+}
+
+/* ---------- Franja de marcas ---------- */
+
+.brand-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md);
+  align-items: center;
+}
+
+@media (max-width: 620px) {
+  .brand-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.brand-strip__item {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 96px;
+  transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+
+.brand-strip__item:hover {
+  border-color: var(--color-gold);
+  transform: translateY(-2px);
+}
+
+.brand-strip__item img {
+  max-width: 100%;
+  max-height: 56px;
+  width: auto;
+  object-fit: contain;
+  filter: grayscale(1) brightness(1.6) contrast(0.9);
+  opacity: 0.85;
+  transition: filter var(--dur) var(--ease), opacity var(--dur) var(--ease);
+}
+
+.brand-strip__item:hover img {
+  filter: none;
+  opacity: 1;
 }
 
 /* ---------- Lista de valores (iconos + texto) ---------- */

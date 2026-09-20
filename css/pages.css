@@ -12,9 +12,7 @@
   padding-block: var(--space-2xl) var(--space-xl);
   overflow: hidden;
   border-bottom: 1px solid var(--color-border);
-  background:
-    linear-gradient(180deg, rgba(20, 18, 15, 0) 40%, var(--color-bg) 100%),
-    radial-gradient(ellipse 70% 60% at 50% -10%, rgba(201, 162, 75, 0.12), transparent 65%);
+  background: var(--color-bg);
 }
 
 .hero__bg-rune {
@@ -105,7 +103,7 @@
 .page-header {
   padding-block: var(--space-xl) var(--space-lg);
   border-bottom: 1px solid var(--color-border);
-  background: radial-gradient(ellipse 60% 80% at 15% 0%, rgba(163, 89, 47, 0.1), transparent 60%);
+  background: var(--color-bg);
 }
 
 .page-header__title {
@@ -197,14 +195,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background:
-    linear-gradient(135deg, var(--color-surface), var(--color-bg-alt));
+  background: var(--color-surface);
   box-shadow: var(--shadow-card);
 }
 
 .decorative-panel svg {
   width: 90px;
   height: 90px;
-  color: var(--color-copper);
-  opacity: 0.8;
+  color: var(--color-gold);
+  opacity: 0.7;
 }

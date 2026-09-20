@@ -34,10 +34,6 @@ body {
   font-family: var(--font-body);
   font-size: var(--fs-body);
   line-height: var(--lh-body);
-  background-image:
-    radial-gradient(ellipse 60% 40% at 15% 0%, rgba(201, 162, 75, 0.06), transparent 60%),
-    radial-gradient(ellipse 50% 35% at 100% 15%, rgba(163, 89, 47, 0.07), transparent 60%);
-  background-attachment: fixed;
 }
 
 img {
@@ -93,6 +89,6 @@ textarea:focus-visible {
 }
 
 ::selection {
-  background: var(--color-copper);
-  color: var(--color-text);
+  background: var(--color-gold);
+  color: var(--color-text-on-gold);
 }
