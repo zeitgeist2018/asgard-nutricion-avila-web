@@ -15,19 +15,19 @@
   border-radius: var(--radius-sm);
   border: 1px solid transparent;
   transition: transform var(--dur) var(--ease), background var(--dur) var(--ease),
-    border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+  border-color var(--dur) var(--ease), color var(--dur) var(--ease);
 }
 
 .btn--primary {
-  background: linear-gradient(180deg, var(--color-gold-bright), var(--color-gold));
-  color: var(--color-text-on-gold);
-  box-shadow: 0 8px 20px rgba(201, 162, 75, 0.25);
+  background: var(--color-text);
+  color: var(--color-bg);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
 }
 
 .btn--primary:hover,
 .btn--primary:focus-visible {
   transform: translateY(-2px);
-  box-shadow: 0 12px 26px rgba(201, 162, 75, 0.35);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45);
 }
 
 .btn--ghost {
@@ -38,8 +38,8 @@
 
 .btn--ghost:hover,
 .btn--ghost:focus-visible {
-  border-color: var(--color-gold);
-  color: var(--color-gold-bright);
+  border-color: var(--color-text);
+  color: var(--color-text);
 }
 
 /* ---------- Divisor rúnico ---------- */
@@ -48,7 +48,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-sm);
-  color: var(--color-gold);
+  color: var(--color-text-faint);
   margin-block: var(--space-lg);
 }
 
@@ -148,7 +148,9 @@
 
 .post-card:hover .post-card__title a,
 .post-card__title a:focus-visible {
-  color: var(--color-gold-bright);
+  color: var(--color-text);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }
 
 .post-card__excerpt {
@@ -160,8 +162,10 @@
 .post-card__link {
   margin-top: auto;
   font-size: 0.9rem;
-  color: var(--color-gold);
+  color: var(--color-text);
   font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
   align-self: flex-start;
 }
 
@@ -204,7 +208,7 @@
 
 .breadcrumbs a:hover,
 .breadcrumbs a:focus-visible {
-  color: var(--color-gold);
+  color: var(--color-text);
 }
 
 .breadcrumbs__sep {
@@ -231,87 +235,6 @@
   overflow: hidden;
   border: 1px solid var(--color-border);
   box-shadow: var(--shadow-card);
-}
-
-/* ---------- Cuadrícula de productos ---------- */
-
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-sm);
-}
-
-@media (max-width: 900px) {
-  .product-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 620px) {
-  .product-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-.product-tile {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease);
-}
-
-.product-tile:hover {
-  transform: translateY(-3px);
-  border-color: var(--color-border-strong);
-}
-
-.product-tile__media {
-  aspect-ratio: 1 / 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-sm);
-  background: var(--color-bg-alt);
-}
-
-.product-tile__media img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.product-tile__name {
-  padding: 0.7rem 0.85rem 0.9rem;
-  font-size: 0.86rem;
-  color: var(--color-text-muted);
-  line-height: 1.4;
-  text-align: center;
-}
-
-/* ---------- Franja de marcas ---------- */
-
-.brand-strip {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-lg);
-  flex-wrap: wrap;
-  padding-block: var(--space-md);
-}
-
-.brand-strip__logo {
-  height: 56px;
-  max-width: 160px;
-  object-fit: contain;
-  filter: grayscale(100%) brightness(1.6) contrast(0.9);
-  opacity: 0.75;
-  transition: filter var(--dur) var(--ease), opacity var(--dur) var(--ease);
-}
-
-.brand-strip__logo:hover {
-  filter: none;
-  opacity: 1;
 }
 
 /* ---------- Galería de productos ---------- */
@@ -367,6 +290,7 @@
   font-size: 0.85rem;
   color: var(--color-text-muted);
   line-height: 1.4;
+  text-align: center;
   border-top: 1px solid var(--color-border);
 }
 
@@ -398,7 +322,7 @@
 }
 
 .brand-strip__item:hover {
-  border-color: var(--color-gold);
+  border-color: var(--color-text-faint);
   transform: translateY(-2px);
 }
 
@@ -441,7 +365,7 @@
 .value-card__icon {
   width: 40px;
   height: 40px;
-  color: var(--color-gold);
+  color: var(--color-text);
   margin-bottom: var(--space-sm);
 }
 

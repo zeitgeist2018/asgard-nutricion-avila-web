@@ -62,7 +62,7 @@
   display: block;
   font-size: 0.68rem;
   letter-spacing: 0.14em;
-  color: var(--color-gold);
+  color: var(--color-text-muted);
   font-weight: 400;
   margin-top: 0.15rem;
 }
@@ -194,7 +194,7 @@
 .site-footer__rune {
   width: 34px;
   height: 34px;
-  color: var(--color-gold);
+  color: var(--color-text-faint);
 }
 
 .site-footer__brand {
@@ -225,8 +225,8 @@
 
 .site-footer__nav a:hover,
 .site-footer__nav a:focus-visible {
-  color: var(--color-gold);
-  border-color: var(--color-gold);
+  color: var(--color-text);
+  border-color: var(--color-text);
 }
 
 .site-footer__meta {
@@ -258,7 +258,9 @@
 .eyebrow {
   display: inline-block;
   font-size: var(--fs-eyebrow);
-  color: var(--color-gold);
+  color: var(--color-text);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
   margin-bottom: var(--space-xs);
   font-weight: 700;
 }
