@@ -5,33 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="449462f2-267b-4a8d-be62-685165304f66" name="Changes" comment="Add dynamic blog version">
-      <change beforePath="$PROJECT_DIR$/images/brand-logo-01.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/brand-logo-01.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/brand-logo-02.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/brand-logo-02.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/brand-logo-03.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/brand-logo-03.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/brand-logo-04.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/brand-logo-04.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/logo.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/images/logo.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/post-293-diferenciamos.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/images/post-293-diferenciamos.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/post-300-realidad.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/post-300-realidad.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/post-315-recuerdo.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/images/post-315-recuerdo.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/post-323-motivacion.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/images/post-323-motivacion.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/post-332-ashwagandha.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/images/post-332-ashwagandha.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/post-357-glutamina.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/images/post-357-glutamina.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/product-abe-energy-drink.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/product-abe-energy-drink.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/product-abe-preworkout.webp" beforeDir="false" afterPath="$PROJECT_DIR$/images/product-abe-preworkout.webp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/product-anabol-testo-booster.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/product-anabol-testo-booster.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/product-artiflex.webp" beforeDir="false" afterPath="$PROJECT_DIR$/images/product-artiflex.webp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/product-boogieman.webp" beforeDir="false" afterPath="$PROJECT_DIR$/images/product-boogieman.webp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/product-creatine-clonapure.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/product-creatine-clonapure.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/product-creatine-gummies.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/product-creatine-gummies.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/product-essence-pro-whey.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/product-essence-pro-whey.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/product-iso-90-choco-blanco.webp" beforeDir="false" afterPath="$PROJECT_DIR$/images/product-iso-90-choco-blanco.webp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/product-isolate-pro-zero.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/product-isolate-pro-zero.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/product-misc-1.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/product-misc-1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/product-misc-2.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/product-misc-2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/product-omega-3.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/product-omega-3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/product-prime-vts8.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/product-prime-vts8.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/product-ultra-zma.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/product-ultra-zma.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/product-whey-essential.webp" beforeDir="false" afterPath="$PROJECT_DIR$/images/product-whey-essential.webp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -251,7 +225,15 @@
       <option name="project" value="LOCAL" />
       <updated>1789904405423</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Add images back">
+      <option name="closed" value="true" />
+      <created>1789907306220</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1789907306220</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -272,7 +254,8 @@
     <MESSAGE value="Add base files" />
     <MESSAGE value="Add initial version" />
     <MESSAGE value="Add dynamic blog version" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add dynamic blog version" />
+    <MESSAGE value="Add images back" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add images back" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
