@@ -15,6 +15,10 @@
   --color-border: #2c2c29;        /* líneas y bordes sutiles */
   --color-border-strong: #40403b; /* bordes con más presencia */
 
+  /* --- Color: superficie clara (solo para logos de marcas oscuros) --- */
+  --color-surface-light: #f3efe6;
+  --color-text-on-light: #1c1a16;
+
   /* --- Color: acento (solo barra de navegación) --- */
   --color-gold: #c9a24b;          /* oro envejecido, únicamente para la cabecera/nav */
   --color-gold-bright: #e3c273;   /* oro para el enlace activo del menú */

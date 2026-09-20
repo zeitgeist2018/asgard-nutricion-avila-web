@@ -151,9 +151,23 @@ def render_header(active_page):
         current = ' aria-current="page"' if page_id == active_page else ""
         return f'<li><a class="main-nav__link" href="{href}"{current}>{label}</a></li>'
 
+    instagram_icon = (
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">'
+        '<rect x="3" y="3" width="18" height="18" rx="5"/>'
+        '<circle cx="12" cy="12" r="4.2"/>'
+        '<circle cx="17.2" cy="6.8" r="0.9" fill="currentColor" stroke="none"/>'
+        '</svg>'
+    )
+    instagram_link = (
+        '<li><a class="main-nav__icon-link" href="https://www.instagram.com/asgardnutricionavila" '
+        'target="_blank" rel="noopener noreferrer" aria-label="Instagram de Asgard Nutrición Deportiva">'
+        + instagram_icon + '</a></li>'
+    )
+
     nav_items = (
         nav_link("/index.html", "Inicio", "inicio")
         + nav_link("/blog.html", "Blog", "blog")
+        + instagram_link
     )
 
     return f'''<header class="site-header" id="site-header">

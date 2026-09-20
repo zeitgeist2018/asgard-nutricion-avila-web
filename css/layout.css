@@ -108,6 +108,23 @@
   color: var(--color-gold-bright);
 }
 
+.main-nav__icon-link {
+  display: flex;
+  align-items: center;
+  color: var(--color-text-muted);
+  transition: color var(--dur) var(--ease);
+}
+
+.main-nav__icon-link svg {
+  width: 20px;
+  height: 20px;
+}
+
+.main-nav__icon-link:hover,
+.main-nav__icon-link:focus-visible {
+  color: var(--color-gold);
+}
+
 /* Botón de menú móvil */
 .nav-toggle {
   display: none;

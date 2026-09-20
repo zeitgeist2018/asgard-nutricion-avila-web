@@ -310,20 +310,20 @@
 }
 
 .brand-strip__item {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background: var(--color-surface-light);
+  border: 1px solid var(--color-surface-light);
   border-radius: var(--radius-md);
   padding: var(--space-md);
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 96px;
-  transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
 }
 
 .brand-strip__item:hover {
-  border-color: var(--color-text-faint);
   transform: translateY(-2px);
+  box-shadow: var(--shadow-card);
 }
 
 .brand-strip__item img {
@@ -331,14 +331,6 @@
   max-height: 56px;
   width: auto;
   object-fit: contain;
-  filter: grayscale(1) brightness(1.6) contrast(0.9);
-  opacity: 0.85;
-  transition: filter var(--dur) var(--ease), opacity var(--dur) var(--ease);
-}
-
-.brand-strip__item:hover img {
-  filter: none;
-  opacity: 1;
 }
 
 /* ---------- Lista de valores (iconos + texto) ---------- */

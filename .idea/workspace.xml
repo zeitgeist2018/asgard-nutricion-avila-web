@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="449462f2-267b-4a8d-be62-685165304f66" name="Changes" comment="Add dynamic blog version">
+    <list default="true" id="449462f2-267b-4a8d-be62-685165304f66" name="Changes" comment="Update styles">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build_site.py" beforeDir="false" afterPath="$PROJECT_DIR$/build_site.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/variables.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/variables.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +90,7 @@
       <recent name="C:\Users\loboy\Downloads\asgard-nutricion-avila-web" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.download_images">
+  <component name="RunManager" selected="Python.build_site">
     <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/asgard-nutricion-avila-web/dist/index.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
@@ -155,9 +157,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.build_site" />
         <item itemvalue="Python.download_images" />
         <item itemvalue="JavaScript Debug.index.html" />
-        <item itemvalue="Python.build_site" />
         <item itemvalue="Shell Script.download-images.sh" />
       </list>
     </recent_temporary>
@@ -233,7 +235,15 @@
       <option name="project" value="LOCAL" />
       <updated>1789907306220</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Update styles">
+      <option name="closed" value="true" />
+      <created>1789922610670</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1789922610670</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -255,7 +265,8 @@
     <MESSAGE value="Add initial version" />
     <MESSAGE value="Add dynamic blog version" />
     <MESSAGE value="Add images back" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add images back" />
+    <MESSAGE value="Update styles" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update styles" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
