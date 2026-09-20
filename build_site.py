@@ -206,6 +206,29 @@ def render_footer():
   </footer>'''
 
 
+def render_whatsapp_button():
+    whatsapp_url = (
+        "https://api.whatsapp.com/send/?phone=34683584356&text=Hola,%20me%20"
+        "gustar%C3%ADa%20saber%20qu%C3%A9%20catalogo%20de%20prote%C3%ADnas%20ten%C3%A9is"
+    )
+    icon = (
+        '<svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">'
+        '<path d="M16.001 3C9.106 3 3.5 8.605 3.5 15.5c0 2.385.664 4.615 1.816 6.52L3 29l7.163-2.263A12.44 '
+        '12.44 0 0 0 16 28.999C22.895 29 28.5 23.394 28.5 16.5S22.895 4 16.001 3Zm7.06 17.94c-.302.85-1.51 '
+        '1.56-2.47 1.77-.66.14-1.52.25-4.42-.95-3.71-1.53-6.1-5.28-6.29-5.53-.18-.25-1.5-2-1.5-3.82 '
+        '0-1.82.95-2.71 1.29-3.08.3-.32.66-.4.88-.4.22 0 .44 0 .63.01.2.01.47-.08.74.56.28.66.94 2.29 '
+        '1.02 2.46.08.17.13.37.03.6-.1.23-.15.37-.3.56-.15.19-.31.43-.44.58-.15.16-.31.34-.13.66.18.32 '
+        '.79 1.3 1.7 2.11 1.17 1.04 2.15 1.37 2.47 1.52.32.15.51.13.7-.08.19-.21.81-.95 1.03-1.28.22-.32 '
+        '.44-.27.74-.16.3.11 1.9.9 2.22 1.06.32.16.53.24.61.38.08.13.08.76-.22 1.6Z"/>'
+        '</svg>'
+    )
+    return (
+        f'<a class="whatsapp-float" href="{whatsapp_url}" target="_blank" '
+        'rel="noopener noreferrer" aria-label="Escríbenos por WhatsApp">'
+        + icon + '</a>'
+    )
+
+
 # --------------------------------------------------------------------
 # Tarjetas de entrada (home y listado del blog)
 # --------------------------------------------------------------------
@@ -246,6 +269,8 @@ def render_placeholder_page(template_text, active_page, extra_replacements):
     out = out.replace("{{SITE_URL}}", SITE_URL)
     for key, value in extra_replacements.items():
         out = out.replace(key, value)
+    # Botón flotante de WhatsApp en todas las páginas
+    out = out.replace("</body>", render_whatsapp_button() + "\n</body>")
     return out
 
 
