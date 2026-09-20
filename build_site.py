@@ -28,9 +28,24 @@ from datetime import datetime, timezone
 import markdown
 
 # --------------------------------------------------------------------
-# Configuración del sitio. Ajusta SITE_URL si el dominio final es otro.
+# Configuración del sitio.
+#
+# Cambia USE_CUSTOM_DOMAIN a True cuando el dominio propio esté listo
+# (y ajusta la URL de abajo si es distinta de la actual). Con False,
+# el sitio se genera para la URL gratuita de GitHub Pages, que vive
+# bajo una subcarpeta con el nombre del repositorio — por eso también
+# hace falta BASE_PATH, para que todas las rutas absolutas (/css/...,
+# /blog/...) se reescriban con ese prefijo y no rompan al cargar.
 # --------------------------------------------------------------------
-SITE_URL = "https://asgardnutriciondeportivaavila.com"
+USE_CUSTOM_DOMAIN = False
+
+if USE_CUSTOM_DOMAIN:
+    SITE_URL = "https://asgardnutriciondeportivaavila.com"
+    BASE_PATH = ""
+else:
+    SITE_URL = "https://zeitgeist2018.github.io/asgard-nutricion-avila-web"
+    BASE_PATH = "/asgard-nutricion-avila-web"
+
 SITE_NAME = "Asgard Nutrición Deportiva"
 DEFAULT_AUTHOR = "Israel Lobo Martín"
 
@@ -333,13 +348,42 @@ def copy_static_assets():
         if os.path.isdir(src):
             shutil.copytree(src, os.path.join(DIST_DIR, folder))
 
-    # Dominio propio para GitHub Pages
-    cname_path = os.path.join(BASE_DIR, "CNAME")
-    if os.path.isfile(cname_path):
-        shutil.copy(cname_path, os.path.join(DIST_DIR, "CNAME"))
+    # Dominio propio para GitHub Pages: solo se copia el CNAME cuando
+    # está en uso, para no confundir a GitHub Pages con un dominio que
+    # todavía no está configurado en el DNS.
+    if USE_CUSTOM_DOMAIN:
+        cname_path = os.path.join(BASE_DIR, "CNAME")
+        if os.path.isfile(cname_path):
+            shutil.copy(cname_path, os.path.join(DIST_DIR, "CNAME"))
 
     # Evita que GitHub procese el sitio publicado con Jekyll
     open(os.path.join(DIST_DIR, ".nojekyll"), "w").close()
+
+
+def apply_base_path(dist_dir, base_path):
+    """Antepone base_path a toda ruta absoluta del sitio (/css/..., /blog/...,
+    /images/..., /publisher/...) en cada archivo generado. No hace nada si
+    base_path está vacío (caso del dominio propio, servido desde la raíz)."""
+    if not base_path:
+        return
+
+    pattern = re.compile(
+        r'"(/(?:css|js|images|blog|publisher)(?:/[^"]*)?|/(?:index|blog)\.html)"'
+    )
+
+    for root, _dirs, files in os.walk(dist_dir):
+        for filename in files:
+            if not filename.endswith((".html", ".webmanifest")):
+                continue
+            path = os.path.join(root, filename)
+            with open(path, encoding="utf-8") as f:
+                content = f.read()
+            new_content = pattern.sub(
+                lambda m: '"' + base_path + m.group(1) + '"', content
+            )
+            if new_content != content:
+                with open(path, "w", encoding="utf-8") as f:
+                    f.write(new_content)
 
 
 # --------------------------------------------------------------------
@@ -365,8 +409,10 @@ def main():
     build_post_pages(posts)
     build_sitemap(posts)
     copy_static_assets()
+    apply_base_path(DIST_DIR, BASE_PATH)
 
-    print(f"\nListo. Sitio generado en {DIST_DIR}")
+    domain_msg = "dominio propio" if USE_CUSTOM_DOMAIN else f"GitHub Pages (subcarpeta {BASE_PATH})"
+    print(f"\nListo. Sitio generado en {DIST_DIR} para: {domain_msg}")
 
 
 if __name__ == "__main__":

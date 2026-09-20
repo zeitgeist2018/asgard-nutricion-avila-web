@@ -54,6 +54,31 @@ entrada se convierte en una página HTML normal y corriente, ya
 escrita, con su título, su descripción y su URL propia — antes de
 que nadie la visite.
 
+## Dominio: gratuito de GitHub Pages, o propio
+
+Al principio de `build_site.py` hay un interruptor:
+
+```python
+USE_CUSTOM_DOMAIN = False
+```
+
+- **`False`** (como está ahora) → el sitio se genera para
+  `https://zeitgeist2018.github.io/asgard-nutricion-avila-web/`, la
+  URL gratuita de GitHub. Como esa URL vive en una subcarpeta (no en
+  la raíz del dominio), el build reescribe automáticamente todas las
+  rutas del sitio (`/css/...`, `/blog/...`, etc.) para que incluyan
+  ese prefijo — si no lo hiciera, nada cargaría, igual que pasa al
+  previsualizar con un servidor que no sirve desde la raíz correcta.
+- **`True`** → el sitio se genera para el dominio propio de
+  `SITE_URL` (más abajo en el mismo archivo), sin ningún prefijo, y
+  se copia el archivo `CNAME` para que GitHub Pages sepa servir ese
+  dominio.
+
+Cuando el dominio propio esté listo, solo hay que cambiar esa línea
+a `True` (y comprobar que `SITE_URL` y `CNAME` tienen el dominio
+correcto) y volver a construir el sitio — no hace falta tocar nada
+más.
+
 ## Configuración inicial (una sola vez)
 
 1. **Verifica que el repositorio existe** con dos ramas: `master`
@@ -61,13 +86,11 @@ que nadie la visite.
    Actions la rellena sola en el primer build).
 2. **Activa GitHub Pages** desde el repositorio: Settings → Pages →
    Source → "Deploy from a branch" → rama `gh-pages`, carpeta `/`.
-3. **Ajusta el dominio** si `asgardnutriciondeportivaavila.com` no
-   es el definitivo: cámbialo en dos sitios —
-   - el archivo `CNAME` (una sola línea con el dominio)
-   - `SITE_URL` al principio de `build_site.py`
-   Y configura el DNS del dominio para que apunte a GitHub Pages
-   (GitHub explica cómo en su propia documentación de dominios
-   personalizados).
+3. **Sobre el dominio** — ahora mismo el sitio está configurado para
+   la URL gratuita de GitHub Pages (`USE_CUSTOM_DOMAIN = False` en
+   `build_site.py`). Cuando quieras pasar al dominio propio, ve a la
+   sección "Dominio: gratuito de GitHub Pages, o propio" de este
+   mismo README.
 4. **No hace falta tocar nada más** para que el build funcione: el
    workflow de GitHub Actions usa un permiso que GitHub concede
    automáticamente (`GITHUB_TOKEN`), no hay que crear ningún secreto
