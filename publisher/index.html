@@ -1,99 +1,99 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Publicar en Asgard</title>
-<meta name="description" content="Crear y publicar entradas del blog de Asgard Nutrición Deportiva">
-<meta name="robots" content="noindex, nofollow">
-<link rel="manifest" href="/publisher/manifest.webmanifest">
-<meta name="theme-color" content="#0b0b0a">
-<link rel="apple-touch-icon" href="/publisher/icons/icon-192.png">
-<link rel="icon" href="/publisher/icons/icon-192.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Publicar en Asgard</title>
+  <meta name="description" content="Crear y publicar entradas del blog de Asgard Nutrición Deportiva">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="manifest" href="/publisher/manifest.webmanifest">
+  <meta name="theme-color" content="#0b0b0a">
+  <link rel="apple-touch-icon" href="/publisher/icons/icon-192.png">
+  <link rel="icon" href="/publisher/icons/icon-192.png">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="/css/variables.css">
-<link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
 
-<style>
-  :root { --safe-top: env(safe-area-inset-top, 0px); --safe-bottom: env(safe-area-inset-bottom, 0px); }
-  body { padding-top: var(--safe-top); padding-bottom: var(--safe-bottom); }
+  <style>
+    :root { --safe-top: env(safe-area-inset-top, 0px); --safe-bottom: env(safe-area-inset-bottom, 0px); }
+    body { padding-top: var(--safe-top); padding-bottom: var(--safe-bottom); }
 
-  .app-header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1rem var(--space-sm);
-    border-bottom: 1px solid var(--color-border);
-  }
-  .app-header h1 { font-size: 1.2rem; margin: 0; }
-  .icon-btn {
-    background: none; border: 1px solid var(--color-border-strong);
-    color: var(--color-text-muted); width: 40px; height: 40px;
-    border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center;
-  }
-  .icon-btn svg { width: 20px; height: 20px; }
+    .app-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem var(--space-sm);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .app-header h1 { font-size: 1.2rem; margin: 0; }
+    .icon-btn {
+      background: none; border: 1px solid var(--color-border-strong);
+      color: var(--color-text-muted); width: 40px; height: 40px;
+      border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center;
+    }
+    .icon-btn svg { width: 20px; height: 20px; }
 
-  .app-main { max-width: 560px; margin: 0 auto; padding: var(--space-md) var(--space-sm) var(--space-2xl); }
+    .app-main { max-width: 560px; margin: 0 auto; padding: var(--space-md) var(--space-sm) var(--space-2xl); }
 
-  .field { margin-bottom: var(--space-md); }
-  .field label {
-    display: block; font-size: 0.9rem; color: var(--color-text-muted);
-    margin-bottom: 0.4rem;
-  }
-  .field .hint { font-size: 0.8rem; color: var(--color-text-faint); margin-top: 0.35rem; }
-  .field input[type="text"],
-  .field input[type="password"],
-  .field textarea {
-    width: 100%; background: var(--color-surface); color: var(--color-text);
-    border: 1px solid var(--color-border-strong); border-radius: var(--radius-sm);
-    padding: 0.75rem 0.9rem; font-family: var(--font-body); font-size: 1rem;
-  }
-  .field textarea { resize: vertical; }
-  .field input:focus, .field textarea:focus { outline: 2px solid var(--color-gold); outline-offset: 1px; }
+    .field { margin-bottom: var(--space-md); }
+    .field label {
+      display: block; font-size: 0.9rem; color: var(--color-text-muted);
+      margin-bottom: 0.4rem;
+    }
+    .field .hint { font-size: 0.8rem; color: var(--color-text-faint); margin-top: 0.35rem; }
+    .field input[type="text"],
+    .field input[type="password"],
+    .field textarea {
+      width: 100%; background: var(--color-surface); color: var(--color-text);
+      border: 1px solid var(--color-border-strong); border-radius: var(--radius-sm);
+      padding: 0.75rem 0.9rem; font-family: var(--font-body); font-size: 1rem;
+    }
+    .field textarea { resize: vertical; }
+    .field input:focus, .field textarea:focus { outline: 2px solid var(--color-gold); outline-offset: 1px; }
 
-  .file-field {
-    display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
-  }
-  .file-field img {
-    width: 64px; height: 64px; object-fit: cover; border-radius: var(--radius-sm);
-    border: 1px solid var(--color-border-strong); display: none;
-  }
-  .file-field .btn { padding: 0.6rem 1rem; font-size: 0.9rem; }
+    .file-field {
+      display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
+    }
+    .file-field img {
+      width: 64px; height: 64px; object-fit: cover; border-radius: var(--radius-sm);
+      border: 1px solid var(--color-border-strong); display: none;
+    }
+    .file-field .btn { padding: 0.6rem 1rem; font-size: 0.9rem; }
 
-  .btn-publish {
-    width: 100%; justify-content: center; padding: 1rem; font-size: 1.05rem;
-    margin-top: var(--space-sm);
-  }
-  .btn-publish:disabled { opacity: 0.6; pointer-events: none; }
+    .btn-publish {
+      width: 100%; justify-content: center; padding: 1rem; font-size: 1.05rem;
+      margin-top: var(--space-sm);
+    }
+    .btn-publish:disabled { opacity: 0.6; pointer-events: none; }
 
-  .status-box {
-    margin-top: var(--space-md); padding: 1rem; border-radius: var(--radius-sm);
-    font-size: 0.95rem; line-height: 1.5; display: none;
-  }
-  .status-box.status-ok { display: block; background: rgba(201,162,75,0.12); border: 1px solid var(--color-gold); color: var(--color-text); }
-  .status-box.status-error { display: block; background: rgba(200,60,60,0.12); border: 1px solid #c85555; color: var(--color-text); }
-  .status-box.status-loading { display: block; background: var(--color-surface); border: 1px solid var(--color-border-strong); color: var(--color-text-muted); }
+    .status-box {
+      margin-top: var(--space-md); padding: 1rem; border-radius: var(--radius-sm);
+      font-size: 0.95rem; line-height: 1.5; display: none;
+    }
+    .status-box.status-ok { display: block; background: rgba(201,162,75,0.12); border: 1px solid var(--color-gold); color: var(--color-text); }
+    .status-box.status-error { display: block; background: rgba(200,60,60,0.12); border: 1px solid #c85555; color: var(--color-text); }
+    .status-box.status-loading { display: block; background: var(--color-surface); border: 1px solid var(--color-border-strong); color: var(--color-text-muted); }
 
-  .view { display: none; }
-  .view.is-active { display: block; }
+    .view { display: none; }
+    .view.is-active { display: block; }
 
-  .settings-note {
-    background: var(--color-surface); border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm); padding: 1rem; font-size: 0.88rem;
-    color: var(--color-text-muted); margin-bottom: var(--space-md); line-height: 1.6;
-  }
-  .settings-note a { color: var(--color-gold); }
+    .settings-note {
+      background: var(--color-surface); border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm); padding: 1rem; font-size: 0.88rem;
+      color: var(--color-text-muted); margin-bottom: var(--space-md); line-height: 1.6;
+    }
+    .settings-note a { color: var(--color-gold); }
 
-  .spinner {
-    display: inline-block; width: 14px; height: 14px;
-    border: 2px solid var(--color-text-faint); border-top-color: var(--color-gold);
-    border-radius: 50%; animation: spin 0.7s linear infinite; margin-right: 0.5rem;
-    vertical-align: -2px;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-</style>
+    .spinner {
+      display: inline-block; width: 14px; height: 14px;
+      border: 2px solid var(--color-text-faint); border-top-color: var(--color-gold);
+      border-radius: 50%; animation: spin 0.7s linear infinite; margin-right: 0.5rem;
+      vertical-align: -2px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
 </head>
 <body>
 
@@ -154,18 +154,6 @@
 
     <form id="settings-form">
       <div class="field">
-        <label for="s-owner">Usuario / organización de GitHub</label>
-        <input type="text" id="s-owner" required>
-      </div>
-      <div class="field">
-        <label for="s-repo">Nombre del repositorio</label>
-        <input type="text" id="s-repo" required>
-      </div>
-      <div class="field">
-        <label for="s-branch">Rama donde se guardan las entradas</label>
-        <input type="text" id="s-branch" required>
-      </div>
-      <div class="field">
         <label for="s-token">Token de acceso de GitHub</label>
         <input type="password" id="s-token" required placeholder="ghp_...">
         <p class="hint">
@@ -174,7 +162,7 @@
           repositorio</strong> y permiso <strong>Contents: Read and write</strong>.
         </p>
       </div>
-      <button type="submit" class="btn btn--primary btn-publish">Guardar ajustes</button>
+      <button type="submit" class="btn btn--primary btn-publish">Guardar token</button>
     </form>
 
     <div class="status-box" id="settings-status"></div>
@@ -183,245 +171,241 @@
 </main>
 
 <script>
-(function () {
-  "use strict";
+  (function () {
+    "use strict";
 
-  var STORAGE_KEY = "asgard_publisher_settings";
+    var STORAGE_KEY = "asgard_publisher_token";
 
-  var viewPublish = document.getElementById("view-publish");
-  var viewSettings = document.getElementById("view-settings");
-  var settingsBtn = document.getElementById("settings-btn");
+    // Datos fijos de este proyecto: no hace falta que el usuario los
+    // rellene, solo el token de acceso personal.
+    var GITHUB_OWNER = "zeitgeist2018";
+    var GITHUB_REPO = "asgard-nutricion-avila-web";
+    var GITHUB_BRANCH = "master";
 
-  function showView(view) {
-    [viewPublish, viewSettings].forEach(function (v) { v.classList.remove("is-active"); });
-    view.classList.add("is-active");
-  }
+    var viewPublish = document.getElementById("view-publish");
+    var viewSettings = document.getElementById("view-settings");
+    var settingsBtn = document.getElementById("settings-btn");
 
-  settingsBtn.addEventListener("click", function () {
-    var showingSettings = viewSettings.classList.contains("is-active");
-    showView(showingSettings ? viewPublish : viewSettings);
-  });
-
-  // ---------- Ajustes ----------
-  function loadSettings() {
-    try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-    } catch (e) {
-      return {};
+    function showView(view) {
+      [viewPublish, viewSettings].forEach(function (v) { v.classList.remove("is-active"); });
+      view.classList.add("is-active");
     }
-  }
 
-  function saveSettings(data) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  }
-
-  var settingsForm = document.getElementById("settings-form");
-  var sOwner = document.getElementById("s-owner");
-  var sRepo = document.getElementById("s-repo");
-  var sBranch = document.getElementById("s-branch");
-  var sToken = document.getElementById("s-token");
-  var settingsStatus = document.getElementById("settings-status");
-
-  function fillSettingsForm() {
-    var s = loadSettings();
-    sOwner.value = s.owner || "zeitgeist2018";
-    sRepo.value = s.repo || "asgard-nutricion-avila-web";
-    sBranch.value = s.branch || "master";
-    sToken.value = s.token || "";
-  }
-  fillSettingsForm();
-
-  settingsForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-    saveSettings({
-      owner: sOwner.value.trim(),
-      repo: sRepo.value.trim(),
-      branch: sBranch.value.trim(),
-      token: sToken.value.trim(),
+    settingsBtn.addEventListener("click", function () {
+      var showingSettings = viewSettings.classList.contains("is-active");
+      showView(showingSettings ? viewPublish : viewSettings);
     });
-    settingsStatus.className = "status-box status-ok";
-    settingsStatus.textContent = "Ajustes guardados en este teléfono.";
-    setTimeout(function () { showView(viewPublish); }, 700);
-  });
 
-  // Si no hay ajustes guardados todavía, abre la pantalla de ajustes primero
-  if (!loadSettings().token) {
-    showView(viewSettings);
-  }
+    // ---------- Token ----------
+    function loadToken() {
+      try {
+        return localStorage.getItem(STORAGE_KEY) || "";
+      } catch (e) {
+        return "";
+      }
+    }
 
-  // ---------- Utilidades ----------
-  function slugify(text) {
-    return text
-      .toString()
-      .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // quita acentos
-      .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, "")
-      .trim()
-      .replace(/\s+/g, "-")
-      .replace(/-+/g, "-")
-      .slice(0, 80);
-  }
+    function saveToken(token) {
+      localStorage.setItem(STORAGE_KEY, token);
+    }
 
-  function todayISO() {
-    var d = new Date();
-    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
-  }
+    var settingsForm = document.getElementById("settings-form");
+    var sToken = document.getElementById("s-token");
+    var settingsStatus = document.getElementById("settings-status");
 
-  function truncate(text, n) {
-    if (text.length <= n) return text;
-    return text.slice(0, n).replace(/\s+\S*$/, "") + "…";
-  }
+    function fillSettingsForm() {
+      sToken.value = loadToken();
+    }
+    fillSettingsForm();
 
-  function yamlEscape(text) {
-    return text.replace(/"/g, '\\"');
-  }
+    settingsForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      saveToken(sToken.value.trim());
+      settingsStatus.className = "status-box status-ok";
+      settingsStatus.textContent = "Token guardado en este teléfono.";
+      setTimeout(function () { showView(viewPublish); }, 700);
+    });
 
-  function fileToBase64(file) {
-    return new Promise(function (resolve, reject) {
+    // Si no hay token guardado todavía, abre la pantalla de ajustes
+    // primero; si ya está guardado, se va directo al formulario de
+    // publicar (que es la vista activa por defecto).
+    if (!loadToken()) {
+      showView(viewSettings);
+    }
+
+    // ---------- Utilidades ----------
+    function slugify(text) {
+      return text
+              .toString()
+              .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // quita acentos
+              .toLowerCase()
+              .replace(/[^a-z0-9\s-]/g, "")
+              .trim()
+              .replace(/\s+/g, "-")
+              .replace(/-+/g, "-")
+              .slice(0, 80);
+    }
+
+    function todayISO() {
+      var d = new Date();
+      return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+    }
+
+    function truncate(text, n) {
+      if (text.length <= n) return text;
+      return text.slice(0, n).replace(/\s+\S*$/, "") + "…";
+    }
+
+    function yamlEscape(text) {
+      return text.replace(/"/g, '\\"');
+    }
+
+    function fileToBase64(file) {
+      return new Promise(function (resolve, reject) {
+        var reader = new FileReader();
+        reader.onload = function () {
+          var result = reader.result;
+          resolve(result.split(",")[1]);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function utf8ToBase64(str) {
+      return btoa(unescape(encodeURIComponent(str)));
+    }
+
+    // ---------- API de GitHub ----------
+    function githubPutFile(token, path, base64Content, message) {
+      var url = "https://api.github.com/repos/" + GITHUB_OWNER + "/" + GITHUB_REPO + "/contents/" + path;
+      return fetch(url, {
+        method: "PUT",
+        headers: {
+          Authorization: "Bearer " + token,
+          Accept: "application/vnd.github+json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: message,
+          content: base64Content,
+          branch: GITHUB_BRANCH,
+        }),
+      }).then(function (res) {
+        if (res.ok) return res.json();
+        return res.json().catch(function () { return {}; }).then(function (body) {
+          var err = new Error(body.message || ("Error " + res.status));
+          err.status = res.status;
+          throw err;
+        });
+      });
+    }
+
+    // ---------- Formulario de publicar ----------
+    var postForm = document.getElementById("post-form");
+    var fTitle = document.getElementById("f-title");
+    var fExcerpt = document.getElementById("f-excerpt");
+    var fBody = document.getElementById("f-body");
+    var fImage = document.getElementById("f-image");
+    var fImageBtn = document.getElementById("f-image-btn");
+    var fImagePreview = document.getElementById("f-image-preview");
+    var publishBtn = document.getElementById("publish-btn");
+    var statusBox = document.getElementById("status-box");
+
+    var selectedImage = null;
+
+    fImageBtn.addEventListener("click", function () { fImage.click(); });
+    fImage.addEventListener("change", function () {
+      var file = fImage.files[0];
+      if (!file) { selectedImage = null; fImagePreview.style.display = "none"; return; }
+      selectedImage = file;
       var reader = new FileReader();
       reader.onload = function () {
-        var result = reader.result;
-        resolve(result.split(",")[1]);
+        fImagePreview.src = reader.result;
+        fImagePreview.style.display = "block";
       };
-      reader.onerror = reject;
       reader.readAsDataURL(file);
     });
-  }
 
-  function utf8ToBase64(str) {
-    return btoa(unescape(encodeURIComponent(str)));
-  }
+    function setStatus(kind, html) {
+      statusBox.className = "status-box status-" + kind;
+      statusBox.innerHTML = html;
+    }
 
-  // ---------- API de GitHub ----------
-  function githubPutFile(settings, path, base64Content, message) {
-    var url = "https://api.github.com/repos/" + settings.owner + "/" + settings.repo + "/contents/" + path;
-    return fetch(url, {
-      method: "PUT",
-      headers: {
-        Authorization: "Bearer " + settings.token,
-        Accept: "application/vnd.github+json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        message: message,
-        content: base64Content,
-        branch: settings.branch,
-      }),
-    }).then(function (res) {
-      if (res.ok) return res.json();
-      return res.json().catch(function () { return {}; }).then(function (body) {
-        var err = new Error(body.message || ("Error " + res.status));
-        err.status = res.status;
-        throw err;
-      });
+    postForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      var token = loadToken();
+      if (!token) {
+        setStatus("error", "Antes de publicar, configura tu token (icono de arriba a la derecha).");
+        showView(viewSettings);
+        return;
+      }
+
+      var title = fTitle.value.trim();
+      var body = fBody.value.trim();
+      if (!title || !body) return;
+
+      var slug = slugify(title) || "entrada-" + Date.now();
+      var date = todayISO();
+      var excerpt = fExcerpt.value.trim() || truncate(body.replace(/\s+/g, " "), 160);
+
+      publishBtn.disabled = true;
+      setStatus("loading", '<span class="spinner"></span>Publicando…');
+
+      var imageFrontmatterLine = "";
+      var imageStep = Promise.resolve();
+
+      if (selectedImage) {
+        var ext = (selectedImage.name.split(".").pop() || "jpg").toLowerCase();
+        var imagePath = "images/" + slug + "." + ext;
+        imageFrontmatterLine = 'image: "' + imagePath + '"\n';
+        imageStep = fileToBase64(selectedImage).then(function (base64) {
+          return githubPutFile(token, imagePath, base64, "Añade foto para: " + title);
+        });
+      }
+
+      imageStep
+              .then(function () {
+                var frontmatter =
+                        "---\n" +
+                        'title: "' + yamlEscape(title) + '"\n' +
+                        'date: "' + date + '"\n' +
+                        'author: "Israel Lobo Martín"\n' +
+                        imageFrontmatterLine +
+                        'excerpt: "' + yamlEscape(excerpt) + '"\n' +
+                        "---\n\n";
+                var markdown = frontmatter + body + "\n";
+                var base64Content = utf8ToBase64(markdown);
+                return githubPutFile(token, "blog/" + slug + ".md", base64Content, "Nueva entrada: " + title);
+              })
+              .then(function () {
+                setStatus(
+                        "ok",
+                        "✅ Entrada publicada. Tardará aproximadamente un minuto en aparecer en la web mientras se genera automáticamente."
+                );
+                postForm.reset();
+                fImagePreview.style.display = "none";
+                selectedImage = null;
+              })
+              .catch(function (err) {
+                var msg = "No se ha podido publicar. ";
+                if (err.status === 401) msg += "El token no es válido o ha caducado.";
+                else if (err.status === 404) msg += "Repositorio, usuario o rama no encontrados. Revisa los ajustes.";
+                else if (err.status === 422) msg += "Ya existe una entrada con ese mismo título. Prueba a cambiar el título.";
+                else msg += err.message || "Inténtalo de nuevo.";
+                setStatus("error", msg);
+              })
+              .finally(function () {
+                publishBtn.disabled = false;
+              });
     });
-  }
 
-  // ---------- Formulario de publicar ----------
-  var postForm = document.getElementById("post-form");
-  var fTitle = document.getElementById("f-title");
-  var fExcerpt = document.getElementById("f-excerpt");
-  var fBody = document.getElementById("f-body");
-  var fImage = document.getElementById("f-image");
-  var fImageBtn = document.getElementById("f-image-btn");
-  var fImagePreview = document.getElementById("f-image-preview");
-  var publishBtn = document.getElementById("publish-btn");
-  var statusBox = document.getElementById("status-box");
-
-  var selectedImage = null;
-
-  fImageBtn.addEventListener("click", function () { fImage.click(); });
-  fImage.addEventListener("change", function () {
-    var file = fImage.files[0];
-    if (!file) { selectedImage = null; fImagePreview.style.display = "none"; return; }
-    selectedImage = file;
-    var reader = new FileReader();
-    reader.onload = function () {
-      fImagePreview.src = reader.result;
-      fImagePreview.style.display = "block";
-    };
-    reader.readAsDataURL(file);
-  });
-
-  function setStatus(kind, html) {
-    statusBox.className = "status-box status-" + kind;
-    statusBox.innerHTML = html;
-  }
-
-  postForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    var settings = loadSettings();
-    if (!settings.token || !settings.owner || !settings.repo || !settings.branch) {
-      setStatus("error", "Antes de publicar, configura tus ajustes (icono de arriba a la derecha).");
-      showView(viewSettings);
-      return;
+    // Registrar el service worker (necesario para poder instalar la app)
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/publisher/sw.js").catch(function () {});
     }
-
-    var title = fTitle.value.trim();
-    var body = fBody.value.trim();
-    if (!title || !body) return;
-
-    var slug = slugify(title) || "entrada-" + Date.now();
-    var date = todayISO();
-    var excerpt = fExcerpt.value.trim() || truncate(body.replace(/\s+/g, " "), 160);
-
-    publishBtn.disabled = true;
-    setStatus("loading", '<span class="spinner"></span>Publicando…');
-
-    var imageFrontmatterLine = "";
-    var imageStep = Promise.resolve();
-
-    if (selectedImage) {
-      var ext = (selectedImage.name.split(".").pop() || "jpg").toLowerCase();
-      var imagePath = "images/" + slug + "." + ext;
-      imageFrontmatterLine = 'image: "' + imagePath + '"\n';
-      imageStep = fileToBase64(selectedImage).then(function (base64) {
-        return githubPutFile(settings, imagePath, base64, "Añade foto para: " + title);
-      });
-    }
-
-    imageStep
-      .then(function () {
-        var frontmatter =
-          "---\n" +
-          'title: "' + yamlEscape(title) + '"\n' +
-          'date: "' + date + '"\n' +
-          'author: "Israel Lobo Martín"\n' +
-          imageFrontmatterLine +
-          'excerpt: "' + yamlEscape(excerpt) + '"\n' +
-          "---\n\n";
-        var markdown = frontmatter + body + "\n";
-        var base64Content = utf8ToBase64(markdown);
-        return githubPutFile(settings, "blog/" + slug + ".md", base64Content, "Nueva entrada: " + title);
-      })
-      .then(function () {
-        setStatus(
-          "ok",
-          "✅ Entrada publicada. Tardará aproximadamente un minuto en aparecer en la web mientras se genera automáticamente."
-        );
-        postForm.reset();
-        fImagePreview.style.display = "none";
-        selectedImage = null;
-      })
-      .catch(function (err) {
-        var msg = "No se ha podido publicar. ";
-        if (err.status === 401) msg += "El token no es válido o ha caducado.";
-        else if (err.status === 404) msg += "Repositorio, usuario o rama no encontrados. Revisa los ajustes.";
-        else if (err.status === 422) msg += "Ya existe una entrada con ese mismo título. Prueba a cambiar el título.";
-        else msg += err.message || "Inténtalo de nuevo.";
-        setStatus("error", msg);
-      })
-      .finally(function () {
-        publishBtn.disabled = false;
-      });
-  });
-
-  // Registrar el service worker (necesario para poder instalar la app)
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/publisher/sw.js").catch(function () {});
-  }
-})();
+  })();
 </script>
 
 </body>
