@@ -37,10 +37,10 @@ import markdown
 # hace falta BASE_PATH, para que todas las rutas absolutas (/css/...,
 # /blog/...) se reescriban con ese prefijo y no rompan al cargar.
 # --------------------------------------------------------------------
-USE_CUSTOM_DOMAIN = False
+USE_CUSTOM_DOMAIN = True
 
 if USE_CUSTOM_DOMAIN:
-    SITE_URL = "https://asgardnutriciondeportivaavila.com"
+    SITE_URL = "https://asgardavilanutriciondeportiva.com"
     BASE_PATH = ""
 else:
     SITE_URL = "https://zeitgeist2018.github.io/asgard-nutricion-avila-web"
