@@ -318,8 +318,9 @@ def build_post_pages(posts):
                 '<div class="decorative-panel" role="img" aria-label="Motivo ornamental vikingo">'
                 + SHIELD_SVG + "</div>"
             )
-            og_image = ""
-            twitter_image = ""
+            # Sin foto propia, la vista previa usa el logo de la marca
+            og_image = f'<meta property="og:image" content="{SITE_URL}/images/logo.jpg">'
+            twitter_image = f'<meta name="twitter:image" content="{SITE_URL}/images/logo.jpg">'
             twitter_card_type = "summary"
 
         json_ld = json.dumps({
