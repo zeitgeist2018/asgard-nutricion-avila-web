@@ -21,163 +21,286 @@
   <style>
     :root { --safe-top: env(safe-area-inset-top, 0px); --safe-bottom: env(safe-area-inset-bottom, 0px); }
     [hidden] { display: none !important; }
-    body { padding-top: var(--safe-top); padding-bottom: var(--safe-bottom); }
+    body {
+      padding-top: var(--safe-top);
+      background: radial-gradient(circle at top, #1a1812 0%, var(--color-bg) 55%) no-repeat, var(--color-bg);
+      min-height: 100vh;
+    }
 
+    /* ---------- Cabecera ---------- */
     .app-header {
-      display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
       padding: 1rem var(--space-sm);
+      background: var(--color-bg-alt);
       border-bottom: 1px solid var(--color-border);
+      position: sticky; top: var(--safe-top); z-index: 5;
     }
-    .app-header h1 { font-size: 1.2rem; margin: 0; }
-    .header-actions { display: flex; gap: 0.5rem; }
+    .brand-eyebrow {
+      display: block; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--color-gold);
+    }
+    .app-header h1 { font-size: 1.25rem; margin: 0; line-height: 1.1; }
     .icon-btn {
-      background: none; border: 1px solid var(--color-border-strong);
-      color: var(--color-text-muted); width: 40px; height: 40px;
+      background: var(--color-surface); border: 1px solid var(--color-border-strong);
+      color: var(--color-text-muted); width: 42px; height: 42px;
       border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center;
-      font-size: 1.4rem; line-height: 1; cursor: pointer;
+      cursor: pointer;
     }
+    .icon-btn:hover { color: var(--color-gold-bright); border-color: var(--color-gold); }
     .icon-btn svg { width: 20px; height: 20px; }
 
-    .app-main { max-width: 640px; margin: 0 auto; padding: var(--space-md) var(--space-sm) var(--space-2xl); }
+    .app-main {
+      max-width: 680px; margin: 0 auto;
+      padding: var(--space-md) var(--space-sm) calc(var(--space-2xl) + var(--safe-bottom));
+    }
+
+    /* ---------- Botones ---------- */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+      border-radius: var(--radius-sm); font-family: var(--font-body); cursor: pointer;
+      border: 1px solid transparent; transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .btn-gold {
+      background: var(--color-gold); color: var(--color-text-on-gold);
+      font-weight: 700; padding: 0.85rem 1.2rem; font-size: 1.02rem;
+    }
+    .btn-gold:hover { background: var(--color-gold-bright); }
+    .btn-line {
+      background: transparent; color: var(--color-text); border-color: var(--color-border-strong);
+      padding: 0.7rem 1rem; font-size: 0.95rem;
+    }
+    .btn-line:hover { border-color: var(--color-gold); color: var(--color-gold-bright); }
+    .btn-danger {
+      background: transparent; color: #e58a8a; border-color: #8f3b3b;
+      padding: 0.85rem 1rem; font-size: 0.98rem; width: 100%;
+    }
+    .btn-danger:hover { background: rgba(200, 60, 60, 0.12); }
+    .btn:disabled { opacity: 0.55; pointer-events: none; }
+    .btn-block { width: 100%; }
+
+    /* ---------- Listado ---------- */
+    .list-hero {
+      display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
+      margin-bottom: var(--space-sm); flex-wrap: wrap;
+    }
+    .list-hero h2 { font-size: 1.35rem; margin: 0; }
+    .list-hero .count { font-size: 0.85rem; color: var(--color-text-faint); }
+
+    .search-form { display: flex; gap: 0.5rem; margin-bottom: var(--space-md); }
+    .search-form input {
+      flex: 1; min-width: 0; background: var(--color-surface); color: var(--color-text);
+      border: 1px solid var(--color-border-strong); border-radius: var(--radius-sm);
+      padding: 0.75rem 0.9rem; font-family: var(--font-body); font-size: 1rem;
+    }
+    .search-form input:focus,
+    .field input:focus, .field select:focus, .field textarea:focus {
+      outline: 2px solid var(--color-gold); outline-offset: 1px;
+    }
+
+    .entry-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.7rem; }
+    .entry-card {
+      position: relative; display: grid; grid-template-columns: 84px 1fr; gap: 0.9rem; align-items: center;
+      background: var(--color-surface); border: 1px solid var(--color-border);
+      border-radius: var(--radius-md); padding: 0.7rem; overflow: hidden;
+    }
+    .entry-card.is-draft {
+      border-color: var(--color-gold);
+      background: linear-gradient(90deg, rgba(201, 162, 75, 0.12), var(--color-surface) 60%);
+    }
+    .entry-card.is-draft::before {
+      content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--color-gold);
+    }
+    .entry-thumb {
+      width: 84px; height: 84px; border-radius: var(--radius-sm); overflow: hidden;
+      border: 1px solid var(--color-border); background: var(--color-bg-alt);
+      display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer;
+    }
+    .entry-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .entry-thumb--empty { color: var(--color-text-faint); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; }
+    .entry-body { min-width: 0; display: flex; flex-direction: column; gap: 0.35rem; }
+    .entry-title {
+      background: none; border: 0; padding: 0; text-align: left; cursor: pointer;
+      color: var(--color-text); font-family: var(--font-body); font-size: 1.05rem; font-weight: 700;
+      line-height: 1.25; overflow-wrap: anywhere;
+    }
+    .entry-title:hover { color: var(--color-gold-bright); text-decoration: underline; }
+    .entry-row { display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem 0.75rem; }
+    .entry-date { font-size: 0.82rem; color: var(--color-text-faint); }
+    .chip {
+      display: inline-block; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.2rem 0.55rem; border-radius: 999px; border: 1px solid var(--color-border-strong);
+      color: var(--color-text-muted);
+    }
+    .chip--draft {
+      background: var(--color-gold); border-color: var(--color-gold); color: var(--color-text-on-gold);
+      font-weight: 700;
+    }
+    .entry-edit {
+      background: none; border: 1px solid var(--color-border-strong); color: var(--color-text-muted);
+      border-radius: var(--radius-sm); padding: 0.3rem 0.7rem; font-family: var(--font-body);
+      font-size: 0.82rem; cursor: pointer; justify-self: start;
+    }
+    .entry-edit:hover { color: var(--color-gold-bright); border-color: var(--color-gold); }
+
+    .empty-state {
+      text-align: center; padding: var(--space-lg) var(--space-sm);
+      border: 1px dashed var(--color-border-strong); border-radius: var(--radius-md);
+      color: var(--color-text-muted);
+    }
+    .empty-state p { margin: 0 0 var(--space-sm); }
+
+    /* ---------- Editor ---------- */
+    .editor-top { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-bottom: var(--space-md); }
+    .editor-top h2 { font-size: 1.2rem; margin: 0; }
+    .back-link {
+      background: none; border: 0; color: var(--color-text-muted); font-family: var(--font-body);
+      font-size: 0.95rem; cursor: pointer; padding: 0.4rem 0;
+    }
+    .back-link:hover { color: var(--color-gold-bright); }
 
     .field { margin-bottom: var(--space-md); }
-    .field label {
-      display: block; font-size: 0.9rem; color: var(--color-text-muted);
-      margin-bottom: 0.4rem;
+    .field > label, .field > .label {
+      display: block; font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 0.4rem;
     }
     .field .hint { font-size: 0.8rem; color: var(--color-text-faint); margin-top: 0.35rem; }
-    .field input:not([type="file"]),
-    .field select,
+    .field input:not([type="file"]):not([type="radio"]),
     .field textarea {
       width: 100%; background: var(--color-surface); color: var(--color-text);
       border: 1px solid var(--color-border-strong); border-radius: var(--radius-sm);
       padding: 0.75rem 0.9rem; font-family: var(--font-body); font-size: 1rem;
     }
+    .field input[name="title"] { font-size: 1.15rem; font-weight: 700; }
     .field textarea { resize: vertical; }
-    .field input:focus, .field select:focus, .field textarea:focus { outline: 2px solid var(--color-gold); outline-offset: 1px; }
 
-    .file-field { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
-    .file-field img {
-      width: 64px; height: 64px; object-fit: cover; border-radius: var(--radius-sm);
-      border: 1px solid var(--color-border-strong); display: none;
-    }
-    .file-field .btn { padding: 0.6rem 1rem; font-size: 0.9rem; }
-
-    .btn:disabled { opacity: 0.6; pointer-events: none; }
-    .btn-block { width: 100%; justify-content: center; padding: 1rem; font-size: 1.05rem; margin-top: var(--space-sm); }
-    .btn-small { padding: 0.45rem 0.7rem; font-size: 0.85rem; }
-    .btn-danger { background: transparent; color: #e07a7a; border: 1px solid #c85555; }
-
-    .toolbar { display: flex; gap: 0.5rem; margin-bottom: var(--space-md); }
-    .toolbar input {
-      flex: 1; min-width: 0; background: var(--color-surface); color: var(--color-text);
+    /* Selector de estado: dos pastillas */
+    .segmented { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+    .segmented input { position: absolute; opacity: 0; pointer-events: none; }
+    .segmented label {
+      display: block; text-align: center; padding: 0.7rem 0.5rem; cursor: pointer;
       border: 1px solid var(--color-border-strong); border-radius: var(--radius-sm);
-      padding: 0.7rem 0.9rem; font-family: var(--font-body); font-size: 1rem;
+      background: var(--color-surface); color: var(--color-text-muted); font-size: 0.98rem;
     }
-    .toolbar input:focus { outline: 2px solid var(--color-gold); outline-offset: 1px; }
-
-    .entry-list { list-style: none; padding: 0; margin: 0; }
-    .entry-item {
-      display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
-      padding: 0.85rem 0; border-bottom: 1px solid var(--color-border);
+    .segmented input:checked + label {
+      background: var(--color-gold); border-color: var(--color-gold); color: var(--color-text-on-gold); font-weight: 700;
     }
-    .entry-info { min-width: 0; display: flex; flex-direction: column; gap: 0.25rem; }
-    .entry-info strong { font-weight: 600; overflow-wrap: anywhere; }
-    .entry-meta { font-size: 0.82rem; color: var(--color-text-muted); }
-    .badge {
-      display: inline-block; width: fit-content; font-size: 0.72rem; padding: 0.1rem 0.5rem;
-      border-radius: 999px; border: 1px solid var(--color-gold); color: var(--color-gold);
+    .segmented input:focus-visible + label { outline: 2px solid var(--color-gold-bright); outline-offset: 2px; }
+
+    .photo-box {
+      display: flex; gap: 0.9rem; align-items: center;
+      background: var(--color-surface); border: 1px solid var(--color-border-strong);
+      border-radius: var(--radius-md); padding: 0.6rem;
     }
-    .entry-actions { display: flex; gap: 0.4rem; flex-shrink: 0; }
-
-    .editor-top {
-      display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
-      flex-wrap: wrap; margin-bottom: var(--space-md);
+    .photo-preview {
+      width: 96px; height: 96px; flex-shrink: 0; border-radius: var(--radius-sm);
+      object-fit: cover; border: 1px solid var(--color-border); background: var(--color-bg-alt);
+      display: flex; align-items: center; justify-content: center;
     }
-    .editor-top h2 { font-size: 1.1rem; margin: 0; }
+    .photo-preview img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .photo-preview--empty { color: var(--color-text-faint); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; }
+    .photo-meta { display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-start; min-width: 0; }
+    .photo-meta .hint { margin: 0; font-size: 0.8rem; color: var(--color-text-faint); overflow-wrap: anywhere; }
 
-    .view { display: none; }
-    .view.is-active { display: block; }
+    .date-note { font-size: 0.85rem; color: var(--color-text-faint); margin: 0 0 var(--space-md); }
 
+    .editor-actions { display: flex; flex-direction: column; gap: 0.6rem; margin-top: var(--space-sm); }
+    .editor-actions .btn-gold { font-size: 1.1rem; padding: 1rem; }
+
+    /* ---------- Estado / mensajes ---------- */
     .status-box {
-      margin-top: var(--space-md); padding: 1rem; border-radius: var(--radius-sm);
+      margin-top: var(--space-md); padding: 0.9rem 1rem; border-radius: var(--radius-sm);
       font-size: 0.95rem; line-height: 1.5; display: none;
     }
     .status-box.status-ok { display: block; background: rgba(201,162,75,0.12); border: 1px solid var(--color-gold); color: var(--color-text); }
     .status-box.status-error { display: block; background: rgba(200,60,60,0.12); border: 1px solid #c85555; color: var(--color-text); }
     .status-box.status-loading { display: block; background: var(--color-surface); border: 1px solid var(--color-border-strong); color: var(--color-text-muted); }
 
+    .view { display: none; }
+    .view.is-active { display: block; }
+
     .settings-note {
       background: var(--color-surface); border: 1px solid var(--color-border);
       border-radius: var(--radius-sm); padding: 1rem; font-size: 0.88rem;
       color: var(--color-text-muted); margin-bottom: var(--space-md); line-height: 1.6;
     }
-    .settings-note a { color: var(--color-gold); }
+    .settings-note em { color: var(--color-text); font-style: normal; }
   </style>
 </head>
 <body>
 
 <header class="app-header">
-  <h1>Panel de Asgard</h1>
-  <div class="header-actions">
-    <button class="icon-btn" id="new-btn" aria-label="Nueva entrada" title="Nueva entrada">+</button>
-    <button class="icon-btn" id="settings-btn" aria-label="Ajustes">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-        <circle cx="12" cy="12" r="3"/>
-        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/>
-      </svg>
-    </button>
+  <div>
+    <span class="brand-eyebrow">Asgard Nutrición</span>
+    <h1>Panel del blog</h1>
   </div>
+  <button class="icon-btn" id="settings-btn" aria-label="Ajustes" title="Ajustes">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+      <circle cx="12" cy="12" r="3"/>
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/>
+    </svg>
+  </button>
 </header>
 
 <main class="app-main">
 
   <!-- ===================== VISTA: LISTADO ===================== -->
   <section class="view is-active" id="view-list">
-    <div class="toolbar">
-      <input type="search" id="search" placeholder="Buscar por título…" aria-label="Buscar entradas">
-      <button type="button" class="btn btn--ghost" id="refresh-btn">Actualizar</button>
+    <div class="list-hero">
+      <div>
+        <h2>Entradas</h2>
+        <span class="count" id="entry-count"></span>
+      </div>
+      <button type="button" class="btn btn-gold" id="new-btn">+ Nueva entrada</button>
     </div>
+
+    <form class="search-form" id="search-form" role="search">
+      <input type="search" id="search" placeholder="Escribe parte del título…" aria-label="Buscar entradas por título">
+      <button type="submit" class="btn btn-line">Buscar</button>
+    </form>
 
     <div class="status-box" id="list-status"></div>
     <ul class="entry-list" id="entry-list"></ul>
-    <p class="entry-meta" id="list-empty" hidden>No hay entradas que coincidan.</p>
+    <div class="empty-state" id="list-empty" hidden>
+      <p id="list-empty-text">Todavía no hay entradas.</p>
+      <button type="button" class="btn btn-gold" id="empty-new-btn">+ Crear la primera</button>
+    </div>
   </section>
 
   <!-- ===================== VISTA: EDITOR ===================== -->
   <section class="view" id="view-editor">
     <div class="editor-top">
-      <button type="button" class="btn btn--ghost btn-small" id="back-btn">← Volver al listado</button>
+      <button type="button" class="back-link" id="back-btn">← Volver al listado</button>
       <h2 id="editor-heading">Nueva entrada</h2>
     </div>
 
     <form id="entry-form">
       <div class="field">
         <label for="f-title">Título</label>
-        <input type="text" id="f-title" required placeholder="Ej: Los mejores snacks para antes de entrenar">
+        <input type="text" id="f-title" name="title" required placeholder="Ej: Los mejores snacks para antes de entrenar">
       </div>
 
       <div class="field">
-        <label for="f-date">Fecha</label>
-        <input type="date" id="f-date" required>
-      </div>
-
-      <div class="field">
-        <label for="f-status">Estado</label>
-        <select id="f-status">
-          <option value="published">Publicada</option>
-          <option value="draft">Borrador (no aparece en la web)</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label for="f-image">Foto</label>
-        <div class="file-field">
-          <img id="f-image-preview" alt="">
-          <button type="button" class="btn btn--ghost" id="f-image-btn">Elegir foto</button>
-          <input type="file" id="f-image" accept="image/*" style="display:none;">
+        <span class="label" id="status-label">Estado</span>
+        <div class="segmented" role="radiogroup" aria-labelledby="status-label">
+          <input type="radio" name="status" id="status-draft" value="draft" checked>
+          <label for="status-draft">Borrador</label>
+          <input type="radio" name="status" id="status-published" value="published">
+          <label for="status-published">Publicada</label>
         </div>
-        <p class="hint" id="f-image-hint"></p>
+        <p class="hint" id="status-hint">Un borrador se guarda, pero no aparece en la web.</p>
+      </div>
+
+      <p class="date-note" id="date-note" hidden></p>
+
+      <div class="field">
+        <span class="label">Foto de portada</span>
+        <div class="photo-box">
+          <div class="photo-preview photo-preview--empty" id="photo-preview">Sin foto</div>
+          <div class="photo-meta">
+            <button type="button" class="btn btn-line" id="f-image-btn">Cambiar foto</button>
+            <input type="file" id="f-image" accept="image/*" style="display:none;">
+            <p class="hint" id="f-image-hint"></p>
+          </div>
+        </div>
       </div>
 
       <div class="field">
@@ -186,15 +309,15 @@
       </div>
 
       <div class="field">
-        <label for="f-body">Contenido de la entrada</label>
-        <textarea id="f-body" rows="14" required placeholder="Escribe aquí el texto de la entrada. Deja una línea en blanco entre párrafos."></textarea>
-        <p class="hint">Escribe normal, en párrafos separados por una línea en blanco.</p>
+        <label for="f-body">Contenido</label>
+        <textarea id="f-body" rows="14" required placeholder="Escribe aquí el texto. Deja una línea en blanco entre párrafos."></textarea>
       </div>
 
-      <button type="submit" class="btn btn--primary btn-block" id="save-btn">Guardar</button>
+      <div class="editor-actions">
+        <button type="submit" class="btn btn-gold btn-block" id="save-btn">Publicar</button>
+        <button type="button" class="btn btn-danger" id="delete-btn" hidden>Borrar entrada</button>
+      </div>
     </form>
-
-    <button type="button" class="btn btn-danger btn-block" id="delete-btn" hidden>Borrar entrada</button>
 
     <div class="status-box" id="editor-status"></div>
   </section>
@@ -214,7 +337,7 @@
         <label for="s-token">Token de acceso de GitHub</label>
         <input type="password" id="s-token" required placeholder="github_pat_...">
       </div>
-      <button type="submit" class="btn btn--primary btn-block">Guardar token</button>
+      <button type="submit" class="btn btn-gold btn-block">Guardar token</button>
     </form>
 
     <div class="status-box" id="settings-status"></div>
@@ -448,6 +571,65 @@
       });
     }
 
+    function buildThumb(entry) {
+      var thumb = document.createElement("button");
+      thumb.type = "button";
+      thumb.className = "entry-thumb";
+      thumb.setAttribute("aria-label", "Editar " + entry.title);
+      if (entry.image) {
+        var img = document.createElement("img");
+        img.src = "/" + entry.image;
+        img.alt = "";
+        img.loading = "lazy";
+        thumb.appendChild(img);
+      } else {
+        thumb.classList.add("entry-thumb--empty");
+        thumb.textContent = "Sin foto";
+      }
+      thumb.addEventListener("click", function () { openEditor(entry); });
+      return thumb;
+    }
+
+    function buildCard(entry) {
+      var item = document.createElement("li");
+      item.className = "entry-card" + (entry.draft ? " is-draft" : "");
+
+      var body = document.createElement("div");
+      body.className = "entry-body";
+
+      var title = document.createElement("button");
+      title.type = "button";
+      title.className = "entry-title";
+      title.textContent = entry.title;
+      title.addEventListener("click", function () { openEditor(entry); });
+      body.appendChild(title);
+
+      var row = document.createElement("div");
+      row.className = "entry-row";
+
+      var chip = document.createElement("span");
+      chip.className = entry.draft ? "chip chip--draft" : "chip";
+      chip.textContent = entry.draft ? "Borrador" : "Publicada";
+      row.appendChild(chip);
+
+      var date = document.createElement("span");
+      date.className = "entry-date";
+      date.textContent = entry.date;
+      row.appendChild(date);
+      body.appendChild(row);
+
+      var edit = document.createElement("button");
+      edit.type = "button";
+      edit.className = "entry-edit";
+      edit.textContent = "Editar";
+      edit.addEventListener("click", function () { openEditor(entry); });
+      body.appendChild(edit);
+
+      item.appendChild(buildThumb(entry));
+      item.appendChild(body);
+      return item;
+    }
+
     function renderList() {
       var query = normalizeText(el("search").value.trim());
       var list = el("entry-list");
@@ -456,65 +638,68 @@
       var shown = entries.filter(function (entry) {
         return normalizeText(entry.title).indexOf(query) !== -1;
       });
-      el("list-empty").hidden = shown.length > 0;
+
+      el("entry-count").textContent = entries.length
+        ? entries.length + (entries.length === 1 ? " entrada" : " entradas")
+        : "";
+
+      var empty = shown.length === 0;
+      el("list-empty").hidden = !empty;
+      el("list-empty-text").textContent = entries.length && query
+        ? "Ninguna entrada coincide con la búsqueda."
+        : "Todavía no hay entradas.";
+      el("empty-new-btn").hidden = entries.length > 0;
 
       shown.forEach(function (entry) {
-        var item = document.createElement("li");
-        item.className = "entry-item";
-
-        var info = document.createElement("div");
-        info.className = "entry-info";
-
-        var title = document.createElement("strong");
-        title.textContent = entry.title;
-        info.appendChild(title);
-
-        var meta = document.createElement("span");
-        meta.className = "entry-meta";
-        meta.textContent = entry.date;
-        info.appendChild(meta);
-
-        if (entry.draft) {
-          var badge = document.createElement("span");
-          badge.className = "badge";
-          badge.textContent = "Borrador";
-          info.appendChild(badge);
-        }
-
-        var actions = document.createElement("div");
-        actions.className = "entry-actions";
-
-        var editBtn = document.createElement("button");
-        editBtn.type = "button";
-        editBtn.className = "btn btn--ghost btn-small";
-        editBtn.textContent = "Editar";
-        editBtn.addEventListener("click", function () { openEditor(entry); });
-        actions.appendChild(editBtn);
-
-        item.appendChild(info);
-        item.appendChild(actions);
-        list.appendChild(item);
+        list.appendChild(buildCard(entry));
       });
     }
 
+    el("search-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      renderList();
+    });
     el("search").addEventListener("input", renderList);
-    el("refresh-btn").addEventListener("click", function () { loadList(); });
 
     // ---------- Editor ----------
     var entryForm = el("entry-form");
     var fImage = el("f-image");
     var saveBtn = el("save-btn");
 
-    function setImagePreview(path) {
-      var img = el("f-image-preview");
+    function selectedStatus() {
+      return entryForm.elements.status.value;
+    }
+
+    // El texto del botón principal depende del estado elegido
+    function updateSaveLabel() {
+      var draft = selectedStatus() === "draft";
+      saveBtn.textContent = draft ? "Guardar borrador" : "Publicar";
+      el("status-hint").textContent = draft
+        ? "Un borrador se guarda, pero no aparece en la web."
+        : "Al publicar, la entrada aparece en la web en un minuto aproximadamente.";
+    }
+
+    entryForm.elements.status.forEach(function (radio) {
+      radio.addEventListener("change", function () {
+        updateSaveLabel();
+        dirty = true;
+      });
+    });
+
+    function setPhoto(path) {
+      var box = el("photo-preview");
+      box.innerHTML = "";
       if (path) {
+        box.className = "photo-preview";
+        var img = document.createElement("img");
         img.src = "/" + path;
-        img.style.display = "block";
+        img.alt = "";
+        box.appendChild(img);
         el("f-image-hint").textContent = "Foto actual: " + path;
       } else {
-        img.removeAttribute("src");
-        img.style.display = "none";
-        el("f-image-hint").textContent = "Sin foto.";
+        box.className = "photo-preview photo-preview--empty";
+        box.textContent = "Sin foto";
+        el("f-image-hint").textContent = "";
       }
     }
 
@@ -526,17 +711,24 @@
 
       el("editor-heading").textContent = entry ? "Editar entrada" : "Nueva entrada";
       el("f-title").value = entry ? entry.title : "";
-      el("f-date").value = entry && entry.date ? entry.date : todayISO();
-      el("f-status").value = entry && entry.draft ? "draft" : "published";
+      entryForm.elements.status.value = entry && !entry.draft ? "published" : "draft";
       el("f-excerpt").value = entry ? entry.excerpt : "";
       el("f-body").value = entry ? entry.body : "";
+
+      var dateNote = el("date-note");
+      dateNote.hidden = !entry;
+      dateNote.textContent = entry ? "Fecha de la entrada: " + entry.date : "";
+
       el("delete-btn").hidden = !entry;
-      setImagePreview(entry ? entry.image : "");
+      setPhoto(entry ? entry.image : "");
+      updateSaveLabel();
       setBox("editor-status", null);
       showView("editor");
+      window.scrollTo(0, 0);
     }
 
     el("new-btn").addEventListener("click", function () { openEditor(null); });
+    el("empty-new-btn").addEventListener("click", function () { openEditor(null); });
 
     el("back-btn").addEventListener("click", function () {
       if (dirty && !confirm("Hay cambios sin guardar. ¿Salir igualmente?")) return;
@@ -551,14 +743,18 @@
       var file = fImage.files[0];
       selectedImage = file || null;
       if (!file) {
-        setImagePreview(current ? current.image : "");
+        setPhoto(current ? current.image : "");
         return;
       }
       var reader = new FileReader();
       reader.onload = function () {
-        var img = el("f-image-preview");
+        var box = el("photo-preview");
+        box.innerHTML = "";
+        box.className = "photo-preview";
+        var img = document.createElement("img");
         img.src = reader.result;
-        img.style.display = "block";
+        img.alt = "";
+        box.appendChild(img);
         el("f-image-hint").textContent = "La foto se subirá al guardar.";
       };
       reader.readAsDataURL(file);
@@ -580,10 +776,10 @@
 
       var title = el("f-title").value.trim();
       var body = el("f-body").value.trim();
-      var date = el("f-date").value;
-      if (!title || !body || !date) return;
+      if (!title || !body) return;
 
-      var draft = el("f-status").value === "draft";
+      var draft = selectedStatus() === "draft";
+      var date = current ? current.date : todayISO();
       var excerpt = el("f-excerpt").value.trim() || truncate(body.replace(/\s+/g, " "), 160);
       var slug = current ? current.slug : (slugify(title) || "entrada-" + Date.now());
 
@@ -630,8 +826,8 @@
       }).then(function () {
         dirty = false;
         var message = draft
-          ? "Guardada como borrador: no aparece en la web hasta que la publiques."
-          : "Guardada. Tardará aproximadamente un minuto en actualizarse en la web.";
+          ? "Borrador guardado. No se ve en la web hasta que lo publiques."
+          : "Publicada. Tardará aproximadamente un minuto en verse en la web.";
         showView("list");
         return loadList().then(function () {
           setBox("list-status", "ok", message);
