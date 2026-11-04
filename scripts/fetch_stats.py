@@ -26,6 +26,7 @@ from datetime import datetime, timedelta, timezone
 
 SITE_API = "https://asgardavilanutriciondeportiva.goatcounter.com/api/v0/"
 DAYS = 30
+ALL_TIME_START = "2020-01-01"  # antes de la web: incluye todas las visitas desde el principio
 LIMIT = 100  # máximo que admite la API por consulta
 OUTPUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "publisher", "stats.json")
 
@@ -48,7 +49,7 @@ def get_once(url, api_key):
 def get(path, params, api_key):
     # GoatCounter limita a 4 peticiones por segundo
     time.sleep(0.5)
-    url = SITE_API + path + "?" + urllib.parse.urlencode(params)
+    url = SITE_API + path + "?" + urllib.parse.urlencode(params, doseq=True)
     delay = BACKOFF_SECONDS
     for attempt in range(1, ATTEMPTS + 1):
         try:
@@ -73,6 +74,31 @@ def get(path, params, api_key):
         delay *= 2
 
 
+def all_time_hits(api_key, end):
+    """Visitas por página desde el inicio. La API pagina con exclude_paths."""
+    hits = []
+    seen = []
+    while True:
+        params = {"start": ALL_TIME_START, "end": end, "limit": LIMIT}
+        if seen:
+            params["exclude_paths"] = seen
+        page = get("stats/hits", params, api_key)
+        batch = page.get("hits", [])
+        hits.extend(batch)
+        seen.extend(hit.get("path") for hit in batch if hit.get("path"))
+        if not page.get("more") or not batch:
+            return hits
+
+
+def entry_visits(hits):
+    """Visitas totales por entrada: {slug: visitas}, a partir de las rutas /blog/<slug>."""
+    visits = {}
+    for page in group_pages(hits):
+        if page["group"] == "post":
+            visits[page["path"][len("/blog/"):]] = page["count"]
+    return visits
+
+
 def breakdown(stats, api_key, start, end):
     """Pide un desglose (locations, browsers, systems) y devuelve nombre y visitas."""
     data = get("stats/" + stats, {"start": start, "end": end, "limit": LIMIT}, api_key)
@@ -84,6 +110,7 @@ def normalize_path(raw):
     """Quita el marcador {{SITE_URL}} que se colaba en algunas rutas y unifica index.html con /."""
     path = urllib.parse.unquote(raw or "/")
     path = re.sub(r"^/?\{\{SITE_URL\}\}", "", path)
+    path = path.rstrip("/") if len(path) > 1 else path
     if path in ("", "/", "/index.html"):
         return "/"
     return path
@@ -137,6 +164,7 @@ def main():
         "total": total.get("total", 0),
         "daily": [{"day": day["day"], "count": day.get("daily", 0)} for day in total.get("stats", [])],
         "pages": group_pages(hits.get("hits", [])),
+        "entries": entry_visits(all_time_hits(api_key, end)),
         "locations": breakdown("locations", api_key, start, end),
         "browsers": breakdown("browsers", api_key, start, end),
         "systems": breakdown("systems", api_key, start, end),

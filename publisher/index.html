@@ -126,6 +126,8 @@
     .entry-title:hover { color: var(--color-gold-bright); text-decoration: underline; }
     .entry-row { display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem 0.75rem; }
     .entry-date { font-size: 0.82rem; color: var(--color-text-faint); }
+    .entry-visits { font-size: 0.82rem; color: var(--color-text-muted); }
+    .entry-visits::before { content: "· "; color: var(--color-text-faint); }
     .chip {
       display: inline-block; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase;
       padding: 0.2rem 0.55rem; border-radius: 999px; border: 1px solid var(--color-border-strong);
@@ -684,8 +686,25 @@
         });
         setBox("list-status", null);
         renderList();
+        loadVisits();
       }).catch(function (err) {
         setBox("list-status", "error", errorMessage(err, "No se han podido cargar las entradas."));
+      });
+    }
+
+    // Visitas por entrada, sacadas de publisher/stats.json. Si el fichero no existe aún, no se muestran.
+    var visitsBySlug = {};
+    var visitsLoaded = false;
+
+    function loadVisits() {
+      return api("GET", "publisher/stats.json?ref=" + GITHUB_BRANCH).then(function (file) {
+        var data = JSON.parse(base64ToUtf8(file.content));
+        visitsBySlug = data.entries || {};
+        visitsLoaded = true;
+        renderList();
+      }).catch(function () {
+        visitsLoaded = false;
+        renderList();
       });
     }
 
@@ -740,6 +759,15 @@
       date.className = "entry-date";
       date.textContent = entry.date;
       row.appendChild(date);
+
+      // Visitas totales de la entrada (desde stats.json); solo si ya se han cargado
+      if (visitsLoaded) {
+        var visits = document.createElement("span");
+        var count = visitsBySlug[entry.slug] || 0;
+        visits.className = "entry-visits";
+        visits.textContent = formatNumber(count) + (count === 1 ? " visita" : " visitas");
+        row.appendChild(visits);
+      }
       body.appendChild(row);
 
       var edit = document.createElement("button");
