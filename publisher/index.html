@@ -410,8 +410,11 @@
       <h3 class="stats-title">Visitas por día</h3>
       <div class="chart" id="stats-chart"></div>
 
-      <h3 class="stats-title">Páginas más vistas</h3>
-      <ul class="bars" id="stats-pages"></ul>
+      <h3 class="stats-title">Entradas del blog</h3>
+      <ul class="bars" id="stats-posts"></ul>
+
+      <h3 class="stats-title">Portada y listado del blog</h3>
+      <ul class="bars" id="stats-site"></ul>
 
       <h3 class="stats-title">Países</h3>
       <ul class="bars" id="stats-locations"></ul>
@@ -1168,9 +1171,21 @@
       el("stats-period").textContent = "Del " + data.start + " al " + data.end;
 
       renderChart(data.daily || []);
-      renderBars("stats-pages", data.pages.map(function (p) {
-        return { label: p.title, count: p.count };
-      }), "Todavía no hay visitas registradas.");
+      // Cada página lleva su grupo (home, blog, post, other); si falta, se deduce de la ruta
+      function groupOf(page) {
+        if (page.group) return page.group;
+        if (page.path === "/") return "home";
+        if (page.path === "/blog.html") return "blog";
+        return page.path.indexOf("/blog/") === 0 ? "post" : "other";
+      }
+      function toBars(group) {
+        return data.pages.filter(function (p) { return groupOf(p) === group; }).map(function (p) {
+          return { label: p.title || p.path, count: p.count };
+        });
+      }
+      renderBars("stats-posts", toBars("post"), "Todavía no hay visitas a entradas.");
+      renderBars("stats-site", toBars("home").concat(toBars("blog"), toBars("other")),
+        "Todavía no hay visitas a la portada ni al listado.");
       renderBars("stats-locations", data.locations.map(function (l) {
         return { label: l.name, count: l.count };
       }), "Todavía no hay datos de países.");
