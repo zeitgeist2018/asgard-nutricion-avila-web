@@ -242,7 +242,7 @@ def render_card(post):
     if post["image"]:
         media = (
             f'<a class="post-card__media" href="{href}" tabindex="-1">'
-            f'<img src="/{post["image"]}" alt="" loading="lazy"></a>'
+            f'<img src="/{post["image"]}" alt="{title}" loading="lazy"></a>'
         )
     else:
         media = f'<div class="post-card__media post-card__media--fallback">{SHIELD_SVG}</div>'
