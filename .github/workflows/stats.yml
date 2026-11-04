@@ -1,0 +1,38 @@
+# Actualiza cada día las estadísticas de GoatCounter que muestra el panel.
+# Guarda publisher/stats.json en el repo. Ese fichero no dispara el
+# despliegue de la web (los commits hechos con GITHUB_TOKEN no lanzan
+# otros workflows), y el panel lo lee directamente desde el repo.
+name: Actualizar estadísticas
+
+on:
+  schedule:
+    - cron: "0 5 * * *"   # cada día a las 05:00 UTC
+  workflow_dispatch:       # también se puede lanzar a mano desde "Actions"
+
+permissions:
+  contents: write
+
+jobs:
+  stats:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código del repositorio
+        uses: actions/checkout@v4
+
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Descargar las estadísticas de GoatCounter
+        env:
+          GOATCOUNTER_API_KEY: ${{ secrets.GOATCOUNTER_API_KEY }}
+        run: python scripts/fetch_stats.py
+
+      - name: Guardar el resultado en el repo si ha cambiado
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add publisher/stats.json
+          git diff --cached --quiet || git commit -m "Actualiza estadísticas"
+          git push

@@ -223,6 +223,38 @@
       color: var(--color-text-muted); margin-bottom: var(--space-md); line-height: 1.6;
     }
     .settings-note em { color: var(--color-text); font-style: normal; }
+    /* ---------- Pestañas ---------- */
+    .tabs { display: flex; gap: 0.25rem; margin-bottom: var(--space-md); border-bottom: 1px solid var(--color-border); }
+    .tab {
+      background: none; border: 0; border-bottom: 2px solid transparent; color: var(--color-text-muted);
+      font-family: var(--font-body); font-size: 1rem; padding: 0.6rem 0.9rem; cursor: pointer;
+    }
+    .tab:hover { color: var(--color-text); }
+    .tab.is-active { color: var(--color-gold-bright); border-bottom-color: var(--color-gold); }
+
+    /* ---------- Estadísticas ---------- */
+    .kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: var(--space-md); }
+    .kpi {
+      background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md);
+      padding: 0.9rem; display: flex; flex-direction: column; gap: 0.3rem;
+    }
+    .kpi-label { font-size: 0.78rem; color: var(--color-text-faint); letter-spacing: 0.04em; }
+    .kpi strong { font-size: 1.6rem; color: var(--color-gold-bright); line-height: 1.1; }
+    .kpi .kpi-small { font-size: 0.95rem; color: var(--color-text); }
+    .stats-title { font-size: 1.05rem; margin: var(--space-md) 0 0.6rem; }
+    .chart {
+      display: flex; align-items: flex-end; gap: 3px; height: 130px;
+      background: var(--color-surface); border: 1px solid var(--color-border);
+      border-radius: var(--radius-md); padding: 0.7rem;
+    }
+    .chart-bar { flex: 1; min-height: 2px; background: var(--color-gold); border-radius: 2px 2px 0 0; opacity: 0.85; }
+    .bars { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.6rem; }
+    .bars li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.3rem 0.6rem; align-items: center; font-size: 0.93rem; }
+    .bars .bar-label { overflow-wrap: anywhere; }
+    .bars .bar-count { color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+    .bar-track { grid-column: 1 / -1; height: 6px; background: var(--color-bg-alt); border-radius: 999px; overflow: hidden; }
+    .bar-fill { height: 100%; background: var(--color-gold); border-radius: 999px; }
+    .bars .bars-empty { display: block; color: var(--color-text-faint); font-size: 0.9rem; }
   </style>
 </head>
 <body>
@@ -241,6 +273,11 @@
 </header>
 
 <main class="app-main">
+
+  <nav class="tabs" id="tabs" aria-label="Secciones">
+    <button type="button" class="tab is-active" id="tab-list">Entradas</button>
+    <button type="button" class="tab" id="tab-stats">Estadísticas</button>
+  </nav>
 
   <!-- ===================== VISTA: LISTADO ===================== -->
   <section class="view is-active" id="view-list">
@@ -322,6 +359,43 @@
     <div class="status-box" id="editor-status"></div>
   </section>
 
+  <!-- ===================== VISTA: ESTADÍSTICAS ===================== -->
+  <section class="view" id="view-stats">
+    <div class="list-hero">
+      <div>
+        <h2>Estadísticas</h2>
+        <span class="count" id="stats-period">Últimos 30 días</span>
+      </div>
+      <button type="button" class="btn btn-line" id="stats-refresh-btn">Actualizar datos</button>
+    </div>
+
+    <div class="status-box" id="stats-status"></div>
+
+    <div id="stats-content" hidden>
+      <div class="kpis">
+        <div class="kpi"><span class="kpi-label">Páginas vistas</span><strong id="kpi-total">0</strong></div>
+        <div class="kpi"><span class="kpi-label">Páginas con visitas</span><strong id="kpi-pages">0</strong></div>
+        <div class="kpi"><span class="kpi-label">Países</span><strong id="kpi-countries">0</strong></div>
+        <div class="kpi"><span class="kpi-label">Última actualización</span><strong class="kpi-small" id="kpi-updated">—</strong></div>
+      </div>
+
+      <h3 class="stats-title">Visitas por día</h3>
+      <div class="chart" id="stats-chart"></div>
+
+      <h3 class="stats-title">Páginas más vistas</h3>
+      <ul class="bars" id="stats-pages"></ul>
+
+      <h3 class="stats-title">Países</h3>
+      <ul class="bars" id="stats-locations"></ul>
+
+      <h3 class="stats-title">Navegadores</h3>
+      <ul class="bars" id="stats-browsers"></ul>
+
+      <h3 class="stats-title">Sistemas operativos</h3>
+      <ul class="bars" id="stats-systems"></ul>
+    </div>
+  </section>
+
   <!-- ===================== VISTA: AJUSTES ===================== -->
   <section class="view" id="view-settings">
     <div class="settings-note">
@@ -361,7 +435,12 @@
 
     function el(id) { return document.getElementById(id); }
 
-    var views = { list: el("view-list"), editor: el("view-editor"), settings: el("view-settings") };
+    var views = {
+      list: el("view-list"),
+      stats: el("view-stats"),
+      editor: el("view-editor"),
+      settings: el("view-settings")
+    };
 
     var entries = [];        // entradas cargadas desde GitHub
     var current = null;      // entrada abierta en el editor (null = nueva)
@@ -372,6 +451,11 @@
       Object.keys(views).forEach(function (key) {
         views[key].classList.toggle("is-active", key === name);
       });
+      // Las pestañas solo se ven en el listado y en las estadísticas
+      var inTabs = name === "list" || name === "stats";
+      el("tabs").hidden = !inTabs;
+      el("tab-list").classList.toggle("is-active", name === "list");
+      el("tab-stats").classList.toggle("is-active", name === "stats");
     }
 
     function setBox(id, kind, text) {
@@ -862,6 +946,105 @@
         setSaving(false);
       });
     });
+
+    // ---------- Estadísticas (GoatCounter, generadas cada día) ----------
+    el("tab-list").addEventListener("click", function () { showView("list"); });
+    el("tab-stats").addEventListener("click", function () { showView("stats"); loadStats(); });
+    el("stats-refresh-btn").addEventListener("click", function () { loadStats(); });
+
+    function formatNumber(n) {
+      return Number(n || 0).toLocaleString("es-ES");
+    }
+
+    // La API guarda el nombre del país, navegador o sistema tal cual lo envía el visitante
+    function renderBars(listId, items, emptyText) {
+      var list = el(listId);
+      list.innerHTML = "";
+      if (!items.length) {
+        var empty = document.createElement("li");
+        empty.className = "bars-empty";
+        empty.textContent = emptyText;
+        list.appendChild(empty);
+        return;
+      }
+      var sorted = items.slice().sort(function (a, b) { return b.count - a.count; });
+      var max = sorted[0].count || 1;
+      sorted.forEach(function (item) {
+        var li = document.createElement("li");
+        var label = document.createElement("span");
+        label.className = "bar-label";
+        label.textContent = item.label;
+        var count = document.createElement("span");
+        count.className = "bar-count";
+        count.textContent = formatNumber(item.count);
+        var track = document.createElement("div");
+        track.className = "bar-track";
+        var fill = document.createElement("div");
+        fill.className = "bar-fill";
+        fill.style.width = Math.max(2, Math.round((item.count / max) * 100)) + "%";
+        track.appendChild(fill);
+        li.appendChild(label);
+        li.appendChild(count);
+        li.appendChild(track);
+        list.appendChild(li);
+      });
+    }
+
+    function renderChart(daily) {
+      var chart = el("stats-chart");
+      chart.innerHTML = "";
+      var max = Math.max.apply(null, daily.map(function (d) { return d.count; }).concat([1]));
+      daily.forEach(function (d) {
+        var bar = document.createElement("div");
+        bar.className = "chart-bar";
+        bar.style.height = Math.max(2, Math.round((d.count / max) * 100)) + "%";
+        bar.title = d.day + ": " + formatNumber(d.count) + " páginas vistas";
+        chart.appendChild(bar);
+      });
+    }
+
+    function renderStats(data) {
+      el("stats-content").hidden = false;
+      el("kpi-total").textContent = formatNumber(data.total);
+      el("kpi-pages").textContent = formatNumber(data.pages.length);
+      el("kpi-countries").textContent = formatNumber(data.locations.length);
+      el("kpi-updated").textContent = data.updated.replace("T", " ").slice(0, 16);
+      el("stats-period").textContent = "Del " + data.start + " al " + data.end;
+
+      renderChart(data.daily || []);
+      renderBars("stats-pages", data.pages.map(function (p) {
+        return { label: p.title, count: p.count };
+      }), "Todavía no hay visitas registradas.");
+      renderBars("stats-locations", data.locations.map(function (l) {
+        return { label: l.name, count: l.count };
+      }), "Todavía no hay datos de países.");
+      renderBars("stats-browsers", data.browsers.map(function (b) {
+        return { label: b.name, count: b.count };
+      }), "Todavía no hay datos de navegadores.");
+      renderBars("stats-systems", data.systems.map(function (s) {
+        return { label: s.name, count: s.count };
+      }), "Todavía no hay datos de sistemas.");
+    }
+
+    // Lee publisher/stats.json del repo (lo genera GitHub Actions cada día)
+    function loadStats() {
+      el("stats-content").hidden = true;
+      if (!loadToken()) {
+        setBox("stats-status", "error", "Configura primero el token en Ajustes.");
+        return Promise.resolve();
+      }
+      setBox("stats-status", "loading", "Cargando estadísticas…");
+      return api("GET", "publisher/stats.json?ref=" + GITHUB_BRANCH).then(function (file) {
+        setBox("stats-status", null);
+        renderStats(JSON.parse(base64ToUtf8(file.content)));
+      }).catch(function (err) {
+        if (err.status === 404) {
+          setBox("stats-status", "loading", "Todavía no hay estadísticas. Se generan cada día a partir de GoatCounter.");
+        } else {
+          setBox("stats-status", "error", errorMessage(err, "No se han podido cargar las estadísticas."));
+        }
+      });
+    }
 
     // ---------- Arranque ----------
     if (!loadToken()) {
