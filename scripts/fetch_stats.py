@@ -16,6 +16,8 @@ sistema. No se guarda nada que identifique a una persona.
 
 import json
 import os
+import sys
+import urllib.error
 import urllib.parse
 import time
 import urllib.request
@@ -26,14 +28,48 @@ DAYS = 30
 LIMIT = 100  # máximo que admite la API por consulta
 OUTPUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "publisher", "stats.json")
 
+REQUEST_TIMEOUT = 20      # segundos máximos por petición; sin esto una conexión puede colgarse
+ATTEMPTS = 4              # intentos por petición (el primero incluido)
+BACKOFF_SECONDS = 5       # espera inicial entre intentos; se duplica en cada reintento
+RETRY_AFTER_CAP = 60      # tope a la espera que pida la API con Retry-After
+
+
+def log(message):
+    print(message, file=sys.stderr, flush=True)
+
+
+def get_once(url, api_key):
+    request = urllib.request.Request(url, headers={"Authorization": "Bearer " + api_key})
+    with urllib.request.urlopen(request, timeout=REQUEST_TIMEOUT) as response:
+        return json.loads(response.read().decode("utf-8"))
+
 
 def get(path, params, api_key):
     # GoatCounter limita a 4 peticiones por segundo
     time.sleep(0.5)
     url = SITE_API + path + "?" + urllib.parse.urlencode(params)
-    request = urllib.request.Request(url, headers={"Authorization": "Bearer " + api_key})
-    with urllib.request.urlopen(request, timeout=60) as response:
-        return json.loads(response.read().decode("utf-8"))
+    delay = BACKOFF_SECONDS
+    for attempt in range(1, ATTEMPTS + 1):
+        try:
+            return get_once(url, api_key)
+        except urllib.error.HTTPError as err:
+            # Errores de la propia petición (clave, ruta…) no se arreglan reintentando
+            if err.code not in (408, 429) and err.code < 500:
+                raise
+            wait = delay
+            retry_after = err.headers.get("Retry-After", "") if err.headers else ""
+            if retry_after.isdigit():
+                wait = min(int(retry_after), RETRY_AFTER_CAP)
+            reason = "HTTP %d" % err.code
+        except (urllib.error.URLError, TimeoutError, OSError) as err:
+            # Tiempo agotado o conexión caída: se reintenta
+            wait = delay
+            reason = "timeout o red (%s)" % err
+        if attempt == ATTEMPTS:
+            raise RuntimeError("GoatCounter no responde tras %d intentos: %s" % (ATTEMPTS, path))
+        log("Intento %d/%d de %s falló (%s). Reintento en %ds." % (attempt, ATTEMPTS, path, reason, wait))
+        time.sleep(wait)
+        delay *= 2
 
 
 def breakdown(stats, api_key, start, end):

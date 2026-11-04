@@ -15,6 +15,7 @@ permissions:
 jobs:
   stats:
     runs-on: ubuntu-latest
+    timeout-minutes: 10   # si algo se queda colgado, se corta y se puede relanzar a mano
     steps:
       - name: Descargar el código del repositorio
         uses: actions/checkout@v4
