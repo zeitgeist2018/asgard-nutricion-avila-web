@@ -86,7 +86,9 @@ def main():
 
     now = datetime.now(timezone.utc)
     start = (now - timedelta(days=DAYS)).strftime("%Y-%m-%d")
-    end = now.strftime("%Y-%m-%d")
+    # GoatCounter toma la fecha final como 00:00 de ese día, así que hay que
+    # pedir hasta mañana para incluir las visitas de hoy
+    end = (now + timedelta(days=1)).strftime("%Y-%m-%d")
 
     total = get("stats/total", {"start": start, "end": end}, api_key)
     hits = get("stats/hits", {"start": start, "end": end, "limit": LIMIT}, api_key)
