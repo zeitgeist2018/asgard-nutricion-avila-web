@@ -16,6 +16,7 @@ sistema. No se guarda nada que identifique a una persona.
 
 import json
 import os
+import re
 import sys
 import urllib.error
 import urllib.parse
@@ -79,6 +80,41 @@ def breakdown(stats, api_key, start, end):
             for item in data.get("stats", [])]
 
 
+def normalize_path(raw):
+    """Quita el marcador {{SITE_URL}} que se colaba en algunas rutas y unifica index.html con /."""
+    path = urllib.parse.unquote(raw or "/")
+    path = re.sub(r"^/?\{\{SITE_URL\}\}", "", path)
+    if path in ("", "/", "/index.html"):
+        return "/"
+    return path
+
+
+def group_of(path):
+    """Agrupa las páginas para el panel: portada, listado del blog, entradas u otras."""
+    if path == "/":
+        return "home"
+    if path == "/blog.html":
+        return "blog"
+    if path.startswith("/blog/"):
+        return "post"
+    return "other"
+
+
+def group_pages(hits):
+    """Suma las visitas de rutas que son la misma página (p. ej. con y sin {{SITE_URL}})."""
+    merged = {}
+    for hit in hits:
+        if hit.get("event"):
+            continue
+        path = normalize_path(hit.get("path"))
+        page = merged.setdefault(path, {"path": path, "title": "", "group": group_of(path), "count": 0})
+        page["count"] += hit.get("count", 0)
+        if not page["title"]:
+            # Los títulos llevan " — Nombre del sitio"; nos quedamos con la parte principal
+            page["title"] = (hit.get("title") or "").split(" — ")[0] or path
+    return sorted(merged.values(), key=lambda page: page["count"], reverse=True)
+
+
 def main():
     api_key = os.environ.get("GOATCOUNTER_API_KEY", "").strip()
     if not api_key:
@@ -100,11 +136,7 @@ def main():
         "days": DAYS,
         "total": total.get("total", 0),
         "daily": [{"day": day["day"], "count": day.get("daily", 0)} for day in total.get("stats", [])],
-        "pages": [
-            {"title": hit.get("title") or hit.get("path"), "path": hit.get("path"), "count": hit.get("count", 0)}
-            for hit in hits.get("hits", [])
-            if not hit.get("event")
-        ],
+        "pages": group_pages(hits.get("hits", [])),
         "locations": breakdown("locations", api_key, start, end),
         "browsers": breakdown("browsers", api_key, start, end),
         "systems": breakdown("systems", api_key, start, end),
