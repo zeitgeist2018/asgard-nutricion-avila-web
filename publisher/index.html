@@ -135,6 +135,28 @@
       background: var(--color-gold); border-color: var(--color-gold); color: var(--color-text-on-gold);
       font-weight: 700;
     }
+    .chip--pending { color: var(--color-gold-bright); border-color: var(--color-gold); animation: pulse 1.4s ease-in-out infinite; }
+    @keyframes pulse { 50% { opacity: 0.45; } }
+
+    /* ---------- Aviso de publicación ---------- */
+    .publish-banner {
+      display: flex; align-items: center; gap: 0.7rem; margin-bottom: var(--space-md);
+      padding: 0.8rem 0.9rem; border-radius: var(--radius-md); font-size: 0.95rem; line-height: 1.4;
+      border: 1px solid var(--color-gold); background: rgba(201, 162, 75, 0.12); color: var(--color-text);
+    }
+    .publish-banner.is-ok { border-color: var(--color-gold-bright); background: rgba(227, 194, 115, 0.18); }
+    .publish-banner.is-error { border-color: #c85555; background: rgba(200, 60, 60, 0.12); }
+    .publish-banner-text { flex: 1; min-width: 0; }
+    .publish-banner-close {
+      background: none; border: 0; color: var(--color-text-muted); font-size: 1.4rem; line-height: 1;
+      cursor: pointer; padding: 0 0.2rem;
+    }
+    .spinner {
+      width: 16px; height: 16px; flex-shrink: 0; border-radius: 50%;
+      border: 2px solid var(--color-border-strong); border-top-color: var(--color-gold);
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
     .entry-edit {
       background: none; border: 1px solid var(--color-border-strong); color: var(--color-text-muted);
       border-radius: var(--radius-sm); padding: 0.3rem 0.7rem; font-family: var(--font-body);
@@ -281,6 +303,12 @@
 
   <!-- ===================== VISTA: LISTADO ===================== -->
   <section class="view is-active" id="view-list">
+    <div class="publish-banner" id="publish-banner" role="status" aria-live="polite" hidden>
+      <span class="spinner" id="publish-banner-spinner" aria-hidden="true"></span>
+      <span class="publish-banner-text" id="publish-banner-text"></span>
+      <button type="button" class="publish-banner-close" id="publish-banner-close" aria-label="Cerrar aviso">×</button>
+    </div>
+
     <div class="list-hero">
       <div>
         <h2>Entradas</h2>
@@ -432,6 +460,9 @@
     var GITHUB_BRANCH = "master";
     var API_CONTENTS = "https://api.github.com/repos/" + GITHUB_OWNER + "/" + GITHUB_REPO + "/contents/";
     var DEFAULT_AUTHOR = "Israel Lobo Martín";
+    var DEPLOY_WORKFLOW = "Construir y publicar el sitio";  // nombre del workflow que publica la web
+    var POLL_MS = 15000;
+    var POLL_LIMIT_MS = 20 * 60 * 1000;
 
     function el(id) { return document.getElementById(id); }
 
@@ -692,8 +723,14 @@
       row.className = "entry-row";
 
       var chip = document.createElement("span");
-      chip.className = entry.draft ? "chip chip--draft" : "chip";
-      chip.textContent = entry.draft ? "Borrador" : "Publicada";
+      var pendingLabel = pendingSlugs[entry.slug];
+      if (pendingLabel) {
+        chip.className = "chip chip--pending";
+        chip.textContent = pendingLabel + "…";
+      } else {
+        chip.className = entry.draft ? "chip chip--draft" : "chip";
+        chip.textContent = entry.draft ? "Borrador" : "Publicada";
+      }
       row.appendChild(chip);
 
       var date = document.createElement("span");
@@ -907,15 +944,11 @@
         };
         if (current) payload.sha = current.sha;
         return api("PUT", "blog/" + slug + ".md", payload);
-      }).then(function () {
+      }).then(function (res) {
         dirty = false;
-        var message = draft
-          ? "Borrador guardado. No se ve en la web hasta que lo publiques."
-          : "Publicada. Tardará aproximadamente un minuto en verse en la web.";
         showView("list");
-        return loadList().then(function () {
-          setBox("list-status", "ok", message);
-        });
+        trackChange({ slug: slug, sha: res.commit.sha, title: title, label: "Publicando" });
+        return loadList();
       }).catch(function (err) {
         setBox("editor-status", "error", errorMessage(err, "No se ha podido guardar."));
       }).finally(function () {
@@ -930,22 +963,145 @@
       setSaving(true);
       setBox("editor-status", "loading", "Borrando…");
 
-      api("DELETE", "blog/" + current.slug + ".md", {
-        message: "Borra entrada: " + current.title,
-        sha: current.sha,
+      var target = current;
+      api("DELETE", "blog/" + target.slug + ".md", {
+        message: "Borra entrada: " + target.title,
+        sha: target.sha,
         branch: GITHUB_BRANCH
-      }).then(function () {
+      }).then(function (res) {
         dirty = false;
         showView("list");
-        return loadList().then(function () {
-          setBox("list-status", "ok", "Entrada borrada. La web se actualizará en un minuto aproximadamente.");
-        });
+        trackChange({ slug: target.slug, sha: res.commit.sha, title: target.title, label: "Borrando" });
+        return loadList();
       }).catch(function (err) {
         setBox("editor-status", "error", errorMessage(err, "No se ha podido borrar."));
       }).finally(function () {
         setSaving(false);
       });
     });
+
+    // ---------- Aviso de publicación: espera a que se despliegue la web ----------
+    var pending = [];        // cambios enviados a GitHub y aún no desplegados
+    var pendingSlugs = {};   // slug -> texto del chip mientras está pendiente
+    var pollTimer = null;
+    var hideTimer = null;
+
+    el("publish-banner-close").addEventListener("click", hideBanner);
+
+    function hideBanner() {
+      clearTimeout(hideTimer);
+      el("publish-banner").hidden = true;
+    }
+
+    function showBanner(kind, text, busy) {
+      clearTimeout(hideTimer);
+      var banner = el("publish-banner");
+      banner.className = "publish-banner is-" + kind;
+      el("publish-banner-spinner").hidden = !busy;
+      el("publish-banner-text").textContent = text;
+      banner.hidden = false;
+    }
+
+    function pendingText() {
+      if (pending.length === 1) return pending[0].label + "… «" + pending[0].title + "»";
+      return "Publicando " + pending.length + " cambios…";
+    }
+
+    // Lectura de la API de Actions (necesita el permiso "Actions: lectura" en el token)
+    function apiRepo(path) {
+      return fetch("https://api.github.com/repos/" + GITHUB_OWNER + "/" + GITHUB_REPO + "/" + path, {
+        headers: {
+          Authorization: "Bearer " + loadToken(),
+          Accept: "application/vnd.github+json"
+        }
+      }).then(function (res) {
+        return res.json().catch(function () { return {}; }).then(function (data) {
+          if (!res.ok) {
+            var err = new Error(data.message || ("Error " + res.status));
+            err.status = res.status;
+            throw err;
+          }
+          return data;
+        });
+      });
+    }
+
+    // Se llama tras cada guardado o borrado. commit.sha identifica el despliegue de ese cambio.
+    function trackChange(change) {
+      change.startedAt = Date.now();
+      pending.push(change);
+      pendingSlugs[change.slug] = change.label;
+      showBanner("busy", pendingText(), true);
+      if (!pollTimer) {
+        pollTimer = setInterval(checkPending, POLL_MS);
+      }
+    }
+
+    function stopPolling() {
+      clearInterval(pollTimer);
+      pollTimer = null;
+    }
+
+    function stopTracking() {
+      stopPolling();
+      pending = [];
+      pendingSlugs = {};
+    }
+
+    function checkPending() {
+      if (!pending.length) {
+        stopPolling();
+        return;
+      }
+      apiRepo("actions/runs?branch=" + GITHUB_BRANCH + "&per_page=30").then(function (data) {
+        var runs = data.workflow_runs || [];
+        var now = Date.now();
+        var finished = [];
+        var failed = [];
+        var waiting = [];
+
+        pending.forEach(function (change) {
+          var run = runs.filter(function (r) {
+            return r.head_sha === change.sha && r.name === DEPLOY_WORKFLOW;
+          })[0];
+          if (run && run.status === "completed") {
+            (run.conclusion === "success" ? finished : failed).push(change);
+          } else if (now - change.startedAt > POLL_LIMIT_MS) {
+            failed.push(change);
+          } else {
+            waiting.push(change);
+          }
+        });
+
+        pending = waiting;
+        finished.concat(failed).forEach(function (change) {
+          delete pendingSlugs[change.slug];
+        });
+
+        if (finished.length) loadList();   // el listado se actualiza solo con la entrada ya publicada
+
+        if (pending.length) {
+          showBanner("busy", pendingText(), true);
+          return;
+        }
+        stopPolling();
+
+        if (failed.length) {
+          showBanner("error", "No se ha podido publicar «" + failed[0].title + "». Revisa la pestaña Actions de GitHub.", false);
+        } else {
+          var last = finished[finished.length - 1];
+          showBanner("ok", "«" + last.title + "» ya está publicada en la web.", false);
+          hideTimer = setTimeout(hideBanner, 8000);
+        }
+      }).catch(function (err) {
+        if (err.status === 401 || err.status === 403 || err.status === 404) {
+          stopTracking();
+          showBanner("error", "No se puede seguir la publicación: el token necesita el permiso «Actions: lectura».", false);
+          loadList();
+        }
+        // Otros errores (red, etc.): se vuelve a intentar en el siguiente ciclo
+      });
+    }
 
     // ---------- Estadísticas (GoatCounter, generadas cada día) ----------
     el("tab-list").addEventListener("click", function () { showView("list"); });
