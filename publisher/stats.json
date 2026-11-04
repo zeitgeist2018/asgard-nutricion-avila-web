@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-04T21:23:13+00:00",
+  "updated": "2026-11-04T21:29:05+00:00",
   "start": "2026-10-05",
   "end": "2026-11-05",
   "days": 30,
@@ -136,23 +136,21 @@
   ],
   "pages": [
     {
-      "title": "Ashwagandha, cortisol, y la vida de locos que llevamos. — Blog de Asgard Nutrición Deportiva",
-      "path": "/blog/ashwagandha-cortisol-y-la-vida-de-locos-que-llevamos",
-      "count": 1
-    },
-    {
-      "title": "Blog — Asgard Nutrición Deportiva",
       "path": "/blog.html",
+      "title": "Blog",
+      "group": "blog",
+      "count": 2
+    },
+    {
+      "path": "/blog/ashwagandha-cortisol-y-la-vida-de-locos-que-llevamos",
+      "title": "Ashwagandha, cortisol, y la vida de locos que llevamos.",
+      "group": "post",
       "count": 1
     },
     {
-      "title": "Blog — Asgard Nutrición Deportiva",
-      "path": "/%7B%7BSITE_URL%7D%7D/blog.html",
-      "count": 1
-    },
-    {
-      "title": "Asgard Nutrición Deportiva — Nutrición deportiva y asesoramiento",
-      "path": "/%7B%7BSITE_URL%7D%7D",
+      "path": "/",
+      "title": "Asgard Nutrición Deportiva",
+      "group": "home",
       "count": 1
     }
   ],
