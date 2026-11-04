@@ -135,6 +135,28 @@
       background: var(--color-gold); border-color: var(--color-gold); color: var(--color-text-on-gold);
       font-weight: 700;
     }
+    .chip--pending { color: var(--color-gold-bright); border-color: var(--color-gold); animation: pulse 1.4s ease-in-out infinite; }
+    @keyframes pulse { 50% { opacity: 0.45; } }
+
+    /* ---------- Aviso de publicación ---------- */
+    .publish-banner {
+      display: flex; align-items: center; gap: 0.7rem; margin-bottom: var(--space-md);
+      padding: 0.8rem 0.9rem; border-radius: var(--radius-md); font-size: 0.95rem; line-height: 1.4;
+      border: 1px solid var(--color-gold); background: rgba(201, 162, 75, 0.12); color: var(--color-text);
+    }
+    .publish-banner.is-ok { border-color: var(--color-gold-bright); background: rgba(227, 194, 115, 0.18); }
+    .publish-banner.is-error { border-color: #c85555; background: rgba(200, 60, 60, 0.12); }
+    .publish-banner-text { flex: 1; min-width: 0; }
+    .publish-banner-close {
+      background: none; border: 0; color: var(--color-text-muted); font-size: 1.4rem; line-height: 1;
+      cursor: pointer; padding: 0 0.2rem;
+    }
+    .spinner {
+      width: 16px; height: 16px; flex-shrink: 0; border-radius: 50%;
+      border: 2px solid var(--color-border-strong); border-top-color: var(--color-gold);
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
     .entry-edit {
       background: none; border: 1px solid var(--color-border-strong); color: var(--color-text-muted);
       border-radius: var(--radius-sm); padding: 0.3rem 0.7rem; font-family: var(--font-body);
@@ -223,6 +245,38 @@
       color: var(--color-text-muted); margin-bottom: var(--space-md); line-height: 1.6;
     }
     .settings-note em { color: var(--color-text); font-style: normal; }
+    /* ---------- Pestañas ---------- */
+    .tabs { display: flex; gap: 0.25rem; margin-bottom: var(--space-md); border-bottom: 1px solid var(--color-border); }
+    .tab {
+      background: none; border: 0; border-bottom: 2px solid transparent; color: var(--color-text-muted);
+      font-family: var(--font-body); font-size: 1rem; padding: 0.6rem 0.9rem; cursor: pointer;
+    }
+    .tab:hover { color: var(--color-text); }
+    .tab.is-active { color: var(--color-gold-bright); border-bottom-color: var(--color-gold); }
+
+    /* ---------- Estadísticas ---------- */
+    .kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: var(--space-md); }
+    .kpi {
+      background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md);
+      padding: 0.9rem; display: flex; flex-direction: column; gap: 0.3rem;
+    }
+    .kpi-label { font-size: 0.78rem; color: var(--color-text-faint); letter-spacing: 0.04em; }
+    .kpi strong { font-size: 1.6rem; color: var(--color-gold-bright); line-height: 1.1; }
+    .kpi .kpi-small { font-size: 0.95rem; color: var(--color-text); }
+    .stats-title { font-size: 1.05rem; margin: var(--space-md) 0 0.6rem; }
+    .chart {
+      display: flex; align-items: flex-end; gap: 3px; height: 130px;
+      background: var(--color-surface); border: 1px solid var(--color-border);
+      border-radius: var(--radius-md); padding: 0.7rem;
+    }
+    .chart-bar { flex: 1; min-height: 2px; background: var(--color-gold); border-radius: 2px 2px 0 0; opacity: 0.85; }
+    .bars { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.6rem; }
+    .bars li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.3rem 0.6rem; align-items: center; font-size: 0.93rem; }
+    .bars .bar-label { overflow-wrap: anywhere; }
+    .bars .bar-count { color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+    .bar-track { grid-column: 1 / -1; height: 6px; background: var(--color-bg-alt); border-radius: 999px; overflow: hidden; }
+    .bar-fill { height: 100%; background: var(--color-gold); border-radius: 999px; }
+    .bars .bars-empty { display: block; color: var(--color-text-faint); font-size: 0.9rem; }
   </style>
 </head>
 <body>
@@ -242,8 +296,19 @@
 
 <main class="app-main">
 
+  <nav class="tabs" id="tabs" aria-label="Secciones">
+    <button type="button" class="tab is-active" id="tab-list">Entradas</button>
+    <button type="button" class="tab" id="tab-stats">Estadísticas</button>
+  </nav>
+
   <!-- ===================== VISTA: LISTADO ===================== -->
   <section class="view is-active" id="view-list">
+    <div class="publish-banner" id="publish-banner" role="status" aria-live="polite" hidden>
+      <span class="spinner" id="publish-banner-spinner" aria-hidden="true"></span>
+      <span class="publish-banner-text" id="publish-banner-text"></span>
+      <button type="button" class="publish-banner-close" id="publish-banner-close" aria-label="Cerrar aviso">×</button>
+    </div>
+
     <div class="list-hero">
       <div>
         <h2>Entradas</h2>
@@ -322,6 +387,43 @@
     <div class="status-box" id="editor-status"></div>
   </section>
 
+  <!-- ===================== VISTA: ESTADÍSTICAS ===================== -->
+  <section class="view" id="view-stats">
+    <div class="list-hero">
+      <div>
+        <h2>Estadísticas</h2>
+        <span class="count" id="stats-period">Últimos 30 días</span>
+      </div>
+      <button type="button" class="btn btn-line" id="stats-refresh-btn">Actualizar datos</button>
+    </div>
+
+    <div class="status-box" id="stats-status"></div>
+
+    <div id="stats-content" hidden>
+      <div class="kpis">
+        <div class="kpi"><span class="kpi-label">Páginas vistas</span><strong id="kpi-total">0</strong></div>
+        <div class="kpi"><span class="kpi-label">Páginas con visitas</span><strong id="kpi-pages">0</strong></div>
+        <div class="kpi"><span class="kpi-label">Países</span><strong id="kpi-countries">0</strong></div>
+        <div class="kpi"><span class="kpi-label">Última actualización</span><strong class="kpi-small" id="kpi-updated">—</strong></div>
+      </div>
+
+      <h3 class="stats-title">Visitas por día</h3>
+      <div class="chart" id="stats-chart"></div>
+
+      <h3 class="stats-title">Páginas más vistas</h3>
+      <ul class="bars" id="stats-pages"></ul>
+
+      <h3 class="stats-title">Países</h3>
+      <ul class="bars" id="stats-locations"></ul>
+
+      <h3 class="stats-title">Navegadores</h3>
+      <ul class="bars" id="stats-browsers"></ul>
+
+      <h3 class="stats-title">Sistemas operativos</h3>
+      <ul class="bars" id="stats-systems"></ul>
+    </div>
+  </section>
+
   <!-- ===================== VISTA: AJUSTES ===================== -->
   <section class="view" id="view-settings">
     <div class="settings-note">
@@ -358,10 +460,18 @@
     var GITHUB_BRANCH = "master";
     var API_CONTENTS = "https://api.github.com/repos/" + GITHUB_OWNER + "/" + GITHUB_REPO + "/contents/";
     var DEFAULT_AUTHOR = "Israel Lobo Martín";
+    var DEPLOY_WORKFLOW = "Construir y publicar el sitio";  // nombre del workflow que publica la web
+    var POLL_MS = 15000;
+    var POLL_LIMIT_MS = 20 * 60 * 1000;
 
     function el(id) { return document.getElementById(id); }
 
-    var views = { list: el("view-list"), editor: el("view-editor"), settings: el("view-settings") };
+    var views = {
+      list: el("view-list"),
+      stats: el("view-stats"),
+      editor: el("view-editor"),
+      settings: el("view-settings")
+    };
 
     var entries = [];        // entradas cargadas desde GitHub
     var current = null;      // entrada abierta en el editor (null = nueva)
@@ -372,6 +482,11 @@
       Object.keys(views).forEach(function (key) {
         views[key].classList.toggle("is-active", key === name);
       });
+      // Las pestañas solo se ven en el listado y en las estadísticas
+      var inTabs = name === "list" || name === "stats";
+      el("tabs").hidden = !inTabs;
+      el("tab-list").classList.toggle("is-active", name === "list");
+      el("tab-stats").classList.toggle("is-active", name === "stats");
     }
 
     function setBox(id, kind, text) {
@@ -608,8 +723,14 @@
       row.className = "entry-row";
 
       var chip = document.createElement("span");
-      chip.className = entry.draft ? "chip chip--draft" : "chip";
-      chip.textContent = entry.draft ? "Borrador" : "Publicada";
+      var pendingLabel = pendingSlugs[entry.slug];
+      if (pendingLabel) {
+        chip.className = "chip chip--pending";
+        chip.textContent = pendingLabel + "…";
+      } else {
+        chip.className = entry.draft ? "chip chip--draft" : "chip";
+        chip.textContent = entry.draft ? "Borrador" : "Publicada";
+      }
       row.appendChild(chip);
 
       var date = document.createElement("span");
@@ -823,15 +944,11 @@
         };
         if (current) payload.sha = current.sha;
         return api("PUT", "blog/" + slug + ".md", payload);
-      }).then(function () {
+      }).then(function (res) {
         dirty = false;
-        var message = draft
-          ? "Borrador guardado. No se ve en la web hasta que lo publiques."
-          : "Publicada. Tardará aproximadamente un minuto en verse en la web.";
         showView("list");
-        return loadList().then(function () {
-          setBox("list-status", "ok", message);
-        });
+        trackChange({ slug: slug, sha: res.commit.sha, title: title, label: "Publicando" });
+        return loadList();
       }).catch(function (err) {
         setBox("editor-status", "error", errorMessage(err, "No se ha podido guardar."));
       }).finally(function () {
@@ -846,22 +963,244 @@
       setSaving(true);
       setBox("editor-status", "loading", "Borrando…");
 
-      api("DELETE", "blog/" + current.slug + ".md", {
-        message: "Borra entrada: " + current.title,
-        sha: current.sha,
+      var target = current;
+      api("DELETE", "blog/" + target.slug + ".md", {
+        message: "Borra entrada: " + target.title,
+        sha: target.sha,
         branch: GITHUB_BRANCH
-      }).then(function () {
+      }).then(function (res) {
         dirty = false;
         showView("list");
-        return loadList().then(function () {
-          setBox("list-status", "ok", "Entrada borrada. La web se actualizará en un minuto aproximadamente.");
-        });
+        trackChange({ slug: target.slug, sha: res.commit.sha, title: target.title, label: "Borrando" });
+        return loadList();
       }).catch(function (err) {
         setBox("editor-status", "error", errorMessage(err, "No se ha podido borrar."));
       }).finally(function () {
         setSaving(false);
       });
     });
+
+    // ---------- Aviso de publicación: espera a que se despliegue la web ----------
+    var pending = [];        // cambios enviados a GitHub y aún no desplegados
+    var pendingSlugs = {};   // slug -> texto del chip mientras está pendiente
+    var pollTimer = null;
+    var hideTimer = null;
+
+    el("publish-banner-close").addEventListener("click", hideBanner);
+
+    function hideBanner() {
+      clearTimeout(hideTimer);
+      el("publish-banner").hidden = true;
+    }
+
+    function showBanner(kind, text, busy) {
+      clearTimeout(hideTimer);
+      var banner = el("publish-banner");
+      banner.className = "publish-banner is-" + kind;
+      el("publish-banner-spinner").hidden = !busy;
+      el("publish-banner-text").textContent = text;
+      banner.hidden = false;
+    }
+
+    function pendingText() {
+      if (pending.length === 1) return pending[0].label + "… «" + pending[0].title + "»";
+      return "Publicando " + pending.length + " cambios…";
+    }
+
+    // Lectura de la API de Actions (necesita el permiso "Actions: lectura" en el token)
+    function apiRepo(path) {
+      return fetch("https://api.github.com/repos/" + GITHUB_OWNER + "/" + GITHUB_REPO + "/" + path, {
+        headers: {
+          Authorization: "Bearer " + loadToken(),
+          Accept: "application/vnd.github+json"
+        }
+      }).then(function (res) {
+        return res.json().catch(function () { return {}; }).then(function (data) {
+          if (!res.ok) {
+            var err = new Error(data.message || ("Error " + res.status));
+            err.status = res.status;
+            throw err;
+          }
+          return data;
+        });
+      });
+    }
+
+    // Se llama tras cada guardado o borrado. commit.sha identifica el despliegue de ese cambio.
+    function trackChange(change) {
+      change.startedAt = Date.now();
+      pending.push(change);
+      pendingSlugs[change.slug] = change.label;
+      showBanner("busy", pendingText(), true);
+      if (!pollTimer) {
+        pollTimer = setInterval(checkPending, POLL_MS);
+      }
+    }
+
+    function stopPolling() {
+      clearInterval(pollTimer);
+      pollTimer = null;
+    }
+
+    function stopTracking() {
+      stopPolling();
+      pending = [];
+      pendingSlugs = {};
+    }
+
+    function checkPending() {
+      if (!pending.length) {
+        stopPolling();
+        return;
+      }
+      apiRepo("actions/runs?branch=" + GITHUB_BRANCH + "&per_page=30").then(function (data) {
+        var runs = data.workflow_runs || [];
+        var now = Date.now();
+        var finished = [];
+        var failed = [];
+        var waiting = [];
+
+        pending.forEach(function (change) {
+          var run = runs.filter(function (r) {
+            return r.head_sha === change.sha && r.name === DEPLOY_WORKFLOW;
+          })[0];
+          if (run && run.status === "completed") {
+            (run.conclusion === "success" ? finished : failed).push(change);
+          } else if (now - change.startedAt > POLL_LIMIT_MS) {
+            failed.push(change);
+          } else {
+            waiting.push(change);
+          }
+        });
+
+        pending = waiting;
+        finished.concat(failed).forEach(function (change) {
+          delete pendingSlugs[change.slug];
+        });
+
+        if (finished.length) loadList();   // el listado se actualiza solo con la entrada ya publicada
+
+        if (pending.length) {
+          showBanner("busy", pendingText(), true);
+          return;
+        }
+        stopPolling();
+
+        if (failed.length) {
+          showBanner("error", "No se ha podido publicar «" + failed[0].title + "». Revisa la pestaña Actions de GitHub.", false);
+        } else {
+          var last = finished[finished.length - 1];
+          showBanner("ok", "«" + last.title + "» ya está publicada en la web.", false);
+          hideTimer = setTimeout(hideBanner, 8000);
+        }
+      }).catch(function (err) {
+        if (err.status === 401 || err.status === 403 || err.status === 404) {
+          stopTracking();
+          showBanner("error", "No se puede seguir la publicación: el token necesita el permiso «Actions: lectura».", false);
+          loadList();
+        }
+        // Otros errores (red, etc.): se vuelve a intentar en el siguiente ciclo
+      });
+    }
+
+    // ---------- Estadísticas (GoatCounter, generadas cada día) ----------
+    el("tab-list").addEventListener("click", function () { showView("list"); });
+    el("tab-stats").addEventListener("click", function () { showView("stats"); loadStats(); });
+    el("stats-refresh-btn").addEventListener("click", function () { loadStats(); });
+
+    function formatNumber(n) {
+      return Number(n || 0).toLocaleString("es-ES");
+    }
+
+    // La API guarda el nombre del país, navegador o sistema tal cual lo envía el visitante
+    function renderBars(listId, items, emptyText) {
+      var list = el(listId);
+      list.innerHTML = "";
+      if (!items.length) {
+        var empty = document.createElement("li");
+        empty.className = "bars-empty";
+        empty.textContent = emptyText;
+        list.appendChild(empty);
+        return;
+      }
+      var sorted = items.slice().sort(function (a, b) { return b.count - a.count; });
+      var max = sorted[0].count || 1;
+      sorted.forEach(function (item) {
+        var li = document.createElement("li");
+        var label = document.createElement("span");
+        label.className = "bar-label";
+        label.textContent = item.label;
+        var count = document.createElement("span");
+        count.className = "bar-count";
+        count.textContent = formatNumber(item.count);
+        var track = document.createElement("div");
+        track.className = "bar-track";
+        var fill = document.createElement("div");
+        fill.className = "bar-fill";
+        fill.style.width = Math.max(2, Math.round((item.count / max) * 100)) + "%";
+        track.appendChild(fill);
+        li.appendChild(label);
+        li.appendChild(count);
+        li.appendChild(track);
+        list.appendChild(li);
+      });
+    }
+
+    function renderChart(daily) {
+      var chart = el("stats-chart");
+      chart.innerHTML = "";
+      var max = Math.max.apply(null, daily.map(function (d) { return d.count; }).concat([1]));
+      daily.forEach(function (d) {
+        var bar = document.createElement("div");
+        bar.className = "chart-bar";
+        bar.style.height = Math.max(2, Math.round((d.count / max) * 100)) + "%";
+        bar.title = d.day + ": " + formatNumber(d.count) + " páginas vistas";
+        chart.appendChild(bar);
+      });
+    }
+
+    function renderStats(data) {
+      el("stats-content").hidden = false;
+      el("kpi-total").textContent = formatNumber(data.total);
+      el("kpi-pages").textContent = formatNumber(data.pages.length);
+      el("kpi-countries").textContent = formatNumber(data.locations.length);
+      el("kpi-updated").textContent = data.updated.replace("T", " ").slice(0, 16);
+      el("stats-period").textContent = "Del " + data.start + " al " + data.end;
+
+      renderChart(data.daily || []);
+      renderBars("stats-pages", data.pages.map(function (p) {
+        return { label: p.title, count: p.count };
+      }), "Todavía no hay visitas registradas.");
+      renderBars("stats-locations", data.locations.map(function (l) {
+        return { label: l.name, count: l.count };
+      }), "Todavía no hay datos de países.");
+      renderBars("stats-browsers", data.browsers.map(function (b) {
+        return { label: b.name, count: b.count };
+      }), "Todavía no hay datos de navegadores.");
+      renderBars("stats-systems", data.systems.map(function (s) {
+        return { label: s.name, count: s.count };
+      }), "Todavía no hay datos de sistemas.");
+    }
+
+    // Lee publisher/stats.json del repo (lo genera GitHub Actions cada día)
+    function loadStats() {
+      el("stats-content").hidden = true;
+      if (!loadToken()) {
+        setBox("stats-status", "error", "Configura primero el token en Ajustes.");
+        return Promise.resolve();
+      }
+      setBox("stats-status", "loading", "Cargando estadísticas…");
+      return api("GET", "publisher/stats.json?ref=" + GITHUB_BRANCH).then(function (file) {
+        setBox("stats-status", null);
+        renderStats(JSON.parse(base64ToUtf8(file.content)));
+      }).catch(function (err) {
+        if (err.status === 404) {
+          setBox("stats-status", "loading", "Todavía no hay estadísticas. Se generan cada día a partir de GoatCounter.");
+        } else {
+          setBox("stats-status", "error", errorMessage(err, "No se han podido cargar las estadísticas."));
+        }
+      });
+    }
 
     // ---------- Arranque ----------
     if (!loadToken()) {
