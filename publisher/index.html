@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Publicar en Asgard</title>
-  <meta name="description" content="Crear y publicar entradas del blog de Asgard Nutrición Deportiva">
+  <title>Panel de Asgard</title>
+  <meta name="description" content="Panel para gestionar las entradas del blog de Asgard Nutrición Deportiva">
   <meta name="robots" content="noindex, nofollow">
   <link rel="manifest" href="/publisher/manifest.webmanifest">
   <meta name="theme-color" content="#0b0b0a">
@@ -20,22 +20,25 @@
 
   <style>
     :root { --safe-top: env(safe-area-inset-top, 0px); --safe-bottom: env(safe-area-inset-bottom, 0px); }
+    [hidden] { display: none !important; }
     body { padding-top: var(--safe-top); padding-bottom: var(--safe-bottom); }
 
     .app-header {
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
       padding: 1rem var(--space-sm);
       border-bottom: 1px solid var(--color-border);
     }
     .app-header h1 { font-size: 1.2rem; margin: 0; }
+    .header-actions { display: flex; gap: 0.5rem; }
     .icon-btn {
       background: none; border: 1px solid var(--color-border-strong);
       color: var(--color-text-muted); width: 40px; height: 40px;
       border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; line-height: 1; cursor: pointer;
     }
     .icon-btn svg { width: 20px; height: 20px; }
 
-    .app-main { max-width: 560px; margin: 0 auto; padding: var(--space-md) var(--space-sm) var(--space-2xl); }
+    .app-main { max-width: 640px; margin: 0 auto; padding: var(--space-md) var(--space-sm) var(--space-2xl); }
 
     .field { margin-bottom: var(--space-md); }
     .field label {
@@ -43,30 +46,58 @@
       margin-bottom: 0.4rem;
     }
     .field .hint { font-size: 0.8rem; color: var(--color-text-faint); margin-top: 0.35rem; }
-    .field input[type="text"],
-    .field input[type="password"],
+    .field input:not([type="file"]),
+    .field select,
     .field textarea {
       width: 100%; background: var(--color-surface); color: var(--color-text);
       border: 1px solid var(--color-border-strong); border-radius: var(--radius-sm);
       padding: 0.75rem 0.9rem; font-family: var(--font-body); font-size: 1rem;
     }
     .field textarea { resize: vertical; }
-    .field input:focus, .field textarea:focus { outline: 2px solid var(--color-gold); outline-offset: 1px; }
+    .field input:focus, .field select:focus, .field textarea:focus { outline: 2px solid var(--color-gold); outline-offset: 1px; }
 
-    .file-field {
-      display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
-    }
+    .file-field { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
     .file-field img {
       width: 64px; height: 64px; object-fit: cover; border-radius: var(--radius-sm);
       border: 1px solid var(--color-border-strong); display: none;
     }
     .file-field .btn { padding: 0.6rem 1rem; font-size: 0.9rem; }
 
-    .btn-publish {
-      width: 100%; justify-content: center; padding: 1rem; font-size: 1.05rem;
-      margin-top: var(--space-sm);
+    .btn:disabled { opacity: 0.6; pointer-events: none; }
+    .btn-block { width: 100%; justify-content: center; padding: 1rem; font-size: 1.05rem; margin-top: var(--space-sm); }
+    .btn-small { padding: 0.45rem 0.7rem; font-size: 0.85rem; }
+    .btn-danger { background: transparent; color: #e07a7a; border: 1px solid #c85555; }
+
+    .toolbar { display: flex; gap: 0.5rem; margin-bottom: var(--space-md); }
+    .toolbar input {
+      flex: 1; min-width: 0; background: var(--color-surface); color: var(--color-text);
+      border: 1px solid var(--color-border-strong); border-radius: var(--radius-sm);
+      padding: 0.7rem 0.9rem; font-family: var(--font-body); font-size: 1rem;
     }
-    .btn-publish:disabled { opacity: 0.6; pointer-events: none; }
+    .toolbar input:focus { outline: 2px solid var(--color-gold); outline-offset: 1px; }
+
+    .entry-list { list-style: none; padding: 0; margin: 0; }
+    .entry-item {
+      display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
+      padding: 0.85rem 0; border-bottom: 1px solid var(--color-border);
+    }
+    .entry-info { min-width: 0; display: flex; flex-direction: column; gap: 0.25rem; }
+    .entry-info strong { font-weight: 600; overflow-wrap: anywhere; }
+    .entry-meta { font-size: 0.82rem; color: var(--color-text-muted); }
+    .badge {
+      display: inline-block; width: fit-content; font-size: 0.72rem; padding: 0.1rem 0.5rem;
+      border-radius: 999px; border: 1px solid var(--color-gold); color: var(--color-gold);
+    }
+    .entry-actions { display: flex; gap: 0.4rem; flex-shrink: 0; }
+
+    .editor-top {
+      display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
+      flex-wrap: wrap; margin-bottom: var(--space-md);
+    }
+    .editor-top h2 { font-size: 1.1rem; margin: 0; }
+
+    .view { display: none; }
+    .view.is-active { display: block; }
 
     .status-box {
       margin-top: var(--space-md); padding: 1rem; border-radius: var(--radius-sm);
@@ -76,55 +107,77 @@
     .status-box.status-error { display: block; background: rgba(200,60,60,0.12); border: 1px solid #c85555; color: var(--color-text); }
     .status-box.status-loading { display: block; background: var(--color-surface); border: 1px solid var(--color-border-strong); color: var(--color-text-muted); }
 
-    .view { display: none; }
-    .view.is-active { display: block; }
-
     .settings-note {
       background: var(--color-surface); border: 1px solid var(--color-border);
       border-radius: var(--radius-sm); padding: 1rem; font-size: 0.88rem;
       color: var(--color-text-muted); margin-bottom: var(--space-md); line-height: 1.6;
     }
     .settings-note a { color: var(--color-gold); }
-
-    .spinner {
-      display: inline-block; width: 14px; height: 14px;
-      border: 2px solid var(--color-text-faint); border-top-color: var(--color-gold);
-      border-radius: 50%; animation: spin 0.7s linear infinite; margin-right: 0.5rem;
-      vertical-align: -2px;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
 
 <header class="app-header">
-  <h1>Publicar en Asgard</h1>
-  <button class="icon-btn" id="settings-btn" aria-label="Ajustes">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-      <circle cx="12" cy="12" r="3"/>
-      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/>
-    </svg>
-  </button>
+  <h1>Panel de Asgard</h1>
+  <div class="header-actions">
+    <button class="icon-btn" id="new-btn" aria-label="Nueva entrada" title="Nueva entrada">+</button>
+    <button class="icon-btn" id="settings-btn" aria-label="Ajustes">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/>
+      </svg>
+    </button>
+  </div>
 </header>
 
 <main class="app-main">
 
-  <!-- ===================== VISTA: PUBLICAR ===================== -->
-  <section class="view is-active" id="view-publish">
+  <!-- ===================== VISTA: LISTADO ===================== -->
+  <section class="view is-active" id="view-list">
+    <div class="toolbar">
+      <input type="search" id="search" placeholder="Buscar por título…" aria-label="Buscar entradas">
+      <button type="button" class="btn btn--ghost" id="refresh-btn">Actualizar</button>
+    </div>
 
-    <form id="post-form">
+    <div class="status-box" id="list-status"></div>
+    <ul class="entry-list" id="entry-list"></ul>
+    <p class="entry-meta" id="list-empty" hidden>No hay entradas que coincidan.</p>
+  </section>
+
+  <!-- ===================== VISTA: EDITOR ===================== -->
+  <section class="view" id="view-editor">
+    <div class="editor-top">
+      <button type="button" class="btn btn--ghost btn-small" id="back-btn">← Volver al listado</button>
+      <h2 id="editor-heading">Nueva entrada</h2>
+    </div>
+
+    <form id="entry-form">
       <div class="field">
-        <label for="f-title">Título de la entrada</label>
+        <label for="f-title">Título</label>
         <input type="text" id="f-title" required placeholder="Ej: Los mejores snacks para antes de entrenar">
       </div>
 
       <div class="field">
-        <label for="f-image">Foto (opcional)</label>
+        <label for="f-date">Fecha</label>
+        <input type="date" id="f-date" required>
+      </div>
+
+      <div class="field">
+        <label for="f-status">Estado</label>
+        <select id="f-status">
+          <option value="published">Publicada</option>
+          <option value="draft">Borrador (no aparece en la web)</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="f-image">Foto</label>
         <div class="file-field">
           <img id="f-image-preview" alt="">
           <button type="button" class="btn btn--ghost" id="f-image-btn">Elegir foto</button>
           <input type="file" id="f-image" accept="image/*" style="display:none;">
         </div>
+        <p class="hint" id="f-image-hint"></p>
       </div>
 
       <div class="field">
@@ -134,30 +187,34 @@
 
       <div class="field">
         <label for="f-body">Contenido de la entrada</label>
-        <textarea id="f-body" rows="12" required placeholder="Escribe aquí el texto de la entrada. Deja una línea en blanco entre párrafos."></textarea>
+        <textarea id="f-body" rows="14" required placeholder="Escribe aquí el texto de la entrada. Deja una línea en blanco entre párrafos."></textarea>
         <p class="hint">Escribe normal, en párrafos separados por una línea en blanco.</p>
       </div>
 
-      <button type="submit" class="btn btn--primary btn-publish" id="publish-btn">Publicar entrada</button>
+      <button type="submit" class="btn btn--primary btn-block" id="save-btn">Guardar</button>
     </form>
 
-    <div class="status-box" id="status-box"></div>
+    <button type="button" class="btn btn-danger btn-block" id="delete-btn" hidden>Borrar entrada</button>
+
+    <div class="status-box" id="editor-status"></div>
   </section>
 
   <!-- ===================== VISTA: AJUSTES ===================== -->
   <section class="view" id="view-settings">
     <div class="settings-note">
       Esto solo hace falta configurarlo <strong>una vez</strong>. El token
-      se guarda únicamente en este teléfono; no se envía a ningún sitio
-      salvo a GitHub, directamente desde el navegador.
+      se guarda únicamente en este dispositivo; no se envía a ningún sitio
+      salvo a GitHub, directamente desde el navegador. Conviene que sea un
+      token de <em>grano fino</em> limitado a este repositorio, con permiso
+      <em>Contents: lectura y escritura</em>.
     </div>
 
     <form id="settings-form">
       <div class="field">
         <label for="s-token">Token de acceso de GitHub</label>
-        <input type="password" id="s-token" required placeholder="ghp_...">
+        <input type="password" id="s-token" required placeholder="github_pat_...">
       </div>
-      <button type="submit" class="btn btn--primary btn-publish">Guardar token</button>
+      <button type="submit" class="btn btn--primary btn-block">Guardar token</button>
     </form>
 
     <div class="status-box" id="settings-status"></div>
@@ -176,20 +233,34 @@
     var GITHUB_OWNER = "zeitgeist2018";
     var GITHUB_REPO = "asgard-nutricion-avila-web";
     var GITHUB_BRANCH = "master";
+    var API_CONTENTS = "https://api.github.com/repos/" + GITHUB_OWNER + "/" + GITHUB_REPO + "/contents/";
+    var DEFAULT_AUTHOR = "Israel Lobo Martín";
 
-    var viewPublish = document.getElementById("view-publish");
-    var viewSettings = document.getElementById("view-settings");
-    var settingsBtn = document.getElementById("settings-btn");
+    function el(id) { return document.getElementById(id); }
 
-    function showView(view) {
-      [viewPublish, viewSettings].forEach(function (v) { v.classList.remove("is-active"); });
-      view.classList.add("is-active");
+    var views = { list: el("view-list"), editor: el("view-editor"), settings: el("view-settings") };
+
+    var entries = [];        // entradas cargadas desde GitHub
+    var current = null;      // entrada abierta en el editor (null = nueva)
+    var selectedImage = null;
+    var dirty = false;       // hay cambios sin guardar en el editor
+
+    function showView(name) {
+      Object.keys(views).forEach(function (key) {
+        views[key].classList.toggle("is-active", key === name);
+      });
     }
 
-    settingsBtn.addEventListener("click", function () {
-      var showingSettings = viewSettings.classList.contains("is-active");
-      showView(showingSettings ? viewPublish : viewSettings);
-    });
+    function setBox(id, kind, text) {
+      var box = el(id);
+      if (!kind) {
+        box.className = "status-box";
+        box.textContent = "";
+        return;
+      }
+      box.className = "status-box status-" + kind;
+      box.textContent = text;
+    }
 
     // ---------- Token ----------
     function loadToken() {
@@ -204,41 +275,42 @@
       localStorage.setItem(STORAGE_KEY, token);
     }
 
-    var settingsForm = document.getElementById("settings-form");
-    var sToken = document.getElementById("s-token");
-    var settingsStatus = document.getElementById("settings-status");
+    var settingsForm = el("settings-form");
+    var sToken = el("s-token");
 
-    function fillSettingsForm() {
-      sToken.value = loadToken();
-    }
-    fillSettingsForm();
+    sToken.value = loadToken();
 
     settingsForm.addEventListener("submit", function (e) {
       e.preventDefault();
       saveToken(sToken.value.trim());
-      settingsStatus.className = "status-box status-ok";
-      settingsStatus.textContent = "Token guardado en este teléfono.";
-      setTimeout(function () { showView(viewPublish); }, 700);
+      setBox("settings-status", "ok", "Token guardado en este dispositivo.");
+      setTimeout(function () {
+        setBox("settings-status", null);
+        showView("list");
+        loadList();
+      }, 700);
     });
 
-    // Si no hay token guardado todavía, abre la pantalla de ajustes
-    // primero; si ya está guardado, se va directo al formulario de
-    // publicar (que es la vista activa por defecto).
-    if (!loadToken()) {
-      showView(viewSettings);
-    }
+    el("settings-btn").addEventListener("click", function () {
+      var showingSettings = views.settings.classList.contains("is-active");
+      showView(showingSettings ? "list" : "settings");
+    });
 
     // ---------- Utilidades ----------
     function slugify(text) {
       return text
               .toString()
-              .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // quita acentos
+              .normalize("NFD").replace(/[̀-ͯ]/g, "") // quita acentos
               .toLowerCase()
               .replace(/[^a-z0-9\s-]/g, "")
               .trim()
               .replace(/\s+/g, "-")
               .replace(/-+/g, "-")
               .slice(0, 80);
+    }
+
+    function normalizeText(text) {
+      return (text || "").toString().normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
     }
 
     function todayISO() {
@@ -255,146 +327,352 @@
       return text.replace(/"/g, '\\"');
     }
 
-    function fileToBase64(file) {
-      return new Promise(function (resolve, reject) {
-        var reader = new FileReader();
-        reader.onload = function () {
-          var result = reader.result;
-          resolve(result.split(",")[1]);
-        };
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
+    function unquote(value) {
+      if (value.length >= 2 && value.charAt(0) === '"' && value.slice(-1) === '"') {
+        return value.slice(1, -1).replace(/\\"/g, '"');
+      }
+      return value;
+    }
+
+    // Lee un .md de blog/ y devuelve sus datos (mismo formato que build_site.py)
+    function parseEntry(raw, slug, sha) {
+      var match = raw.match(/^---\s*\n([\s\S]*?)\n---\s*\n?([\s\S]*)$/);
+      var data = {};
+      var body = raw;
+      if (match) {
+        match[1].split("\n").forEach(function (line) {
+          var m = line.match(/^([a-zA-Z0-9_]+)\s*:\s*(.*)$/);
+          if (m) data[m[1]] = unquote(m[2].trim());
+        });
+        body = match[2];
+      }
+      return {
+        slug: slug,
+        sha: sha,
+        title: data.title || slug,
+        date: data.date || "",
+        author: data.author || DEFAULT_AUTHOR,
+        image: data.image || "",
+        excerpt: data.excerpt || "",
+        draft: (data.draft || "").toLowerCase() === "true",
+        body: body.trim()
+      };
+    }
+
+    function buildMarkdown(entry) {
+      var lines = ["---"];
+      lines.push('title: "' + yamlEscape(entry.title) + '"');
+      lines.push('date: "' + entry.date + '"');
+      lines.push('author: "' + yamlEscape(entry.author) + '"');
+      if (entry.image) lines.push('image: "' + entry.image + '"');
+      lines.push('excerpt: "' + yamlEscape(entry.excerpt) + '"');
+      if (entry.draft) lines.push("draft: true");
+      lines.push("---", "");
+      return lines.join("\n") + "\n" + entry.body + "\n";
     }
 
     function utf8ToBase64(str) {
       return btoa(unescape(encodeURIComponent(str)));
     }
 
+    function base64ToUtf8(b64) {
+      var binary = atob(b64.replace(/\s/g, ""));
+      var bytes = Uint8Array.from(binary, function (c) { return c.charCodeAt(0); });
+      return new TextDecoder("utf-8").decode(bytes);
+    }
+
+    function fileToBase64(file) {
+      return new Promise(function (resolve, reject) {
+        var reader = new FileReader();
+        reader.onload = function () {
+          resolve(reader.result.split(",")[1]);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function errorMessage(err, fallback) {
+      if (err.status === 401) return "El token no es válido o ha caducado. Revísalo en Ajustes.";
+      if (err.status === 403) return "El token no tiene permiso para modificar el repositorio.";
+      if (err.status === 404) return "No se ha encontrado el repositorio, la rama o la entrada.";
+      if (err.status === 409) return "La entrada ha cambiado desde que la abriste. Vuelve al listado, actualiza y repite los cambios.";
+      if (err.status === 422) return "GitHub ha rechazado el cambio. Puede que ya exista una entrada con ese nombre.";
+      return fallback + " " + (err.message || "Inténtalo de nuevo.");
+    }
+
     // ---------- API de GitHub ----------
-    function githubPutFile(token, path, base64Content, message) {
-      var url = "https://api.github.com/repos/" + GITHUB_OWNER + "/" + GITHUB_REPO + "/contents/" + path;
-      return fetch(url, {
-        method: "PUT",
+    function api(method, path, body) {
+      return fetch(API_CONTENTS + path, {
+        method: method,
         headers: {
-          Authorization: "Bearer " + token,
+          Authorization: "Bearer " + loadToken(),
           Accept: "application/vnd.github+json",
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-          message: message,
-          content: base64Content,
-          branch: GITHUB_BRANCH,
-        }),
+        body: body ? JSON.stringify(body) : undefined
       }).then(function (res) {
-        if (res.ok) return res.json();
-        return res.json().catch(function () { return {}; }).then(function (body) {
-          var err = new Error(body.message || ("Error " + res.status));
-          err.status = res.status;
-          throw err;
+        return res.json().catch(function () { return {}; }).then(function (data) {
+          if (!res.ok) {
+            var err = new Error(data.message || ("Error " + res.status));
+            err.status = res.status;
+            throw err;
+          }
+          return data;
         });
       });
     }
 
-    // ---------- Formulario de publicar ----------
-    var postForm = document.getElementById("post-form");
-    var fTitle = document.getElementById("f-title");
-    var fExcerpt = document.getElementById("f-excerpt");
-    var fBody = document.getElementById("f-body");
-    var fImage = document.getElementById("f-image");
-    var fImageBtn = document.getElementById("f-image-btn");
-    var fImagePreview = document.getElementById("f-image-preview");
-    var publishBtn = document.getElementById("publish-btn");
-    var statusBox = document.getElementById("status-box");
-
-    var selectedImage = null;
-
-    fImageBtn.addEventListener("click", function () { fImage.click(); });
-    fImage.addEventListener("change", function () {
-      var file = fImage.files[0];
-      if (!file) { selectedImage = null; fImagePreview.style.display = "none"; return; }
-      selectedImage = file;
-      var reader = new FileReader();
-      reader.onload = function () {
-        fImagePreview.src = reader.result;
-        fImagePreview.style.display = "block";
-      };
-      reader.readAsDataURL(file);
-    });
-
-    function setStatus(kind, html) {
-      statusBox.className = "status-box status-" + kind;
-      statusBox.innerHTML = html;
+    // ---------- Listado ----------
+    function loadList() {
+      if (!loadToken()) {
+        setBox("list-status", "error", "Configura primero el token en Ajustes.");
+        return Promise.resolve();
+      }
+      setBox("list-status", "loading", "Cargando entradas…");
+      return api("GET", "blog?ref=" + GITHUB_BRANCH).then(function (files) {
+        var mdFiles = files.filter(function (f) { return /\.md$/i.test(f.name); });
+        return Promise.all(mdFiles.map(function (f) {
+          return api("GET", "blog/" + encodeURIComponent(f.name) + "?ref=" + GITHUB_BRANCH).then(function (file) {
+            return parseEntry(base64ToUtf8(file.content), f.name.replace(/\.md$/i, ""), file.sha);
+          });
+        }));
+      }).then(function (list) {
+        entries = list.sort(function (a, b) {
+          return a.date < b.date ? 1 : a.date > b.date ? -1 : 0;
+        });
+        setBox("list-status", null);
+        renderList();
+      }).catch(function (err) {
+        setBox("list-status", "error", errorMessage(err, "No se han podido cargar las entradas."));
+      });
     }
 
-    postForm.addEventListener("submit", function (e) {
+    function renderList() {
+      var query = normalizeText(el("search").value.trim());
+      var list = el("entry-list");
+      list.innerHTML = "";
+
+      var shown = entries.filter(function (entry) {
+        return normalizeText(entry.title).indexOf(query) !== -1;
+      });
+      el("list-empty").hidden = shown.length > 0;
+
+      shown.forEach(function (entry) {
+        var item = document.createElement("li");
+        item.className = "entry-item";
+
+        var info = document.createElement("div");
+        info.className = "entry-info";
+
+        var title = document.createElement("strong");
+        title.textContent = entry.title;
+        info.appendChild(title);
+
+        var meta = document.createElement("span");
+        meta.className = "entry-meta";
+        meta.textContent = entry.date;
+        info.appendChild(meta);
+
+        if (entry.draft) {
+          var badge = document.createElement("span");
+          badge.className = "badge";
+          badge.textContent = "Borrador";
+          info.appendChild(badge);
+        }
+
+        var actions = document.createElement("div");
+        actions.className = "entry-actions";
+
+        var editBtn = document.createElement("button");
+        editBtn.type = "button";
+        editBtn.className = "btn btn--ghost btn-small";
+        editBtn.textContent = "Editar";
+        editBtn.addEventListener("click", function () { openEditor(entry); });
+        actions.appendChild(editBtn);
+
+        item.appendChild(info);
+        item.appendChild(actions);
+        list.appendChild(item);
+      });
+    }
+
+    el("search").addEventListener("input", renderList);
+    el("refresh-btn").addEventListener("click", function () { loadList(); });
+
+    // ---------- Editor ----------
+    var entryForm = el("entry-form");
+    var fImage = el("f-image");
+    var saveBtn = el("save-btn");
+
+    function setImagePreview(path) {
+      var img = el("f-image-preview");
+      if (path) {
+        img.src = "/" + path;
+        img.style.display = "block";
+        el("f-image-hint").textContent = "Foto actual: " + path;
+      } else {
+        img.removeAttribute("src");
+        img.style.display = "none";
+        el("f-image-hint").textContent = "Sin foto.";
+      }
+    }
+
+    function openEditor(entry) {
+      current = entry;
+      selectedImage = null;
+      dirty = false;
+      fImage.value = "";
+
+      el("editor-heading").textContent = entry ? "Editar entrada" : "Nueva entrada";
+      el("f-title").value = entry ? entry.title : "";
+      el("f-date").value = entry && entry.date ? entry.date : todayISO();
+      el("f-status").value = entry && entry.draft ? "draft" : "published";
+      el("f-excerpt").value = entry ? entry.excerpt : "";
+      el("f-body").value = entry ? entry.body : "";
+      el("delete-btn").hidden = !entry;
+      setImagePreview(entry ? entry.image : "");
+      setBox("editor-status", null);
+      showView("editor");
+    }
+
+    el("new-btn").addEventListener("click", function () { openEditor(null); });
+
+    el("back-btn").addEventListener("click", function () {
+      if (dirty && !confirm("Hay cambios sin guardar. ¿Salir igualmente?")) return;
+      showView("list");
+    });
+
+    entryForm.addEventListener("input", function () { dirty = true; });
+
+    el("f-image-btn").addEventListener("click", function () { fImage.click(); });
+
+    fImage.addEventListener("change", function () {
+      var file = fImage.files[0];
+      selectedImage = file || null;
+      if (!file) {
+        setImagePreview(current ? current.image : "");
+        return;
+      }
+      var reader = new FileReader();
+      reader.onload = function () {
+        var img = el("f-image-preview");
+        img.src = reader.result;
+        img.style.display = "block";
+        el("f-image-hint").textContent = "La foto se subirá al guardar.";
+      };
+      reader.readAsDataURL(file);
+      dirty = true;
+    });
+
+    function setSaving(busy) {
+      saveBtn.disabled = busy;
+      el("delete-btn").disabled = busy;
+    }
+
+    entryForm.addEventListener("submit", function (e) {
       e.preventDefault();
 
-      var token = loadToken();
-      if (!token) {
-        setStatus("error", "Antes de publicar, configura tu token (icono de arriba a la derecha).");
-        showView(viewSettings);
+      if (!loadToken()) {
+        setBox("editor-status", "error", "Configura primero el token en Ajustes.");
         return;
       }
 
-      var title = fTitle.value.trim();
-      var body = fBody.value.trim();
-      if (!title || !body) return;
+      var title = el("f-title").value.trim();
+      var body = el("f-body").value.trim();
+      var date = el("f-date").value;
+      if (!title || !body || !date) return;
 
-      var slug = slugify(title) || "entrada-" + Date.now();
-      var date = todayISO();
-      var excerpt = fExcerpt.value.trim() || truncate(body.replace(/\s+/g, " "), 160);
+      var draft = el("f-status").value === "draft";
+      var excerpt = el("f-excerpt").value.trim() || truncate(body.replace(/\s+/g, " "), 160);
+      var slug = current ? current.slug : (slugify(title) || "entrada-" + Date.now());
 
-      publishBtn.disabled = true;
-      setStatus("loading", '<span class="spinner"></span>Publicando…');
+      if (!current && entries.some(function (entry) { return entry.slug === slug; })) {
+        setBox("editor-status", "error", "Ya existe una entrada con ese título. Cambia el título.");
+        return;
+      }
 
-      var imageFrontmatterLine = "";
-      var imageStep = Promise.resolve();
-
+      var imagePath = current ? current.image : "";
+      var uploadStep = Promise.resolve();
       if (selectedImage) {
-        var ext = (selectedImage.name.split(".").pop() || "jpg").toLowerCase();
-        var imagePath = "images/" + slug + "." + ext;
-        imageFrontmatterLine = 'image: "' + imagePath + '"\n';
-        imageStep = fileToBase64(selectedImage).then(function (base64) {
-          return githubPutFile(token, imagePath, base64, "Añade foto para: " + title);
+        var ext = (selectedImage.name.split(".").pop() || "jpg").toLowerCase().replace(/[^a-z0-9]/g, "") || "jpg";
+        // Nombre único para no chocar con una foto anterior de la misma entrada
+        imagePath = "images/" + slug + "-" + Date.now() + "." + ext;
+        uploadStep = fileToBase64(selectedImage).then(function (base64) {
+          return api("PUT", imagePath, {
+            message: "Añade foto para: " + title,
+            content: base64,
+            branch: GITHUB_BRANCH
+          });
         });
       }
 
-      imageStep
-              .then(function () {
-                var frontmatter =
-                        "---\n" +
-                        'title: "' + yamlEscape(title) + '"\n' +
-                        'date: "' + date + '"\n' +
-                        'author: "Israel Lobo Martín"\n' +
-                        imageFrontmatterLine +
-                        'excerpt: "' + yamlEscape(excerpt) + '"\n' +
-                        "---\n\n";
-                var markdown = frontmatter + body + "\n";
-                var base64Content = utf8ToBase64(markdown);
-                return githubPutFile(token, "blog/" + slug + ".md", base64Content, "Nueva entrada: " + title);
-              })
-              .then(function () {
-                setStatus(
-                        "ok",
-                        "✅ Entrada publicada. Tardará aproximadamente un minuto en aparecer en la web mientras se genera automáticamente."
-                );
-                postForm.reset();
-                fImagePreview.style.display = "none";
-                selectedImage = null;
-              })
-              .catch(function (err) {
-                var msg = "No se ha podido publicar. ";
-                if (err.status === 401) msg += "El token no es válido o ha caducado.";
-                else if (err.status === 404) msg += "Repositorio, usuario o rama no encontrados. Revisa los ajustes.";
-                else if (err.status === 422) msg += "Ya existe una entrada con ese mismo título. Prueba a cambiar el título.";
-                else msg += err.message || "Inténtalo de nuevo.";
-                setStatus("error", msg);
-              })
-              .finally(function () {
-                publishBtn.disabled = false;
-              });
+      setSaving(true);
+      setBox("editor-status", "loading", "Guardando…");
+
+      uploadStep.then(function () {
+        var markdown = buildMarkdown({
+          title: title,
+          date: date,
+          author: current ? current.author : DEFAULT_AUTHOR,
+          image: imagePath,
+          excerpt: excerpt,
+          draft: draft,
+          body: body
+        });
+        var payload = {
+          message: (current ? "Edita entrada: " : "Nueva entrada: ") + title,
+          content: utf8ToBase64(markdown),
+          branch: GITHUB_BRANCH
+        };
+        if (current) payload.sha = current.sha;
+        return api("PUT", "blog/" + slug + ".md", payload);
+      }).then(function () {
+        dirty = false;
+        var message = draft
+          ? "Guardada como borrador: no aparece en la web hasta que la publiques."
+          : "Guardada. Tardará aproximadamente un minuto en actualizarse en la web.";
+        showView("list");
+        return loadList().then(function () {
+          setBox("list-status", "ok", message);
+        });
+      }).catch(function (err) {
+        setBox("editor-status", "error", errorMessage(err, "No se ha podido guardar."));
+      }).finally(function () {
+        setSaving(false);
+      });
     });
+
+    el("delete-btn").addEventListener("click", function () {
+      if (!current) return;
+      if (!confirm('¿Borrar la entrada "' + current.title + '"? Dejará de aparecer en la web en cuanto se actualice.')) return;
+
+      setSaving(true);
+      setBox("editor-status", "loading", "Borrando…");
+
+      api("DELETE", "blog/" + current.slug + ".md", {
+        message: "Borra entrada: " + current.title,
+        sha: current.sha,
+        branch: GITHUB_BRANCH
+      }).then(function () {
+        dirty = false;
+        showView("list");
+        return loadList().then(function () {
+          setBox("list-status", "ok", "Entrada borrada. La web se actualizará en un minuto aproximadamente.");
+        });
+      }).catch(function (err) {
+        setBox("editor-status", "error", errorMessage(err, "No se ha podido borrar."));
+      }).finally(function () {
+        setSaving(false);
+      });
+    });
+
+    // ---------- Arranque ----------
+    if (!loadToken()) {
+      showView("settings");
+    } else {
+      loadList();
+    }
 
     // Registrar el service worker (necesario para poder instalar la app)
     if ("serviceWorker" in navigator) {

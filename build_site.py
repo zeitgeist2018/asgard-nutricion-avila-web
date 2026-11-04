@@ -125,6 +125,9 @@ def load_posts():
         with open(path, encoding="utf-8") as f:
             raw = f.read()
         data, body_md = parse_frontmatter(raw)
+        # Borradores: se guardan en el repo (y se ven en el panel) pero no se publican
+        if data.get("draft", "").lower() == "true":
+            continue
         slug = filename[:-3]
         body_html = markdown.markdown(body_md, extensions=["extra", "sane_lists"])
         posts.append({
