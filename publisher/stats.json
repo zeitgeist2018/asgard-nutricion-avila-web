@@ -1,9 +1,9 @@
 {
-  "updated": "2026-11-05T04:00:17+00:00",
+  "updated": "2026-11-05T19:11:06+00:00",
   "start": "2026-10-06",
   "end": "2026-11-06",
   "days": 30,
-  "total": 8,
+  "total": 45,
   "daily": [
     {
       "day": "2026-10-06",
@@ -127,7 +127,7 @@
     },
     {
       "day": "2026-11-05",
-      "count": 4
+      "count": 41
     },
     {
       "day": "2026-11-06",
@@ -136,16 +136,22 @@
   ],
   "pages": [
     {
+      "path": "/blog/navidad-en-agosto-y-otros-problemas-del-mundo",
+      "title": "Navidad en agosto y otros problemas del mundo.",
+      "group": "post",
+      "count": 26
+    },
+    {
       "path": "/",
       "title": "Asgard Nutrición Deportiva",
       "group": "home",
-      "count": 5
+      "count": 15
     },
     {
       "path": "/blog.html",
       "title": "Blog",
       "group": "blog",
-      "count": 2
+      "count": 3
     },
     {
       "path": "/blog/ashwagandha-cortisol-y-la-vida-de-locos-que-llevamos",
@@ -155,19 +161,32 @@
     }
   ],
   "entries": {
+    "navidad-en-agosto-y-otros-problemas-del-mundo": 26,
     "ashwagandha-cortisol-y-la-vida-de-locos-que-llevamos": 1
   },
   "locations": [
     {
       "name": "Spain",
-      "count": 4
+      "count": 34
     },
     {
       "name": "United States",
+      "count": 5
+    },
+    {
+      "name": "Hong Kong",
       "count": 2
     },
     {
       "name": "France",
+      "count": 1
+    },
+    {
+      "name": "Japan",
+      "count": 1
+    },
+    {
+      "name": "Netherlands",
       "count": 1
     },
     {
@@ -178,25 +197,33 @@
   "browsers": [
     {
       "name": "Chrome",
-      "count": 6
+      "count": 23
     },
     {
       "name": "Safari",
-      "count": 2
+      "count": 21
+    },
+    {
+      "name": "Firefox",
+      "count": 1
     }
   ],
   "systems": [
     {
-      "name": "Windows",
-      "count": 4
+      "name": "iOS",
+      "count": 21
     },
     {
-      "name": "iOS",
-      "count": 2
+      "name": "Android",
+      "count": 14
+    },
+    {
+      "name": "Windows",
+      "count": 7
     },
     {
       "name": "Linux",
-      "count": 2
+      "count": 3
     }
   ]
 }
