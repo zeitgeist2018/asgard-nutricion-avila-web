@@ -1,14 +1,10 @@
 {
-  "updated": "2026-11-04T21:29:05+00:00",
-  "start": "2026-10-05",
-  "end": "2026-11-05",
+  "updated": "2026-11-05T04:00:17+00:00",
+  "start": "2026-10-06",
+  "end": "2026-11-06",
   "days": 30,
-  "total": 4,
+  "total": 8,
   "daily": [
-    {
-      "day": "2026-10-05",
-      "count": 0
-    },
     {
       "day": "2026-10-06",
       "count": 0
@@ -131,10 +127,20 @@
     },
     {
       "day": "2026-11-05",
+      "count": 4
+    },
+    {
+      "day": "2026-11-06",
       "count": 0
     }
   ],
   "pages": [
+    {
+      "path": "/",
+      "title": "Asgard Nutrición Deportiva",
+      "group": "home",
+      "count": 5
+    },
     {
       "path": "/blog.html",
       "title": "Blog",
@@ -146,30 +152,51 @@
       "title": "Ashwagandha, cortisol, y la vida de locos que llevamos.",
       "group": "post",
       "count": 1
-    },
-    {
-      "path": "/",
-      "title": "Asgard Nutrición Deportiva",
-      "group": "home",
-      "count": 1
     }
   ],
+  "entries": {
+    "ashwagandha-cortisol-y-la-vida-de-locos-que-llevamos": 1
+  },
   "locations": [
     {
       "name": "Spain",
       "count": 4
+    },
+    {
+      "name": "United States",
+      "count": 2
+    },
+    {
+      "name": "France",
+      "count": 1
+    },
+    {
+      "name": "Poland",
+      "count": 1
     }
   ],
   "browsers": [
     {
       "name": "Chrome",
-      "count": 4
+      "count": 6
+    },
+    {
+      "name": "Safari",
+      "count": 2
     }
   ],
   "systems": [
     {
       "name": "Windows",
       "count": 4
+    },
+    {
+      "name": "iOS",
+      "count": 2
+    },
+    {
+      "name": "Linux",
+      "count": 2
     }
   ]
 }
