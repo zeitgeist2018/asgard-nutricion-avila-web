@@ -1,14 +1,10 @@
 {
-  "updated": "2026-11-05T19:11:06+00:00",
-  "start": "2026-10-06",
-  "end": "2026-11-06",
+  "updated": "2026-11-06T18:38:55+00:00",
+  "start": "2026-10-07",
+  "end": "2026-11-07",
   "days": 30,
-  "total": 45,
+  "total": 112,
   "daily": [
-    {
-      "day": "2026-10-06",
-      "count": 0
-    },
     {
       "day": "2026-10-07",
       "count": 0
@@ -127,10 +123,14 @@
     },
     {
       "day": "2026-11-05",
-      "count": 41
+      "count": 82
     },
     {
       "day": "2026-11-06",
+      "count": 26
+    },
+    {
+      "day": "2026-11-07",
       "count": 0
     }
   ],
@@ -139,39 +139,78 @@
       "path": "/blog/navidad-en-agosto-y-otros-problemas-del-mundo",
       "title": "Navidad en agosto y otros problemas del mundo.",
       "group": "post",
-      "count": 26
+      "count": 59
     },
     {
       "path": "/",
       "title": "Asgard Nutrición Deportiva",
       "group": "home",
-      "count": 15
+      "count": 32
     },
     {
       "path": "/blog.html",
       "title": "Blog",
       "group": "blog",
-      "count": 3
+      "count": 11
     },
     {
       "path": "/blog/ashwagandha-cortisol-y-la-vida-de-locos-que-llevamos",
       "title": "Ashwagandha, cortisol, y la vida de locos que llevamos.",
       "group": "post",
+      "count": 4
+    },
+    {
+      "path": "/blog/recuerdo-de-un-pasado-mejor",
+      "title": "Recuerdo de un pasado mejor.",
+      "group": "post",
+      "count": 2
+    },
+    {
+      "path": "/blog/la-secta-del-arroz-y-pollo",
+      "title": "La secta del arroz y pollo",
+      "group": "post",
+      "count": 1
+    },
+    {
+      "path": "/blog/en-que-nos-diferenciamos-de-las-otras-tiendas-de-suplementacion",
+      "title": "¿En qué nos diferenciamos de las otras tiendas de suplementación?",
+      "group": "post",
+      "count": 1
+    },
+    {
+      "path": "/blog/glutamina-ese-aminoacido-que-todos-toma-y-no-saben-para-que",
+      "title": "Glutamina, ese aminoácido que todos toma y no saben para qué.",
+      "group": "post",
+      "count": 1
+    },
+    {
+      "path": "/blog/la-realidad-de-la-suplementacion-hoy-en-dia",
+      "title": "La realidad de la suplementación hoy en día.",
+      "group": "post",
       "count": 1
     }
   ],
   "entries": {
-    "navidad-en-agosto-y-otros-problemas-del-mundo": 26,
-    "ashwagandha-cortisol-y-la-vida-de-locos-que-llevamos": 1
+    "navidad-en-agosto-y-otros-problemas-del-mundo": 59,
+    "ashwagandha-cortisol-y-la-vida-de-locos-que-llevamos": 4,
+    "recuerdo-de-un-pasado-mejor": 2,
+    "la-secta-del-arroz-y-pollo": 1,
+    "en-que-nos-diferenciamos-de-las-otras-tiendas-de-suplementacion": 1,
+    "glutamina-ese-aminoacido-que-todos-toma-y-no-saben-para-que": 1,
+    "la-realidad-de-la-suplementacion-hoy-en-dia": 1
   },
   "locations": [
     {
       "name": "Spain",
-      "count": 34
+      "count": 94
     },
     {
       "name": "United States",
-      "count": 5
+      "count": 8
+    },
+    {
+      "name": "United Kingdom",
+      "count": 3
     },
     {
       "name": "Hong Kong",
@@ -179,6 +218,10 @@
     },
     {
       "name": "France",
+      "count": 1
+    },
+    {
+      "name": "Ireland",
       "count": 1
     },
     {
@@ -197,11 +240,11 @@
   "browsers": [
     {
       "name": "Chrome",
-      "count": 23
+      "count": 56
     },
     {
       "name": "Safari",
-      "count": 21
+      "count": 55
     },
     {
       "name": "Firefox",
@@ -211,19 +254,19 @@
   "systems": [
     {
       "name": "iOS",
-      "count": 21
+      "count": 55
     },
     {
       "name": "Android",
-      "count": 14
+      "count": 37
     },
     {
       "name": "Windows",
-      "count": 7
+      "count": 16
     },
     {
       "name": "Linux",
-      "count": 3
+      "count": 4
     }
   ]
 }
