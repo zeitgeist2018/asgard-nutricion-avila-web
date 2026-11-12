@@ -1,34 +1,10 @@
 {
-  "updated": "2026-11-05T04:00:17+00:00",
-  "start": "2026-10-06",
-  "end": "2026-11-06",
+  "updated": "2026-11-11T18:57:37+00:00",
+  "start": "2026-10-12",
+  "end": "2026-11-12",
   "days": 30,
-  "total": 8,
+  "total": 128,
   "daily": [
-    {
-      "day": "2026-10-06",
-      "count": 0
-    },
-    {
-      "day": "2026-10-07",
-      "count": 0
-    },
-    {
-      "day": "2026-10-08",
-      "count": 0
-    },
-    {
-      "day": "2026-10-09",
-      "count": 0
-    },
-    {
-      "day": "2026-10-10",
-      "count": 0
-    },
-    {
-      "day": "2026-10-11",
-      "count": 0
-    },
     {
       "day": "2026-10-12",
       "count": 0
@@ -127,76 +103,178 @@
     },
     {
       "day": "2026-11-05",
-      "count": 4
+      "count": 82
     },
     {
       "day": "2026-11-06",
+      "count": 27
+    },
+    {
+      "day": "2026-11-07",
+      "count": 3
+    },
+    {
+      "day": "2026-11-08",
+      "count": 0
+    },
+    {
+      "day": "2026-11-09",
+      "count": 3
+    },
+    {
+      "day": "2026-11-10",
+      "count": 4
+    },
+    {
+      "day": "2026-11-11",
+      "count": 5
+    },
+    {
+      "day": "2026-11-12",
       "count": 0
     }
   ],
   "pages": [
     {
+      "path": "/blog/navidad-en-agosto-y-otros-problemas-del-mundo",
+      "title": "Navidad en agosto y otros problemas del mundo.",
+      "group": "post",
+      "count": 61
+    },
+    {
       "path": "/",
       "title": "Asgard Nutrición Deportiva",
       "group": "home",
-      "count": 5
+      "count": 46
     },
     {
       "path": "/blog.html",
       "title": "Blog",
       "group": "blog",
-      "count": 2
+      "count": 11
     },
     {
       "path": "/blog/ashwagandha-cortisol-y-la-vida-de-locos-que-llevamos",
       "title": "Ashwagandha, cortisol, y la vida de locos que llevamos.",
       "group": "post",
+      "count": 4
+    },
+    {
+      "path": "/blog/recuerdo-de-un-pasado-mejor",
+      "title": "Recuerdo de un pasado mejor.",
+      "group": "post",
+      "count": 2
+    },
+    {
+      "path": "/blog/la-secta-del-arroz-y-pollo",
+      "title": "La secta del arroz y pollo",
+      "group": "post",
+      "count": 1
+    },
+    {
+      "path": "/blog/en-que-nos-diferenciamos-de-las-otras-tiendas-de-suplementacion",
+      "title": "¿En qué nos diferenciamos de las otras tiendas de suplementación?",
+      "group": "post",
+      "count": 1
+    },
+    {
+      "path": "/blog/glutamina-ese-aminoacido-que-todos-toma-y-no-saben-para-que",
+      "title": "Glutamina, ese aminoácido que todos toma y no saben para qué.",
+      "group": "post",
+      "count": 1
+    },
+    {
+      "path": "/blog/la-realidad-de-la-suplementacion-hoy-en-dia",
+      "title": "La realidad de la suplementación hoy en día.",
+      "group": "post",
       "count": 1
     }
   ],
   "entries": {
-    "ashwagandha-cortisol-y-la-vida-de-locos-que-llevamos": 1
+    "navidad-en-agosto-y-otros-problemas-del-mundo": 61,
+    "ashwagandha-cortisol-y-la-vida-de-locos-que-llevamos": 4,
+    "recuerdo-de-un-pasado-mejor": 2,
+    "la-secta-del-arroz-y-pollo": 1,
+    "en-que-nos-diferenciamos-de-las-otras-tiendas-de-suplementacion": 1,
+    "glutamina-ese-aminoacido-que-todos-toma-y-no-saben-para-que": 1,
+    "la-realidad-de-la-suplementacion-hoy-en-dia": 1
   },
   "locations": [
     {
       "name": "Spain",
-      "count": 4
+      "count": 99
     },
     {
       "name": "United States",
+      "count": 13
+    },
+    {
+      "name": "United Kingdom",
+      "count": 3
+    },
+    {
+      "name": "Netherlands",
+      "count": 3
+    },
+    {
+      "name": "Poland",
+      "count": 3
+    },
+    {
+      "name": "Hong Kong",
       "count": 2
+    },
+    {
+      "name": "Colombia",
+      "count": 1
     },
     {
       "name": "France",
       "count": 1
     },
     {
-      "name": "Poland",
+      "name": "Ireland",
+      "count": 1
+    },
+    {
+      "name": "Japan",
+      "count": 1
+    },
+    {
+      "name": "Taiwan",
       "count": 1
     }
   ],
   "browsers": [
     {
       "name": "Chrome",
-      "count": 6
+      "count": 69
     },
     {
       "name": "Safari",
-      "count": 2
+      "count": 58
+    },
+    {
+      "name": "Firefox",
+      "count": 1
     }
   ],
   "systems": [
     {
-      "name": "Windows",
-      "count": 4
+      "name": "iOS",
+      "count": 58
     },
     {
-      "name": "iOS",
-      "count": 2
+      "name": "Android",
+      "count": 39
+    },
+    {
+      "name": "Windows",
+      "count": 23
     },
     {
       "name": "Linux",
-      "count": 2
+      "count": 8
     }
   ]
 }
