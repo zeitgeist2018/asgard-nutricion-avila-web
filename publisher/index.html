@@ -387,6 +387,7 @@
     </form>
 
     <div class="status-box" id="editor-status"></div>
+    <button type="button" class="btn btn-line btn-block" id="discard-btn" hidden>Descartar el texto guardado</button>
   </section>
 
   <!-- ===================== VISTA: ESTADÍSTICAS ===================== -->
@@ -492,6 +493,7 @@
       el("tabs").hidden = !inTabs;
       el("tab-list").classList.toggle("is-active", name === "list");
       el("tab-stats").classList.toggle("is-active", name === "stats");
+      if (name === "list") updateNewButton();
     }
 
     function setBox(id, kind, text) {
@@ -801,6 +803,7 @@
         ? "Ninguna entrada coincide con la búsqueda."
         : "Todavía no hay entradas.";
       el("empty-new-btn").hidden = entries.length > 0;
+      updateNewButton();
 
       shown.forEach(function (entry) {
         list.appendChild(buildCard(entry));
@@ -835,6 +838,7 @@
       radio.addEventListener("change", function () {
         updateSaveLabel();
         dirty = true;
+        saveLocalDraft();
       });
     });
 
@@ -855,7 +859,63 @@
       }
     }
 
-    function openEditor(entry) {
+    // ---------- Borrador local: el texto se guarda en este dispositivo mientras se escribe ----------
+    // Así, si falla la conexión o se cierra la página, no se pierde lo escrito.
+    var DRAFT_PREFIX = "asgard_draft:";
+
+    function draftKeyFor(entry) {
+      return DRAFT_PREFIX + (entry ? entry.slug : "nueva");
+    }
+
+    function readDraft(key) {
+      try {
+        return JSON.parse(localStorage.getItem(key) || "null");
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function writeDraft(key, value) {
+      try {
+        localStorage.setItem(key, JSON.stringify(value));
+      } catch (e) {
+        // Sin almacenamiento disponible (modo privado, cuota llena…): se sigue sin borrador local
+      }
+    }
+
+    function removeDraft(key) {
+      try {
+        localStorage.removeItem(key);
+      } catch (e) {
+        // Nada que limpiar si el almacenamiento no está disponible
+      }
+    }
+
+    function saveLocalDraft() {
+      if (!views.editor.classList.contains("is-active")) return;
+      writeDraft(draftKeyFor(current), {
+        title: el("f-title").value,
+        status: selectedStatus(),
+        excerpt: el("f-excerpt").value,
+        body: el("f-body").value,
+        savedAt: Date.now()
+      });
+    }
+
+    function fillForm(values) {
+      el("f-title").value = values.title || "";
+      entryForm.elements.status.value = values.status || "draft";
+      el("f-excerpt").value = values.excerpt || "";
+      el("f-body").value = values.body || "";
+      updateSaveLabel();
+    }
+
+    // Si hay un texto sin publicar guardado en este dispositivo, el botón de nueva entrada lo indica
+    function updateNewButton() {
+      el("new-btn").textContent = readDraft(draftKeyFor(null)) ? "+ Continuar borrador" : "+ Nueva entrada";
+    }
+
+    function openEditor(entry, skipDraft) {
       current = entry;
       selectedImage = null;
       dirty = false;
@@ -875,6 +935,15 @@
       setPhoto(entry ? entry.image : "");
       updateSaveLabel();
       setBox("editor-status", null);
+
+      // Recupera lo que se escribió y no llegó a guardarse
+      var saved = skipDraft ? null : readDraft(draftKeyFor(entry));
+      el("discard-btn").hidden = !saved;
+      if (saved && (saved.title || saved.body || saved.excerpt)) {
+        fillForm(saved);
+        dirty = true;
+        setBox("editor-status", "ok", "Recuperamos el texto que estabas escribiendo. Se guarda en este dispositivo hasta que lo publiques o lo descartes. La foto no se guarda: si la cambiaste, vuelve a elegirla.");
+      }
       showView("editor");
       window.scrollTo(0, 0);
     }
@@ -887,7 +956,17 @@
       showView("list");
     });
 
-    entryForm.addEventListener("input", function () { dirty = true; });
+    entryForm.addEventListener("input", function () {
+      dirty = true;
+      saveLocalDraft();
+    });
+
+    el("discard-btn").addEventListener("click", function () {
+      if (!confirm("¿Descartar el texto guardado en este dispositivo? Se perderá.")) return;
+      removeDraft(draftKeyFor(current));
+      openEditor(current, true);
+      updateNewButton();
+    });
 
     el("f-image-btn").addEventListener("click", function () { fImage.click(); });
 
@@ -929,6 +1008,8 @@
       var title = el("f-title").value.trim();
       var body = el("f-body").value.trim();
       if (!title || !body) return;
+
+      var draftToClear = draftKeyFor(current);
 
       var draft = selectedStatus() === "draft";
       var date = current ? current.date : todayISO();
@@ -977,11 +1058,12 @@
         return api("PUT", "blog/" + slug + ".md", payload);
       }).then(function (res) {
         dirty = false;
+        removeDraft(draftToClear);
         showView("list");
         trackChange({ slug: slug, sha: res.commit.sha, title: title, label: "Publicando" });
         return loadList();
       }).catch(function (err) {
-        setBox("editor-status", "error", errorMessage(err, "No se ha podido guardar."));
+        setBox("editor-status", "error", errorMessage(err, "No se ha podido guardar.") + " Tu texto sigue en pantalla y guardado en este dispositivo.");
       }).finally(function () {
         setSaving(false);
       });
@@ -1001,6 +1083,7 @@
         branch: GITHUB_BRANCH
       }).then(function (res) {
         dirty = false;
+        removeDraft(draftKeyFor(target));
         showView("list");
         trackChange({ slug: target.slug, sha: res.commit.sha, title: target.title, label: "Borrando" });
         return loadList();
