@@ -1,9 +1,9 @@
 {
-  "updated": "2026-11-14T03:53:35+00:00",
+  "updated": "2026-11-14T17:25:41+00:00",
   "start": "2026-10-15",
   "end": "2026-11-15",
   "days": 30,
-  "total": 166,
+  "total": 168,
   "daily": [
     {
       "day": "2026-10-15",
@@ -127,7 +127,7 @@
     },
     {
       "day": "2026-11-14",
-      "count": 1
+      "count": 3
     },
     {
       "day": "2026-11-15",
@@ -145,7 +145,7 @@
       "path": "/",
       "title": "Asgard Nutrición Deportiva",
       "group": "home",
-      "count": 55
+      "count": 57
     },
     {
       "path": "/blog/principios-de-individualidad-dosis-y-frecuencias-de-entrenamiento",
@@ -228,6 +228,10 @@
       "count": 3
     },
     {
+      "name": "China",
+      "count": 2
+    },
+    {
       "name": "Germany",
       "count": 2
     },
@@ -259,7 +263,7 @@
   "browsers": [
     {
       "name": "Chrome",
-      "count": 95
+      "count": 97
     },
     {
       "name": "Safari",
@@ -285,7 +289,7 @@
     },
     {
       "name": "Linux",
-      "count": 9
+      "count": 11
     }
   ]
 }
