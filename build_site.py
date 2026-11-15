@@ -80,7 +80,8 @@ DEFAULT_AUTHOR = "Israel Lobo Martín"
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 BLOG_DIR = os.path.join(BASE_DIR, "blog")
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
-DIST_DIR = os.path.join(BASE_DIR, "dist")
+# Carpeta de salida. serve_local.py la cambia para probar en el navegador sin tocar dist/.
+DIST_DIR = os.environ.get("ASGARD_DIST_DIR") or os.path.join(BASE_DIR, "dist")
 
 MESES = [
     "enero", "febrero", "marzo", "abril", "mayo", "junio",
