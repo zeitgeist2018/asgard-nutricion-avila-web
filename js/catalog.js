@@ -2,7 +2,8 @@
 (function () {
   "use strict";
 
-  var AUTO_MS = 4000;     // tiempo entre pasos del carrusel
+  var SPEED = 0.03;       // píxeles por milisegundo (unos 30 px por segundo: despacio y continuo)
+  var WRAP_PAUSE_MS = 1500; // pausa al llegar al final antes de volver al principio
   var RESUME_MS = 8000;   // tiempo sin tocar el carrusel antes de que vuelva a moverse
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -17,42 +18,59 @@
       return;
     }
 
-    var timer = null;
+    var frame = null;        // fotograma de animación en curso
+    var last = null;         // instante del último fotograma
+    var position = 0;        // posición exacta (el navegador redondea scrollLeft; aquí no se pierde la fracción)
     var resumeTimer = null;
+    var wrapTimer = null;
 
     // Posición de una tarjeta dentro del carrusel (coordenadas del scroll, no de la página)
     function positionOf(item) {
       return item.getBoundingClientRect().left - track.getBoundingClientRect().left + track.scrollLeft;
     }
 
-    // Siguiente tarjeta a la derecha; al llegar al final vuelve al principio
-    function next() {
-      var left = track.scrollLeft;
-      var atEnd = left + track.clientWidth >= track.scrollWidth - 4;
-      if (atEnd) {
-        track.scrollTo({ left: 0, behavior: "smooth" });
+    // Avance continuo y lento: se calcula por el tiempo transcurrido, así va igual en cualquier pantalla
+    function tick(now) {
+      if (last === null) last = now;
+      position += (now - last) * SPEED;
+      last = now;
+
+      var max = track.scrollWidth - track.clientWidth;
+      if (position >= max) {
+        // Final: breve pausa y vuelta suave al principio
+        stop();
+        wrapTimer = setTimeout(function () {
+          wrapTimer = null;
+          track.scrollTo({ left: 0, behavior: "smooth" });
+          wrapTimer = setTimeout(function () {
+            wrapTimer = null;
+            start();
+          }, 1000);
+        }, WRAP_PAUSE_MS);
         return;
       }
-      for (var i = 0; i < track.children.length; i++) {
-        var target = positionOf(track.children[i]);
-        if (target > left + 4) {
-          track.scrollTo({ left: target, behavior: "smooth" });
-          return;
-        }
-      }
+
+      track.scrollLeft = position;
+      frame = requestAnimationFrame(tick);
     }
 
     function start() {
-      if (reduceMotion || timer) return;
-      timer = setInterval(next, AUTO_MS);
+      if (reduceMotion || frame || wrapTimer) return;
+      position = track.scrollLeft;
+      last = null;
+      track.style.scrollSnapType = "none";   // el snap frenaría el avance continuo
+      frame = requestAnimationFrame(tick);
     }
 
     function stop() {
-      clearInterval(timer);
-      timer = null;
+      if (frame) cancelAnimationFrame(frame);
+      frame = null;
+      clearTimeout(wrapTimer);
+      wrapTimer = null;
+      track.style.scrollSnapType = "";        // vuelve el ajuste a tarjetas al tocar o hacer scroll
     }
 
-    // Si el visitante toca o hace scroll, el carrusel se queda quieto un rato
+    // Si el visitante toca, hace scroll o usa las flechas, el carrusel se queda quieto un rato
     function pauseForUser() {
       stop();
       clearTimeout(resumeTimer);
