@@ -44,6 +44,17 @@
       "precioReal": null,
       "imagen": "",
       "creado": "2026-11-15T21:12:18.749Z"
+    },
+    {
+      "id": "test-3-mwibz64x",
+      "titulo": "test 3",
+      "descripcion": "",
+      "categoria": "",
+      "marca": "",
+      "precioOriginal": 24,
+      "precioReal": 21.5,
+      "imagen": "",
+      "creado": "2026-11-15T21:12:32.721Z"
     }
   ]
 }
