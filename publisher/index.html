@@ -464,6 +464,7 @@
 
     <div class="catalog-actions">
       <button type="button" class="btn btn-line" id="manage-categories-btn">Gestionar categorías</button>
+      <button type="button" class="btn btn-line" id="manage-brands-btn">Gestionar marcas</button>
     </div>
 
     <div class="status-box" id="catalog-status"></div>
@@ -506,10 +507,7 @@
 
       <div class="field">
         <label for="p-brand">Marca</label>
-        <div class="select-row">
-          <select id="p-brand"></select>
-          <button type="button" class="link-action" id="add-brand-btn">+ Añadir marca nueva</button>
-        </div>
+        <select id="p-brand"></select>
       </div>
 
       <div class="field">
@@ -551,6 +549,22 @@
 
     <div class="status-box" id="categories-status"></div>
     <ul class="entry-list" id="category-list"></ul>
+  </section>
+
+  <!-- ===================== VISTA: MARCAS ===================== -->
+  <section class="view" id="view-brands">
+    <div class="editor-top">
+      <button type="button" class="back-link" id="brands-back-btn">← Volver al catálogo</button>
+      <h2>Marcas</h2>
+    </div>
+
+    <form class="category-form" id="brand-form">
+      <input type="text" id="b-name" placeholder="Nombre de la marca" required aria-label="Nombre de la marca">
+      <button type="submit" class="btn btn-gold">Añadir</button>
+    </form>
+
+    <div class="status-box" id="brands-status"></div>
+    <ul class="entry-list" id="brand-list"></ul>
   </section>
 
   <!-- ===================== VISTA: AJUSTES ===================== -->
@@ -602,6 +616,7 @@
       catalog: el("view-catalog"),
       product: el("view-product"),
       categories: el("view-categories"),
+      brands: el("view-brands"),
       settings: el("view-settings")
     };
 
@@ -1639,30 +1654,6 @@
       select.value = selected || "";
     }
 
-    // Añade una marca al catálogo sin cerrar el producto que se está editando
-    el("add-brand-btn").addEventListener("click", function () {
-      var name = prompt("Nombre de la marca nueva:");
-      if (name === null) return;
-      name = name.trim();
-      if (!name) return;
-      var id = slugify(name) || "marca";
-      var repeated = (catalog.marcas || []).some(function (m) {
-        return m.id === id || normalizeText(m.nombre) === normalizeText(name);
-      });
-      if (repeated) {
-        setBox("product-status", "error", "Ya existe una marca con ese nombre.");
-        return;
-      }
-      setBox("product-status", "loading", "Guardando la marca…");
-      changeCatalog(function () {
-        catalog.marcas = (catalog.marcas || []).concat([{ id: id, nombre: name }]);
-      }, "Nueva marca: " + name, name).then(function () {
-        setBox("product-status", null);
-        fillBrandSelect(id);
-      }).catch(function (err) {
-        setBox("product-status", "error", errorMessage(err, "No se ha podido guardar la marca."));
-      });
-    });
 
     function fillCategorySelect(selected) {
       var select = el("p-category");
@@ -1908,6 +1899,137 @@
         renderCategories();
       }).catch(function (err) {
         setBox("categories-status", "error", errorMessage(err, "No se ha podido borrar la categoría."));
+      });
+    }
+
+    // ---------- Marcas (mismo flujo que las categorías) ----------
+    el("manage-brands-btn").addEventListener("click", function () { openBrands(); });
+    el("brands-back-btn").addEventListener("click", function () { showView("catalog"); });
+
+    function brandProductCount(id) {
+      return catalog.productos.filter(function (p) { return p.marca === id; }).length;
+    }
+
+    function brandNameTaken(name, exceptId) {
+      return (catalog.marcas || []).some(function (m) {
+        return m.id !== exceptId && normalizeText(m.nombre) === normalizeText(name);
+      });
+    }
+
+    function openBrands() {
+      renderBrands();
+      setBox("brands-status", null);
+      showView("brands");
+    }
+
+    function renderBrands() {
+      var list = el("brand-list");
+      list.innerHTML = "";
+      var brands = catalog.marcas || [];
+      if (!brands.length) {
+        var empty = document.createElement("li");
+        empty.className = "entry-meta-line";
+        empty.textContent = "Todavía no hay marcas. Crea la primera arriba.";
+        list.appendChild(empty);
+        return;
+      }
+      brands.forEach(function (brand) {
+        var count = brandProductCount(brand.id);
+
+        var item = document.createElement("li");
+        item.className = "entry-item";
+
+        var info = document.createElement("div");
+        info.className = "entry-info";
+        var name = document.createElement("strong");
+        name.textContent = brand.nombre;
+        var meta = document.createElement("span");
+        meta.className = "entry-meta";
+        meta.textContent = count + (count === 1 ? " producto" : " productos");
+        info.appendChild(name);
+        info.appendChild(meta);
+
+        var actions = document.createElement("div");
+        actions.className = "entry-actions";
+
+        var rename = document.createElement("button");
+        rename.type = "button";
+        rename.className = "entry-edit";
+        rename.textContent = "Renombrar";
+        rename.addEventListener("click", function () { renameBrand(brand); });
+
+        var remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "entry-edit";
+        remove.textContent = "Borrar";
+        remove.addEventListener("click", function () { deleteBrand(brand, count); });
+
+        actions.appendChild(rename);
+        actions.appendChild(remove);
+        item.appendChild(info);
+        item.appendChild(actions);
+        list.appendChild(item);
+      });
+    }
+
+    el("brand-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var name = el("b-name").value.trim();
+      if (!name) return;
+      var id = slugify(name) || "marca";
+      if (brandNameTaken(name, null) || (catalog.marcas || []).some(function (m) { return m.id === id; })) {
+        setBox("brands-status", "error", "Ya existe una marca con ese nombre.");
+        return;
+      }
+      setBox("brands-status", "loading", "Guardando…");
+      changeCatalog(function () {
+        catalog.marcas = (catalog.marcas || []).concat([{ id: id, nombre: name }]);
+      }, "Nueva marca: " + name, name).then(function () {
+        el("b-name").value = "";
+        setBox("brands-status", null);
+        renderBrands();
+      }).catch(function (err) {
+        setBox("brands-status", "error", errorMessage(err, "No se ha podido guardar la marca."));
+      });
+    });
+
+    function renameBrand(brand) {
+      var name = prompt("Nuevo nombre de la marca:", brand.nombre);
+      if (name === null) return;
+      name = name.trim();
+      if (!name || name === brand.nombre) return;
+      if (brandNameTaken(name, brand.id)) {
+        setBox("brands-status", "error", "Ya existe una marca con ese nombre.");
+        return;
+      }
+      setBox("brands-status", "loading", "Guardando…");
+      changeCatalog(function () {
+        catalog.marcas.forEach(function (m) {
+          if (m.id === brand.id) m.nombre = name;
+        });
+      }, "Renombra marca: " + brand.nombre + " → " + name, name).then(function () {
+        setBox("brands-status", null);
+        renderBrands();
+      }).catch(function (err) {
+        setBox("brands-status", "error", errorMessage(err, "No se ha podido renombrar la marca."));
+      });
+    }
+
+    function deleteBrand(brand, count) {
+      if (count > 0) {
+        setBox("brands-status", "error", "Hay " + count + (count === 1 ? " producto" : " productos") +
+          " con la marca «" + brand.nombre + "». Cámbialos de marca antes de borrarla.");
+        return;
+      }
+      if (!confirm('¿Borrar la marca "' + brand.nombre + '"?')) return;
+      setBox("brands-status", "loading", "Borrando…");
+      changeCatalog(function () {
+        catalog.marcas = catalog.marcas.filter(function (m) { return m.id !== brand.id; });
+      }, "Borra marca: " + brand.nombre, brand.nombre).then(function () {
+        setBox("brands-status", null);
+        renderBrands();
+      }).catch(function (err) {
+        setBox("brands-status", "error", errorMessage(err, "No se ha podido borrar la marca."));
       });
     }
 
