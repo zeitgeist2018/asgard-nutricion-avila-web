@@ -1,14 +1,10 @@
 {
-  "updated": "2026-11-14T17:25:41+00:00",
-  "start": "2026-10-15",
-  "end": "2026-11-15",
+  "updated": "2026-11-15T18:07:11+00:00",
+  "start": "2026-10-16",
+  "end": "2026-11-16",
   "days": 30,
-  "total": 168,
+  "total": 177,
   "daily": [
-    {
-      "day": "2026-10-15",
-      "count": 0
-    },
     {
       "day": "2026-10-16",
       "count": 0
@@ -127,25 +123,29 @@
     },
     {
       "day": "2026-11-14",
-      "count": 3
+      "count": 5
     },
     {
       "day": "2026-11-15",
+      "count": 7
+    },
+    {
+      "day": "2026-11-16",
       "count": 0
     }
   ],
   "pages": [
     {
+      "path": "/",
+      "title": "Asgard Nutrición Deportiva",
+      "group": "home",
+      "count": 63
+    },
+    {
       "path": "/blog/navidad-en-agosto-y-otros-problemas-del-mundo",
       "title": "Navidad en agosto y otros problemas del mundo.",
       "group": "post",
       "count": 62
-    },
-    {
-      "path": "/",
-      "title": "Asgard Nutrición Deportiva",
-      "group": "home",
-      "count": 57
     },
     {
       "path": "/blog/principios-de-individualidad-dosis-y-frecuencias-de-entrenamiento",
@@ -157,7 +157,7 @@
       "path": "/blog.html",
       "title": "Blog",
       "group": "blog",
-      "count": 16
+      "count": 19
     },
     {
       "path": "/blog/ashwagandha-cortisol-y-la-vida-de-locos-que-llevamos",
@@ -209,18 +209,18 @@
   "locations": [
     {
       "name": "Spain",
-      "count": 132
+      "count": 140
     },
     {
       "name": "United States",
       "count": 16
     },
     {
-      "name": "United Kingdom",
-      "count": 3
+      "name": "Netherlands",
+      "count": 4
     },
     {
-      "name": "Netherlands",
+      "name": "United Kingdom",
       "count": 3
     },
     {
@@ -263,11 +263,11 @@
   "browsers": [
     {
       "name": "Chrome",
-      "count": 97
+      "count": 104
     },
     {
       "name": "Safari",
-      "count": 70
+      "count": 72
     },
     {
       "name": "Firefox",
@@ -277,19 +277,19 @@
   "systems": [
     {
       "name": "iOS",
-      "count": 70
+      "count": 72
     },
     {
       "name": "Android",
-      "count": 58
+      "count": 60
     },
     {
       "name": "Windows",
-      "count": 29
+      "count": 33
     },
     {
       "name": "Linux",
-      "count": 11
+      "count": 12
     }
   ]
 }
