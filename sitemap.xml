@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://asgardavilanutriciondeportiva.com/</loc><lastmod>2026-11-14</lastmod></url>
-  <url><loc>https://asgardavilanutriciondeportiva.com/blog.html</loc><lastmod>2026-11-14</lastmod></url>
-  <url><loc>https://asgardavilanutriciondeportiva.com/blog/principios-de-individualidad-dosis-y-frecuencias-de-entrenamiento/</loc><lastmod>2026-11-12</lastmod></url>
-  <url><loc>https://asgardavilanutriciondeportiva.com/blog/navidad-en-agosto-y-otros-problemas-del-mundo/</loc><lastmod>2026-11-05</lastmod></url>
-  <url><loc>https://asgardavilanutriciondeportiva.com/blog/glutamina-ese-aminoacido-que-todos-toma-y-no-saben-para-que/</loc><lastmod>2026-07-13</lastmod></url>
-  <url><loc>https://asgardavilanutriciondeportiva.com/blog/ashwagandha-cortisol-y-la-vida-de-locos-que-llevamos/</loc><lastmod>2026-07-05</lastmod></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url><loc>https://asgardavilanutriciondeportiva.com/</loc><lastmod>2026-11-12</lastmod></url>
+  <url><loc>https://asgardavilanutriciondeportiva.com/blog.html</loc><lastmod>2026-11-12</lastmod></url>
+  <url><loc>https://asgardavilanutriciondeportiva.com/blog/principios-de-individualidad-dosis-y-frecuencias-de-entrenamiento/</loc><lastmod>2026-11-12</lastmod><image:image><image:loc>https://asgardavilanutriciondeportiva.com/images/principios-de-individualidad-dosis-y-frecuencias-de-entrenamiento-1794489700117.png</image:loc><image:caption>Principios de individualidad, dosis y frecuencias de entrenamiento.</image:caption></image:image></url>
+  <url><loc>https://asgardavilanutriciondeportiva.com/blog/navidad-en-agosto-y-otros-problemas-del-mundo/</loc><lastmod>2026-11-05</lastmod><image:image><image:loc>https://asgardavilanutriciondeportiva.com/images/navidad-en-agosto-y-otros-problemas-del-mundo-1793897757560.png</image:loc><image:caption>Navidad en agosto y otros problemas del mundo.</image:caption></image:image></url>
+  <url><loc>https://asgardavilanutriciondeportiva.com/blog/glutamina-ese-aminoacido-que-todos-toma-y-no-saben-para-que/</loc><lastmod>2026-07-13</lastmod><image:image><image:loc>https://asgardavilanutriciondeportiva.com/images/post-357-glutamina.jpg</image:loc><image:caption>Glutamina, ese aminoácido que todos toma y no saben para qué.</image:caption></image:image></url>
+  <url><loc>https://asgardavilanutriciondeportiva.com/blog/ashwagandha-cortisol-y-la-vida-de-locos-que-llevamos/</loc><lastmod>2026-07-05</lastmod><image:image><image:loc>https://asgardavilanutriciondeportiva.com/images/post-332-ashwagandha.jpg</image:loc><image:caption>Ashwagandha, cortisol, y la vida de locos que llevamos.</image:caption></image:image></url>
   <url><loc>https://asgardavilanutriciondeportiva.com/blog/la-secta-del-arroz-y-pollo/</loc><lastmod>2026-07-03</lastmod></url>
-  <url><loc>https://asgardavilanutriciondeportiva.com/blog/cuando-la-motivacion-no-es-suficiente/</loc><lastmod>2026-07-01</lastmod></url>
-  <url><loc>https://asgardavilanutriciondeportiva.com/blog/recuerdo-de-un-pasado-mejor/</loc><lastmod>2026-06-27</lastmod></url>
-  <url><loc>https://asgardavilanutriciondeportiva.com/blog/la-realidad-de-la-suplementacion-hoy-en-dia/</loc><lastmod>2026-06-25</lastmod></url>
-  <url><loc>https://asgardavilanutriciondeportiva.com/blog/en-que-nos-diferenciamos-de-las-otras-tiendas-de-suplementacion/</loc><lastmod>2026-06-19</lastmod></url>
+  <url><loc>https://asgardavilanutriciondeportiva.com/blog/cuando-la-motivacion-no-es-suficiente/</loc><lastmod>2026-07-01</lastmod><image:image><image:loc>https://asgardavilanutriciondeportiva.com/images/post-323-motivacion.jpg</image:loc><image:caption>Cuando la motivación no es suficiente</image:caption></image:image></url>
+  <url><loc>https://asgardavilanutriciondeportiva.com/blog/recuerdo-de-un-pasado-mejor/</loc><lastmod>2026-06-27</lastmod><image:image><image:loc>https://asgardavilanutriciondeportiva.com/images/post-315-recuerdo.jpg</image:loc><image:caption>Recuerdo de un pasado mejor.</image:caption></image:image></url>
+  <url><loc>https://asgardavilanutriciondeportiva.com/blog/la-realidad-de-la-suplementacion-hoy-en-dia/</loc><lastmod>2026-06-25</lastmod><image:image><image:loc>https://asgardavilanutriciondeportiva.com/images/post-300-realidad.png</image:loc><image:caption>La realidad de la suplementación hoy en día.</image:caption></image:image></url>
+  <url><loc>https://asgardavilanutriciondeportiva.com/blog/en-que-nos-diferenciamos-de-las-otras-tiendas-de-suplementacion/</loc><lastmod>2026-06-19</lastmod><image:image><image:loc>https://asgardavilanutriciondeportiva.com/images/post-293-diferenciamos.jpg</image:loc><image:caption>¿En qué nos diferenciamos de las otras tiendas de suplementación?</image:caption></image:image></url>
 </urlset>
