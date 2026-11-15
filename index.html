@@ -54,8 +54,8 @@
       </svg>
 
       <div class="container">
-        <div class="hero__inner" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:2rem; align-items:center;">
-          <div>
+        <div class="hero__split">
+          <div class="hero__inner">
             <p class="hero__eyebrow">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                 <path d="M12 2 3 6v6c0 5 3.8 8.7 9 10 5.2-1.3 9-5 9-10V6l-9-4Z" stroke-linejoin="round"/>
@@ -73,12 +73,18 @@
               <a class="btn btn--ghost" href="#nuestra-forma">Conócenos</a>
             </div>
           </div>
-          <iframe
-            src="https://www.openstreetmap.org/export/embed.html?bbox=-4.6915%2C40.6554%2C-4.6876%2C40.6574&amp;layer=mapnik&amp;marker=40.656396%2C-4.689563"
-            title="Mapa de la ubicación de Asgard Nutrición Deportiva en Ávila"
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            style="width:100%; height:300px; border:1px solid var(--color-border); border-radius:var(--radius-md);"></iframe>
+          <div class="hero__card">
+            <iframe
+              src="https://www.openstreetmap.org/export/embed.html?bbox=-4.6915%2C40.6554%2C-4.6876%2C40.6574&amp;layer=mapnik&amp;marker=40.656396%2C-4.689563"
+              title="Mapa de la ubicación de Asgard Nutrición Deportiva en Ávila"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <p class="hero__hours">
+              <strong>Asgard Nutrición Deportiva</strong> · Pl. Sta. Ana, 2, Ávila<br>
+              <strong>Lunes a viernes:</strong> 10:30–14:00 y 17:00–20:00<br>
+              <strong>Sábado:</strong> 11:00–13:30 · <strong>Domingo:</strong> cerrado
+            </p>
+          </div>
         </div>
       </div>
     </section>
