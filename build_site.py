@@ -496,8 +496,13 @@ def catalog_carousel_html(products):
         '<div class="container">'
         '<div class="section__head"><p class="eyebrow">Catálogo</p><h2>Últimas incorporaciones</h2></div>'
         '<div class="carousel" data-carousel>'
+        '<button type="button" class="carousel__arrow carousel__arrow--prev" data-carousel-prev '
+        'aria-label="Ver los productos anteriores">‹</button>'
         '<ul class="carousel__track" aria-label="Productos del catálogo">' + items + "</ul>"
+        '<button type="button" class="carousel__arrow carousel__arrow--next" data-carousel-next '
+        'aria-label="Ver los productos siguientes">›</button>'
         "</div>"
+        '<div class="carousel__dots" data-carousel-dots></div>'
         '<div class="carousel__footer"><a class="btn btn--primary" href="/catalogo.html">Ver todo el catálogo</a></div>'
         "</div></section>"
     )

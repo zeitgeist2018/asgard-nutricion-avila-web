@@ -9,7 +9,13 @@
   // ---------- Carrusel automático con scroll manual (dedo o ratón) ----------
   document.querySelectorAll("[data-carousel]").forEach(function (root) {
     var track = root.querySelector(".carousel__track");
-    if (!track || track.children.length < 2) return;
+    var dotsBox = root.nextElementSibling && root.nextElementSibling.hasAttribute("data-carousel-dots")
+      ? root.nextElementSibling
+      : null;
+    if (!track || track.children.length < 2) {
+      root.classList.add("is-static");   // con pocas tarjetas no hacen falta flechas ni puntos
+      return;
+    }
 
     var timer = null;
     var resumeTimer = null;
@@ -63,6 +69,52 @@
     document.addEventListener("visibilitychange", function () {
       if (document.hidden) stop(); else start();
     });
+
+    // Flechas: avanzan o retroceden una tarjeta; en los extremos dan la vuelta
+    function stepBy(direction) {
+      var step = positionOf(track.children[1]) - positionOf(track.children[0]);
+      var max = track.scrollWidth - track.clientWidth;
+      var target;
+      if (direction > 0 && track.scrollLeft >= max - 4) target = 0;
+      else if (direction < 0 && track.scrollLeft <= 4) target = max;
+      else target = Math.min(max, Math.max(0, track.scrollLeft + direction * step));
+      track.scrollTo({ left: target, behavior: "smooth" });
+    }
+
+    var prevButton = root.querySelector("[data-carousel-prev]");
+    var nextButton = root.querySelector("[data-carousel-next]");
+    if (prevButton) prevButton.addEventListener("click", function () { pauseForUser(); stepBy(-1); });
+    if (nextButton) nextButton.addEventListener("click", function () { pauseForUser(); stepBy(1); });
+
+    // Puntos: uno por tarjeta; marcan la tarjeta visible y permiten ir directamente a ella
+    var dots = [];
+    if (dotsBox) {
+      Array.prototype.forEach.call(track.children, function (item, index) {
+        var dot = document.createElement("button");
+        dot.type = "button";
+        dot.className = "carousel__dot";
+        dot.setAttribute("aria-label", "Ver el producto " + (index + 1));
+        dot.addEventListener("click", function () {
+          pauseForUser();
+          track.scrollTo({ left: positionOf(item), behavior: "smooth" });
+        });
+        dotsBox.appendChild(dot);
+        dots.push(dot);
+      });
+    }
+
+    function updateDots() {
+      var current = 0;
+      for (var i = 0; i < track.children.length; i++) {
+        if (positionOf(track.children[i]) <= track.scrollLeft + 8) current = i;
+      }
+      dots.forEach(function (dot, index) {
+        dot.setAttribute("aria-current", index === current ? "true" : "false");
+      });
+    }
+    track.addEventListener("scroll", updateDots, { passive: true });
+    window.addEventListener("resize", updateDots);
+    updateDots();
 
     start();
   });
