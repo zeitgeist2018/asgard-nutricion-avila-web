@@ -23,6 +23,7 @@ import json
 import os
 import re
 import shutil
+import urllib.parse
 from datetime import datetime, timezone
 
 import markdown
@@ -197,6 +198,7 @@ def render_header(active_page):
     nav_items = (
         nav_link("/index.html", "Inicio", "inicio")
         + nav_link("/blog.html", "Blog", "blog")
+        + nav_link("/catalogo.html", "Catálogo", "catalogo")
         + instagram_link
     )
 
@@ -397,6 +399,121 @@ def breadcrumb_json_ld(title, canonical):
     }
 
 
+# --------------------------------------------------------------------
+# Catálogo de productos (se gestiona desde el panel de administración)
+# --------------------------------------------------------------------
+
+CATALOG_FILE = os.path.join(BASE_DIR, "catalogo", "catalogo.json")
+CAROUSEL_LIMIT = 12  # productos que muestra el carrusel de la portada
+WHATSAPP_NUMBER = BUSINESS["telephone"].lstrip("+")
+
+
+def load_catalog():
+    """Devuelve (categorias, productos). Los productos salen primero los más recientes."""
+    if not os.path.isfile(CATALOG_FILE):
+        return [], []
+    with open(CATALOG_FILE, encoding="utf-8") as f:
+        data = json.load(f)
+
+    categories = data.get("categorias", [])
+    names = {c["id"]: c["nombre"] for c in categories}
+    products = []
+    for p in data.get("productos", []):
+        products.append({
+            "id": p["id"],
+            "titulo": p.get("titulo", ""),
+            "descripcion": p.get("descripcion", ""),
+            "categoria": p.get("categoria", ""),
+            "categoriaNombre": names.get(p.get("categoria", ""), ""),
+            "precioOriginal": p.get("precioOriginal"),
+            "precioReal": p.get("precioReal"),
+            "imagen": p.get("imagen", ""),
+            "creado": p.get("creado", ""),
+        })
+    products.sort(key=lambda p: p["creado"], reverse=True)
+    return categories, products
+
+
+def format_price(value):
+    """Precio en formato español: 1.234,50 €"""
+    text = f"{float(value):,.2f}"  # 1,234.50 (formato inglés)
+    return text.replace(",", "§").replace(".", ",").replace("§", ".") + " €"
+
+
+def whatsapp_question_url(product_title):
+    """Enlace a WhatsApp con un mensaje ya escrito sobre ese producto."""
+    text = f"Hola, me interesa el producto «{product_title}». ¿Me dices el precio?"
+    return f"https://wa.me/{WHATSAPP_NUMBER}?text={urllib.parse.quote(text)}"
+
+
+def product_card(p, with_description=False):
+    if p["imagen"]:
+        media = f'<img src="/{esc(p["imagen"])}" alt="{esc(p["titulo"])}" loading="lazy">'
+    else:
+        media = '<span class="product-card__placeholder">Sin foto</span>'
+
+    prices = []
+    if p["precioOriginal"] is not None:
+        prices.append(f'<s class="product-card__old">{format_price(p["precioOriginal"])}</s>')
+    if p["precioReal"] is not None:
+        prices.append(f'<span class="product-card__real">{format_price(p["precioReal"])}</span>')
+    else:
+        prices.append(
+            f'<a class="product-card__ask" href="{esc(whatsapp_question_url(p["titulo"]))}" '
+            'target="_blank" rel="noopener noreferrer">Consulta el precio con nosotros</a>'
+        )
+
+    category = f'<span class="product-card__cat">{esc(p["categoriaNombre"])}</span>' if p["categoriaNombre"] else ""
+    description = ""
+    if with_description and p["descripcion"]:
+        description = f'<p class="product-card__desc">{esc(p["descripcion"])}</p>'
+
+    return (
+        f'<article class="product-card" data-category="{esc(p["categoria"])}">'
+        f'<div class="product-card__media">{media}</div>'
+        '<div class="product-card__body">'
+        + category
+        + f'<h3 class="product-card__title">{esc(p["titulo"])}</h3>'
+        + description
+        + '<div class="product-card__prices">' + "".join(prices) + "</div>"
+        + "</div></article>"
+    )
+
+
+def catalog_carousel_html(products):
+    """Carrusel de novedades para la portada (vacío si no hay productos)."""
+    if not products:
+        return ""
+    items = "".join(f"<li>{product_card(p)}</li>" for p in products[:CAROUSEL_LIMIT])
+    return (
+        '<section class="section section--alt" id="novedades">'
+        '<div class="container">'
+        '<div class="section__head"><p class="eyebrow">Catálogo</p><h2>Últimas incorporaciones</h2></div>'
+        '<div class="carousel" data-carousel>'
+        '<ul class="carousel__track" aria-label="Productos del catálogo">' + items + "</ul>"
+        "</div>"
+        '<div class="carousel__footer"><a class="btn btn--primary" href="/catalogo.html">Ver todo el catálogo</a></div>'
+        "</div></section>"
+    )
+
+
+def build_catalog_page(categories, products):
+    with open(os.path.join(BASE_DIR, "catalogo.html"), encoding="utf-8") as f:
+        template = f.read()
+    filters = ['<button type="button" class="chip-filter is-active" data-filter="all" aria-pressed="true">Todos</button>']
+    for c in categories:
+        filters.append(
+            f'<button type="button" class="chip-filter" data-filter="{esc(c["id"])}" aria-pressed="false">'
+            f'{esc(c["nombre"])}</button>'
+        )
+    grid = "".join(product_card(p, with_description=True) for p in products)
+    html_out = render_placeholder_page(template, "catalogo", {
+        "<!--CATALOG_FILTERS-->": "".join(filters),
+        "<!--CATALOG_GRID-->": grid or '<p class="catalog-empty">Todavía no hay productos en el catálogo.</p>',
+    })
+    write_file(os.path.join(DIST_DIR, "catalogo.html"), html_out)
+
+
 def review_link_html():
     """Enlace para dejar una reseña en Google. Vacío si no hay enlace configurado."""
     if not BUSINESS["reviewUrl"]:
@@ -407,7 +524,7 @@ def review_link_html():
     )
 
 
-def build_home(posts):
+def build_home(posts, products):
     with open(os.path.join(BASE_DIR, "index.html"), encoding="utf-8") as f:
         template = f.read()
     cards = "".join(render_card(p) for p in posts[:3]) or (
@@ -417,6 +534,7 @@ def build_home(posts):
         "<!--LATEST_POSTS-->": cards,
         "<!--JSON_LD-->": json_ld_script(store_json_ld()),
         "<!--REVIEW_LINK-->": review_link_html(),
+        "<!--CATALOG_CAROUSEL-->": catalog_carousel_html(products),
     })
     write_file(os.path.join(DIST_DIR, "index.html"), html_out)
 
@@ -511,6 +629,7 @@ def build_sitemap(posts):
     entries = [
         f"  <url><loc>{esc(SITE_URL)}/</loc><lastmod>{latest}</lastmod></url>",
         f"  <url><loc>{esc(SITE_URL)}/blog.html</loc><lastmod>{latest}</lastmod></url>",
+        f"  <url><loc>{esc(SITE_URL)}/catalogo.html</loc><lastmod>{latest}</lastmod></url>",
     ]
     for p in posts:
         images = ""
@@ -609,7 +728,11 @@ def main():
     for p in posts:
         print(f"  - {p['date']} | {p['title']}")
 
-    build_home(posts)
+    categories, products = load_catalog()
+    print(f"Productos en el catálogo: {len(products)}")
+
+    build_home(posts, products)
+    build_catalog_page(categories, products)
     build_blog_listing(posts)
     build_post_pages(posts)
     build_sitemap(posts)

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <title>Catálogo — Asgard Nutrición Deportiva</title>
+  <meta name="description" content="Catálogo de suplementación y nutrición deportiva de Asgard Nutrición Deportiva en Ávila. Consulta precios y disponibilidad por WhatsApp.">
+  <link rel="canonical" href="{{SITE_URL}}/catalogo.html">
+
+  <!-- Open Graph / vistas previas en WhatsApp, Facebook, etc. -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Catálogo — Asgard Nutrición Deportiva">
+  <meta property="og:description" content="Catálogo de suplementación y nutrición deportiva de Asgard Nutrición Deportiva en Ávila.">
+  <meta property="og:url" content="{{SITE_URL}}/catalogo.html">
+  <meta property="og:site_name" content="Asgard Nutrición Deportiva">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:image" content="{{SITE_URL}}/images/share.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="{{SITE_URL}}/images/share.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/pages.css">
+
+  <!-- Estadísticas de visitas (GoatCounter, sin cookies) -->
+  <script data-goatcounter="https://asgardavilanutriciondeportiva.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+
+  <!--HEADER-->
+
+  <main id="main">
+
+    <section class="page-header">
+      <div class="container">
+        <p class="eyebrow">Tienda</p>
+        <h1 class="page-header__title">Catálogo</h1>
+        <p class="page-header__lede">
+          Filtra por categoría y pregúntanos por WhatsApp por cualquier producto.
+          Los precios que aparecen tachados son los de referencia.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="catalog-filters" role="group" aria-label="Filtrar por categoría">
+<!--CATALOG_FILTERS-->
+        </div>
+
+        <div class="catalog-grid" id="catalog-grid">
+<!--CATALOG_GRID-->
+        </div>
+
+        <p class="catalog-empty" id="catalog-empty" hidden>No hay productos en esta categoría todavía.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!--FOOTER-->
+
+  <script src="/js/main.js"></script>
+  <script src="/js/catalog.js" defer></script>
+</body>
+</html>
