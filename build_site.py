@@ -417,6 +417,7 @@ def load_catalog():
 
     categories = data.get("categorias", [])
     names = {c["id"]: c["nombre"] for c in categories}
+    brands = {m["id"]: m["nombre"] for m in data.get("marcas", [])}
     products = []
     for p in data.get("productos", []):
         products.append({
@@ -425,6 +426,7 @@ def load_catalog():
             "descripcion": p.get("descripcion", ""),
             "categoria": p.get("categoria", ""),
             "categoriaNombre": names.get(p.get("categoria", ""), ""),
+            "marcaNombre": brands.get(p.get("marca", ""), ""),
             "precioOriginal": p.get("precioOriginal"),
             "precioReal": p.get("precioReal"),
             "imagen": p.get("imagen", ""),
@@ -464,6 +466,8 @@ def product_card(p, with_description=False):
         )
 
     category = f'<span class="product-card__cat">{esc(p["categoriaNombre"])}</span>' if p["categoriaNombre"] else ""
+    if p["marcaNombre"]:
+        category += f'<span class="product-card__brand">{esc(p["marcaNombre"])}</span>'
     description = ""
     if with_description and p["descripcion"]:
         description = f'<p class="product-card__desc">{esc(p["descripcion"])}</p>'

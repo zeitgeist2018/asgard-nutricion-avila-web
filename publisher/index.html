@@ -293,6 +293,13 @@
     .price-line strong { color: var(--color-gold-bright); }
     .price-line .no-real { color: var(--color-text-muted); }
     .entry-meta-line { font-size: 0.85rem; color: var(--color-text-muted); margin: 0; }
+    .select-row { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+    .select-row select { flex: 1; min-width: 180px; }
+    .link-action {
+      background: none; border: 0; color: var(--color-gold-bright); font-family: var(--font-body);
+      font-size: 0.95rem; cursor: pointer; padding: 0.4rem 0; text-decoration: underline;
+      text-underline-offset: 0.15em; white-space: nowrap;
+    }
   </style>
 </head>
 <body>
@@ -495,6 +502,14 @@
       <div class="field">
         <label for="p-category">Categoría</label>
         <select id="p-category"></select>
+      </div>
+
+      <div class="field">
+        <label for="p-brand">Marca</label>
+        <div class="select-row">
+          <select id="p-brand"></select>
+          <button type="button" class="link-action" id="add-brand-btn">+ Añadir marca nueva</button>
+        </div>
       </div>
 
       <div class="field">
@@ -1442,7 +1457,7 @@
 
     // ---------- Catálogo (catalogo/catalogo.json en el repo) ----------
     var CATALOG_PATH = "catalogo/catalogo.json";
-    var catalog = { categorias: [], productos: [] };
+    var catalog = { categorias: [], marcas: [], productos: [] };
     var catalogSha = null;        // versión actual del fichero (necesaria para guardar)
     var currentProduct = null;    // producto abierto en el editor (null = nuevo)
     var productImage = null;      // foto elegida para el producto y aún sin subir
@@ -1471,14 +1486,18 @@
       setBox("catalog-status", "loading", "Cargando catálogo…");
       return api("GET", CATALOG_PATH + "?ref=" + GITHUB_BRANCH).then(function (file) {
         var data = JSON.parse(base64ToUtf8(file.content));
-        catalog = { categorias: data.categorias || [], productos: data.productos || [] };
+        catalog = {
+          categorias: data.categorias || [],
+          marcas: data.marcas || [],
+          productos: data.productos || []
+        };
         catalogSha = file.sha;
         setBox("catalog-status", null);
         renderProducts();
       }).catch(function (err) {
         if (err.status === 404) {
           // Aún no existe el fichero: el primer guardado lo crea
-          catalog = { categorias: [], productos: [] };
+          catalog = { categorias: [], marcas: [], productos: [] };
           catalogSha = null;
           setBox("catalog-status", null);
           renderProducts();
@@ -1559,7 +1578,8 @@
 
       var category = document.createElement("span");
       category.className = "entry-meta-line";
-      category.textContent = categoryName(product.categoria) || "Sin categoría";
+      category.textContent = [brandName(product.marca), categoryName(product.categoria)]
+        .filter(Boolean).join(" · ") || "Sin categoría";
       body.appendChild(category);
 
       var prices = document.createElement("div");
@@ -1604,6 +1624,46 @@
       }
     }
 
+    function brandName(id) {
+      var found = (catalog.marcas || []).filter(function (m) { return m.id === id; })[0];
+      return found ? found.nombre : "";
+    }
+
+    function fillBrandSelect(selected) {
+      var select = el("p-brand");
+      select.innerHTML = "";
+      select.add(new Option("Sin marca", ""));
+      (catalog.marcas || []).forEach(function (m) {
+        select.add(new Option(m.nombre, m.id));
+      });
+      select.value = selected || "";
+    }
+
+    // Añade una marca al catálogo sin cerrar el producto que se está editando
+    el("add-brand-btn").addEventListener("click", function () {
+      var name = prompt("Nombre de la marca nueva:");
+      if (name === null) return;
+      name = name.trim();
+      if (!name) return;
+      var id = slugify(name) || "marca";
+      var repeated = (catalog.marcas || []).some(function (m) {
+        return m.id === id || normalizeText(m.nombre) === normalizeText(name);
+      });
+      if (repeated) {
+        setBox("product-status", "error", "Ya existe una marca con ese nombre.");
+        return;
+      }
+      setBox("product-status", "loading", "Guardando la marca…");
+      changeCatalog(function () {
+        catalog.marcas = (catalog.marcas || []).concat([{ id: id, nombre: name }]);
+      }, "Nueva marca: " + name, name).then(function () {
+        setBox("product-status", null);
+        fillBrandSelect(id);
+      }).catch(function (err) {
+        setBox("product-status", "error", errorMessage(err, "No se ha podido guardar la marca."));
+      });
+    });
+
     function fillCategorySelect(selected) {
       var select = el("p-category");
       select.innerHTML = "";
@@ -1625,6 +1685,7 @@
       el("p-image").value = "";
       el("product-heading").textContent = product ? "Editar producto" : "Nuevo producto";
       fillCategorySelect(product ? product.categoria : "");
+      fillBrandSelect(product ? product.marca : "");
       el("p-title").value = product ? product.titulo : "";
       el("p-description").value = product ? product.descripcion : "";
       el("p-price-original").value = product && product.precioOriginal != null ? product.precioOriginal : "";
@@ -1688,6 +1749,7 @@
         titulo: title,
         descripcion: el("p-description").value.trim(),
         categoria: el("p-category").value,
+        marca: el("p-brand").value,
         precioOriginal: original,
         precioReal: real,
         imagen: imagePath,
