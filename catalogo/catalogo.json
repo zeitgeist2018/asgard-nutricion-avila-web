@@ -11,17 +11,5 @@
       "nombre": "VitoBest"
     }
   ],
-  "productos": [
-    {
-      "id": "creatina-premium-mwiasq7b",
-      "titulo": "Creatina premium",
-      "descripcion": "esto es la descripción",
-      "categoria": "vitobest",
-      "marca": "vitobest",
-      "precioOriginal": 37,
-      "precioReal": 35,
-      "imagen": "images/productos/creatina-premium-mwiasq7b-1794775172519.jpg",
-      "creado": "2026-11-15T20:39:32.519Z"
-    }
-  ]
+  "productos": []
 }
