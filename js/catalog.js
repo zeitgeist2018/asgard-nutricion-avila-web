@@ -77,11 +77,11 @@
       resumeTimer = setTimeout(start, RESUME_MS);
     }
 
+    // Solo se para cuando el visitante interactúa: arrastra, desliza, usa la rueda o pulsa un producto.
+    // Pasar el ratón por encima no lo para.
     ["pointerdown", "touchstart", "wheel", "keydown", "focusin"].forEach(function (name) {
       track.addEventListener(name, pauseForUser, { passive: true });
     });
-    root.addEventListener("pointerenter", stop);
-    root.addEventListener("pointerleave", function () { clearTimeout(resumeTimer); start(); });
 
     // No gastar movimiento si la pestaña no está visible
     document.addEventListener("visibilitychange", function () {
