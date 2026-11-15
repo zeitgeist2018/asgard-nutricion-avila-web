@@ -62,7 +62,14 @@ BUSINESS = {
     "addressLocality": "Ávila",
     "addressRegion": "Castilla y León",
     "addressCountry": "ES",
-    "openingHours": [],           # p. ej. ["Mo-Fr 10:00-14:00", "Mo-Fr 17:00-20:30"]
+    # Horario de Google Maps. Domingo cerrado: no se incluye.
+    "openingHours": [
+        "Mo-Fr 10:30-14:00",
+        "Mo-Fr 17:00-20:00",
+        "Sa 11:00-13:30",
+    ],
+    "latitude": 40.656396,
+    "longitude": -4.689563,
 }
 DEFAULT_AUTHOR = "Israel Lobo Martín"
 
@@ -336,6 +343,12 @@ def store_json_ld():
         store["telephone"] = BUSINESS["telephone"]
     if BUSINESS["openingHours"]:
         store["openingHours"] = BUSINESS["openingHours"]
+    if BUSINESS["latitude"] and BUSINESS["longitude"]:
+        store["geo"] = {
+            "@type": "GeoCoordinates",
+            "latitude": BUSINESS["latitude"],
+            "longitude": BUSINESS["longitude"],
+        }
 
     website = {
         "@context": "https://schema.org",
