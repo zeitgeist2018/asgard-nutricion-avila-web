@@ -66,6 +66,17 @@
       "precioReal": null,
       "imagen": "",
       "creado": "2026-11-15T21:17:14.390Z"
+    },
+    {
+      "id": "test-5-mwic5fuv",
+      "titulo": "test 5",
+      "descripcion": "",
+      "categoria": "",
+      "marca": "vitobest",
+      "precioOriginal": 86,
+      "precioReal": null,
+      "imagen": "",
+      "creado": "2026-11-15T21:17:25.255Z"
     }
   ]
 }
