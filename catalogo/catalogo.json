@@ -22,28 +22,6 @@
       "precioReal": 35,
       "imagen": "images/productos/creatina-premium-mwiasq7b-1794775172519.jpg",
       "creado": "2026-11-15T20:39:32.519Z"
-    },
-    {
-      "id": "test-1-mwibyp78",
-      "titulo": "test 1",
-      "descripcion": "",
-      "categoria": "",
-      "marca": "",
-      "precioOriginal": 45,
-      "precioReal": null,
-      "imagen": "",
-      "creado": "2026-11-15T21:12:10.772Z"
-    },
-    {
-      "id": "test-2-mwibyvct",
-      "titulo": "test 2",
-      "descripcion": "",
-      "categoria": "",
-      "marca": "",
-      "precioOriginal": 76,
-      "precioReal": null,
-      "imagen": "",
-      "creado": "2026-11-15T21:12:18.749Z"
     }
   ]
 }
