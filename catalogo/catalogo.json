@@ -55,6 +55,28 @@
       "precioReal": 21.5,
       "imagen": "",
       "creado": "2026-11-15T21:12:32.721Z"
+    },
+    {
+      "id": "test-4-mwic57h2",
+      "titulo": "test 4",
+      "descripcion": "",
+      "categoria": "vitobest",
+      "marca": "vitobest",
+      "precioOriginal": 67,
+      "precioReal": null,
+      "imagen": "",
+      "creado": "2026-11-15T21:17:14.390Z"
+    },
+    {
+      "id": "test-5-mwic5fuv",
+      "titulo": "test 5",
+      "descripcion": "",
+      "categoria": "",
+      "marca": "vitobest",
+      "precioOriginal": 86,
+      "precioReal": null,
+      "imagen": "",
+      "creado": "2026-11-15T21:17:25.255Z"
     }
   ]
 }
