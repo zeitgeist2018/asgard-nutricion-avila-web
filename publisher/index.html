@@ -279,6 +279,20 @@
     .bar-track { grid-column: 1 / -1; height: 6px; background: var(--color-bg-alt); border-radius: 999px; overflow: hidden; }
     .bar-fill { height: 100%; background: var(--color-gold); border-radius: 999px; }
     .bars .bars-empty { display: block; color: var(--color-text-faint); font-size: 0.9rem; }
+    /* ---------- Catálogo ---------- */
+    .catalog-actions { margin-bottom: var(--space-md); }
+    .category-form { display: flex; gap: 0.5rem; margin-bottom: var(--space-md); }
+    .category-form input {
+      flex: 1; min-width: 0; background: var(--color-surface); color: var(--color-text);
+      border: 1px solid var(--color-border-strong); border-radius: var(--radius-sm);
+      padding: 0.75rem 0.9rem; font-family: var(--font-body); font-size: 1rem;
+    }
+    .category-form input:focus { outline: 2px solid var(--color-gold); outline-offset: 1px; }
+    .price-line { display: flex; gap: 0.5rem; align-items: baseline; flex-wrap: wrap; font-size: 0.9rem; }
+    .price-line s { color: var(--color-text-faint); }
+    .price-line strong { color: var(--color-gold-bright); }
+    .price-line .no-real { color: var(--color-text-muted); }
+    .entry-meta-line { font-size: 0.85rem; color: var(--color-text-muted); margin: 0; }
   </style>
 </head>
 <body>
@@ -301,6 +315,7 @@
   <nav class="tabs" id="tabs" aria-label="Secciones">
     <button type="button" class="tab is-active" id="tab-list">Entradas</button>
     <button type="button" class="tab" id="tab-stats">Estadísticas</button>
+    <button type="button" class="tab" id="tab-catalog">Catálogo</button>
   </nav>
 
   <!-- ===================== VISTA: LISTADO ===================== -->
@@ -430,6 +445,99 @@
     </div>
   </section>
 
+  <!-- ===================== VISTA: CATÁLOGO ===================== -->
+  <section class="view" id="view-catalog">
+    <div class="list-hero">
+      <div>
+        <h2>Catálogo</h2>
+        <span class="count" id="catalog-count"></span>
+      </div>
+      <button type="button" class="btn btn-gold" id="new-product-btn">+ Nuevo producto</button>
+    </div>
+
+    <div class="catalog-actions">
+      <button type="button" class="btn btn-line" id="manage-categories-btn">Gestionar categorías</button>
+    </div>
+
+    <div class="status-box" id="catalog-status"></div>
+    <ul class="entry-list" id="product-list"></ul>
+    <div class="empty-state" id="catalog-empty" hidden>
+      <p>Todavía no hay productos en el catálogo.</p>
+      <button type="button" class="btn btn-gold" id="empty-product-btn">+ Añadir el primero</button>
+    </div>
+  </section>
+
+  <!-- ===================== VISTA: PRODUCTO ===================== -->
+  <section class="view" id="view-product">
+    <div class="editor-top">
+      <button type="button" class="back-link" id="product-back-btn">← Volver al catálogo</button>
+      <h2 id="product-heading">Nuevo producto</h2>
+    </div>
+
+    <form id="product-form">
+      <div class="field">
+        <span class="label">Foto</span>
+        <div class="photo-box">
+          <div class="photo-preview photo-preview--empty" id="product-photo-preview">Sin foto</div>
+          <div class="photo-meta">
+            <button type="button" class="btn btn-line" id="p-image-btn">Elegir foto</button>
+            <input type="file" id="p-image" accept="image/*" style="display:none;">
+            <p class="hint" id="p-image-hint"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="p-title">Título</label>
+        <input type="text" id="p-title" required placeholder="Ej: Whey Essential 2kg">
+      </div>
+
+      <div class="field">
+        <label for="p-category">Categoría</label>
+        <select id="p-category"></select>
+      </div>
+
+      <div class="field">
+        <label for="p-description">Descripción</label>
+        <textarea id="p-description" rows="4" placeholder="Sabor, formato, para qué sirve…"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="p-price-original">Precio original (€)</label>
+        <input type="number" id="p-price-original" min="0" step="0.01" required inputmode="decimal">
+        <p class="hint">Siempre aparece tachado.</p>
+      </div>
+
+      <div class="field">
+        <label for="p-price-real">Precio real (€), opcional</label>
+        <input type="number" id="p-price-real" min="0" step="0.01" inputmode="decimal">
+        <p class="hint">Si lo dejas vacío, en la web aparece «Consulta el precio con nosotros», con enlace a WhatsApp.</p>
+      </div>
+
+      <button type="submit" class="btn btn-gold btn-block" id="product-save-btn">Guardar producto</button>
+    </form>
+
+    <button type="button" class="btn btn-danger btn-block" id="product-delete-btn" hidden>Borrar producto</button>
+
+    <div class="status-box" id="product-status"></div>
+  </section>
+
+  <!-- ===================== VISTA: CATEGORÍAS ===================== -->
+  <section class="view" id="view-categories">
+    <div class="editor-top">
+      <button type="button" class="back-link" id="categories-back-btn">← Volver al catálogo</button>
+      <h2>Categorías</h2>
+    </div>
+
+    <form class="category-form" id="category-form">
+      <input type="text" id="c-name" placeholder="Nombre de la categoría" required aria-label="Nombre de la categoría">
+      <button type="submit" class="btn btn-gold">Añadir</button>
+    </form>
+
+    <div class="status-box" id="categories-status"></div>
+    <ul class="entry-list" id="category-list"></ul>
+  </section>
+
   <!-- ===================== VISTA: AJUSTES ===================== -->
   <section class="view" id="view-settings">
     <div class="settings-note">
@@ -476,6 +584,9 @@
       list: el("view-list"),
       stats: el("view-stats"),
       editor: el("view-editor"),
+      catalog: el("view-catalog"),
+      product: el("view-product"),
+      categories: el("view-categories"),
       settings: el("view-settings")
     };
 
@@ -488,11 +599,12 @@
       Object.keys(views).forEach(function (key) {
         views[key].classList.toggle("is-active", key === name);
       });
-      // Las pestañas solo se ven en el listado y en las estadísticas
-      var inTabs = name === "list" || name === "stats";
+      // Las pestañas solo se ven en el listado, las estadísticas y el catálogo
+      var inTabs = name === "list" || name === "stats" || name === "catalog";
       el("tabs").hidden = !inTabs;
       el("tab-list").classList.toggle("is-active", name === "list");
       el("tab-stats").classList.toggle("is-active", name === "stats");
+      el("tab-catalog").classList.toggle("is-active", name === "catalog");
       if (name === "list") updateNewButton();
     }
 
@@ -1325,6 +1437,415 @@
         } else {
           setBox("stats-status", "error", errorMessage(err, "No se han podido cargar las estadísticas."));
         }
+      });
+    }
+
+    // ---------- Catálogo (catalogo/catalogo.json en el repo) ----------
+    var CATALOG_PATH = "catalogo/catalogo.json";
+    var catalog = { categorias: [], productos: [] };
+    var catalogSha = null;        // versión actual del fichero (necesaria para guardar)
+    var currentProduct = null;    // producto abierto en el editor (null = nuevo)
+    var productImage = null;      // foto elegida para el producto y aún sin subir
+
+    el("tab-catalog").addEventListener("click", function () { showView("catalog"); loadCatalog(); });
+    el("new-product-btn").addEventListener("click", function () { openProduct(null); });
+    el("empty-product-btn").addEventListener("click", function () { openProduct(null); });
+    el("manage-categories-btn").addEventListener("click", function () { openCategories(); });
+    el("product-back-btn").addEventListener("click", function () { showView("catalog"); });
+    el("categories-back-btn").addEventListener("click", function () { showView("catalog"); });
+
+    function formatEuro(value) {
+      return Number(value).toLocaleString("es-ES", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
+    }
+
+    function categoryName(id) {
+      var found = catalog.categorias.filter(function (c) { return c.id === id; })[0];
+      return found ? found.nombre : "";
+    }
+
+    function loadCatalog() {
+      if (!loadToken()) {
+        setBox("catalog-status", "error", "Configura primero el token en Ajustes.");
+        return Promise.resolve();
+      }
+      setBox("catalog-status", "loading", "Cargando catálogo…");
+      return api("GET", CATALOG_PATH + "?ref=" + GITHUB_BRANCH).then(function (file) {
+        var data = JSON.parse(base64ToUtf8(file.content));
+        catalog = { categorias: data.categorias || [], productos: data.productos || [] };
+        catalogSha = file.sha;
+        setBox("catalog-status", null);
+        renderProducts();
+      }).catch(function (err) {
+        if (err.status === 404) {
+          // Aún no existe el fichero: el primer guardado lo crea
+          catalog = { categorias: [], productos: [] };
+          catalogSha = null;
+          setBox("catalog-status", null);
+          renderProducts();
+          return;
+        }
+        setBox("catalog-status", "error", errorMessage(err, "No se ha podido cargar el catálogo."));
+      });
+    }
+
+    // Guarda el catálogo entero en un commit y sigue el despliegue igual que las entradas
+    function saveCatalog(message, title) {
+      var payload = {
+        message: message,
+        content: utf8ToBase64(JSON.stringify(catalog, null, 2) + "\n"),
+        branch: GITHUB_BRANCH
+      };
+      if (catalogSha) payload.sha = catalogSha;
+      return api("PUT", CATALOG_PATH, payload).then(function (res) {
+        catalogSha = res.content.sha;
+        trackChange({ slug: "catalogo", sha: res.commit.sha, title: title, label: "Actualizando catálogo" });
+      });
+    }
+
+    // Aplica un cambio, lo guarda y, si falla, lo deshace en pantalla
+    function changeCatalog(mutate, message, title) {
+      var snapshot = JSON.stringify(catalog);
+      mutate();
+      return saveCatalog(message, title).catch(function (err) {
+        catalog = JSON.parse(snapshot);
+        throw err;
+      });
+    }
+
+    function renderProducts() {
+      var list = el("product-list");
+      list.innerHTML = "";
+      var products = catalog.productos.slice().sort(function (a, b) {
+        return a.creado < b.creado ? 1 : a.creado > b.creado ? -1 : 0;
+      });
+      el("catalog-count").textContent = products.length
+        ? products.length + (products.length === 1 ? " producto" : " productos")
+        : "";
+      el("catalog-empty").hidden = products.length > 0;
+      products.forEach(function (product) {
+        list.appendChild(buildProductCard(product));
+      });
+    }
+
+    function buildProductCard(product) {
+      var item = document.createElement("li");
+      item.className = "entry-card";
+
+      var thumb = document.createElement("button");
+      thumb.type = "button";
+      thumb.className = "entry-thumb";
+      thumb.setAttribute("aria-label", "Editar " + product.titulo);
+      if (product.imagen) {
+        var img = document.createElement("img");
+        img.src = "/" + product.imagen;
+        img.alt = "";
+        img.loading = "lazy";
+        thumb.appendChild(img);
+      } else {
+        thumb.classList.add("entry-thumb--empty");
+        thumb.textContent = "Sin foto";
+      }
+      thumb.addEventListener("click", function () { openProduct(product); });
+
+      var body = document.createElement("div");
+      body.className = "entry-body";
+
+      var title = document.createElement("button");
+      title.type = "button";
+      title.className = "entry-title";
+      title.textContent = product.titulo;
+      title.addEventListener("click", function () { openProduct(product); });
+      body.appendChild(title);
+
+      var category = document.createElement("span");
+      category.className = "entry-meta-line";
+      category.textContent = categoryName(product.categoria) || "Sin categoría";
+      body.appendChild(category);
+
+      var prices = document.createElement("div");
+      prices.className = "price-line";
+      if (product.precioOriginal != null) {
+        var old = document.createElement("s");
+        old.textContent = formatEuro(product.precioOriginal);
+        prices.appendChild(old);
+      }
+      var real = document.createElement(product.precioReal != null ? "strong" : "span");
+      real.className = product.precioReal != null ? "" : "no-real";
+      real.textContent = product.precioReal != null ? formatEuro(product.precioReal) : "Consulta el precio";
+      prices.appendChild(real);
+      body.appendChild(prices);
+
+      var edit = document.createElement("button");
+      edit.type = "button";
+      edit.className = "entry-edit";
+      edit.textContent = "Editar";
+      edit.addEventListener("click", function () { openProduct(product); });
+      body.appendChild(edit);
+
+      item.appendChild(thumb);
+      item.appendChild(body);
+      return item;
+    }
+
+    function setProductPhoto(path) {
+      var box = el("product-photo-preview");
+      box.innerHTML = "";
+      if (path) {
+        box.className = "photo-preview";
+        var img = document.createElement("img");
+        img.src = "/" + path;
+        img.alt = "";
+        box.appendChild(img);
+        el("p-image-hint").textContent = "Foto actual.";
+      } else {
+        box.className = "photo-preview photo-preview--empty";
+        box.textContent = "Sin foto";
+        el("p-image-hint").textContent = "";
+      }
+    }
+
+    function fillCategorySelect(selected) {
+      var select = el("p-category");
+      select.innerHTML = "";
+      select.add(new Option("Sin categoría", ""));
+      catalog.categorias.forEach(function (c) {
+        select.add(new Option(c.nombre, c.id));
+      });
+      select.value = selected || "";
+    }
+
+    function setProductSaving(busy) {
+      el("product-save-btn").disabled = busy;
+      el("product-delete-btn").disabled = busy;
+    }
+
+    function openProduct(product) {
+      currentProduct = product;
+      productImage = null;
+      el("p-image").value = "";
+      el("product-heading").textContent = product ? "Editar producto" : "Nuevo producto";
+      fillCategorySelect(product ? product.categoria : "");
+      el("p-title").value = product ? product.titulo : "";
+      el("p-description").value = product ? product.descripcion : "";
+      el("p-price-original").value = product && product.precioOriginal != null ? product.precioOriginal : "";
+      el("p-price-real").value = product && product.precioReal != null ? product.precioReal : "";
+      el("product-delete-btn").hidden = !product;
+      setProductPhoto(product ? product.imagen : "");
+      setBox("product-status", null);
+      showView("product");
+      window.scrollTo(0, 0);
+    }
+
+    el("p-image-btn").addEventListener("click", function () { el("p-image").click(); });
+
+    el("p-image").addEventListener("change", function () {
+      var file = el("p-image").files[0];
+      productImage = file || null;
+      if (!file) {
+        setProductPhoto(currentProduct ? currentProduct.imagen : "");
+        return;
+      }
+      var reader = new FileReader();
+      reader.onload = function () {
+        var box = el("product-photo-preview");
+        box.innerHTML = "";
+        box.className = "photo-preview";
+        var img = document.createElement("img");
+        img.src = reader.result;
+        img.alt = "";
+        box.appendChild(img);
+        el("p-image-hint").textContent = "La foto se subirá al guardar.";
+      };
+      reader.readAsDataURL(file);
+    });
+
+    el("product-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (!loadToken()) {
+        setBox("product-status", "error", "Configura primero el token en Ajustes.");
+        return;
+      }
+
+      var title = el("p-title").value.trim();
+      var original = parseFloat(el("p-price-original").value);
+      var realText = el("p-price-real").value.trim();
+      var real = realText === "" ? null : parseFloat(realText);
+      if (!title || isNaN(original) || (real !== null && isNaN(real))) return;
+
+      var id = currentProduct ? currentProduct.id : (slugify(title) || "producto") + "-" + Date.now().toString(36);
+      var imagePath = currentProduct ? currentProduct.imagen : "";
+      var uploadStep = Promise.resolve();
+      if (productImage) {
+        var ext = (productImage.name.split(".").pop() || "jpg").toLowerCase().replace(/[^a-z0-9]/g, "") || "jpg";
+        imagePath = "images/productos/" + id + "-" + Date.now() + "." + ext;
+        uploadStep = fileToBase64(productImage).then(function (base64) {
+          return api("PUT", imagePath, { message: "Foto de producto: " + title, content: base64, branch: GITHUB_BRANCH });
+        });
+      }
+
+      var product = {
+        id: id,
+        titulo: title,
+        descripcion: el("p-description").value.trim(),
+        categoria: el("p-category").value,
+        precioOriginal: original,
+        precioReal: real,
+        imagen: imagePath,
+        creado: currentProduct ? currentProduct.creado : new Date().toISOString()
+      };
+
+      setProductSaving(true);
+      setBox("product-status", "loading", "Guardando…");
+
+      uploadStep.then(function () {
+        return changeCatalog(function () {
+          var index = catalog.productos.findIndex(function (p) { return p.id === id; });
+          if (index === -1) catalog.productos.push(product);
+          else catalog.productos[index] = product;
+        }, (currentProduct ? "Edita producto: " : "Nuevo producto: ") + title, title);
+      }).then(function () {
+        showView("catalog");
+        renderProducts();
+      }).catch(function (err) {
+        setBox("product-status", "error", errorMessage(err, "No se ha podido guardar el producto."));
+      }).finally(function () {
+        setProductSaving(false);
+      });
+    });
+
+    el("product-delete-btn").addEventListener("click", function () {
+      if (!currentProduct) return;
+      var target = currentProduct;
+      if (!confirm('¿Borrar el producto "' + target.titulo + '"? Dejará de aparecer en la web.')) return;
+
+      setProductSaving(true);
+      setBox("product-status", "loading", "Borrando…");
+
+      changeCatalog(function () {
+        catalog.productos = catalog.productos.filter(function (p) { return p.id !== target.id; });
+      }, "Borra producto: " + target.titulo, target.titulo).then(function () {
+        showView("catalog");
+        renderProducts();
+      }).catch(function (err) {
+        setBox("product-status", "error", errorMessage(err, "No se ha podido borrar el producto."));
+      }).finally(function () {
+        setProductSaving(false);
+      });
+    });
+
+    // ---------- Categorías ----------
+    function openCategories() {
+      renderCategories();
+      setBox("categories-status", null);
+      showView("categories");
+    }
+
+    function renderCategories() {
+      var list = el("category-list");
+      list.innerHTML = "";
+      if (!catalog.categorias.length) {
+        var empty = document.createElement("li");
+        empty.className = "entry-meta-line";
+        empty.textContent = "Todavía no hay categorías. Crea la primera arriba.";
+        list.appendChild(empty);
+        return;
+      }
+      catalog.categorias.forEach(function (category) {
+        var count = catalog.productos.filter(function (p) { return p.categoria === category.id; }).length;
+
+        var item = document.createElement("li");
+        item.className = "entry-item";
+
+        var info = document.createElement("div");
+        info.className = "entry-info";
+        var name = document.createElement("strong");
+        name.textContent = category.nombre;
+        var meta = document.createElement("span");
+        meta.className = "entry-meta";
+        meta.textContent = count + (count === 1 ? " producto" : " productos");
+        info.appendChild(name);
+        info.appendChild(meta);
+
+        var actions = document.createElement("div");
+        actions.className = "entry-actions";
+
+        var rename = document.createElement("button");
+        rename.type = "button";
+        rename.className = "entry-edit";
+        rename.textContent = "Renombrar";
+        rename.addEventListener("click", function () { renameCategory(category); });
+
+        var remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "entry-edit";
+        remove.textContent = "Borrar";
+        remove.addEventListener("click", function () { deleteCategory(category, count); });
+
+        actions.appendChild(rename);
+        actions.appendChild(remove);
+        item.appendChild(info);
+        item.appendChild(actions);
+        list.appendChild(item);
+      });
+    }
+
+    el("category-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var name = el("c-name").value.trim();
+      if (!name) return;
+      var id = slugify(name) || "categoria";
+      var repeated = catalog.categorias.some(function (c) {
+        return c.id === id || normalizeText(c.nombre) === normalizeText(name);
+      });
+      if (repeated) {
+        setBox("categories-status", "error", "Ya existe una categoría con ese nombre.");
+        return;
+      }
+      setBox("categories-status", "loading", "Guardando…");
+      changeCatalog(function () {
+        catalog.categorias.push({ id: id, nombre: name });
+      }, "Nueva categoría: " + name, name).then(function () {
+        el("c-name").value = "";
+        setBox("categories-status", null);
+        renderCategories();
+      }).catch(function (err) {
+        setBox("categories-status", "error", errorMessage(err, "No se ha podido guardar la categoría."));
+      });
+    });
+
+    function renameCategory(category) {
+      var name = prompt("Nuevo nombre de la categoría:", category.nombre);
+      if (name === null) return;
+      name = name.trim();
+      if (!name || name === category.nombre) return;
+      setBox("categories-status", "loading", "Guardando…");
+      changeCatalog(function () {
+        catalog.categorias.forEach(function (c) {
+          if (c.id === category.id) c.nombre = name;
+        });
+      }, "Renombra categoría: " + category.nombre + " → " + name, name).then(function () {
+        setBox("categories-status", null);
+        renderCategories();
+      }).catch(function (err) {
+        setBox("categories-status", "error", errorMessage(err, "No se ha podido renombrar la categoría."));
+      });
+    }
+
+    function deleteCategory(category, count) {
+      if (count > 0) {
+        setBox("categories-status", "error", "Hay " + count + (count === 1 ? " producto" : " productos") +
+          " en «" + category.nombre + "». Cámbialos de categoría antes de borrarla.");
+        return;
+      }
+      if (!confirm('¿Borrar la categoría "' + category.nombre + '"?')) return;
+      setBox("categories-status", "loading", "Borrando…");
+      changeCatalog(function () {
+        catalog.categorias = catalog.categorias.filter(function (c) { return c.id !== category.id; });
+      }, "Borra categoría: " + category.nombre, category.nombre).then(function () {
+        setBox("categories-status", null);
+        renderCategories();
+      }).catch(function (err) {
+        setBox("categories-status", "error", errorMessage(err, "No se ha podido borrar la categoría."));
       });
     }
 
