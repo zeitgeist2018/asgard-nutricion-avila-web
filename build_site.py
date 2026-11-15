@@ -47,6 +47,23 @@ else:
     BASE_PATH = "/asgard-nutricion-avila-web"
 
 SITE_NAME = "Asgard Nutrición Deportiva"
+
+# Imágenes para las vistas previas (WhatsApp, Google, redes)
+LOGO_IMAGE = f"{SITE_URL}/images/logo.jpg"
+SHARE_IMAGE = f"{SITE_URL}/images/share.jpg"  # 1200x630
+
+# Datos de la tienda para los datos estructurados (JSON-LD) de la portada.
+# Lo que quede vacío no se publica. Google usa la dirección para la ficha local.
+BUSINESS = {
+    "telephone": "+34683584356",
+    "instagram": "https://www.instagram.com/asgardnutricionavila",
+    "streetAddress": "",          # p. ej. "Calle Ejemplo, 1"
+    "postalCode": "",             # p. ej. "05001"
+    "addressLocality": "Ávila",
+    "addressRegion": "Castilla y León",
+    "addressCountry": "ES",
+    "openingHours": [],           # p. ej. ["Mo-Fr 10:00-14:00", "Mo-Fr 17:00-20:30"]
+}
 DEFAULT_AUTHOR = "Israel Lobo Martín"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -277,13 +294,103 @@ def render_placeholder_page(template_text, active_page, extra_replacements):
     return out
 
 
+def json_ld_script(data):
+    """Envuelve datos JSON-LD en la etiqueta <script> que leen los buscadores."""
+    return '<script type="application/ld+json">\n' + json.dumps(data, ensure_ascii=False, indent=2) + "\n</script>"
+
+
+def organization_json_ld():
+    return {
+        "@type": "Organization",
+        "name": SITE_NAME,
+        "url": f"{SITE_URL}/",
+        "logo": {"@type": "ImageObject", "url": LOGO_IMAGE},
+    }
+
+
+def store_json_ld():
+    """Ficha de la tienda y del sitio web (solo en la portada)."""
+    address = {
+        "@type": "PostalAddress",
+        "addressLocality": BUSINESS["addressLocality"],
+        "addressRegion": BUSINESS["addressRegion"],
+        "addressCountry": BUSINESS["addressCountry"],
+    }
+    if BUSINESS["streetAddress"]:
+        address["streetAddress"] = BUSINESS["streetAddress"]
+    if BUSINESS["postalCode"]:
+        address["postalCode"] = BUSINESS["postalCode"]
+
+    store = {
+        "@context": "https://schema.org",
+        "@type": "Store",
+        "@id": f"{SITE_URL}/#store",
+        "name": SITE_NAME,
+        "url": f"{SITE_URL}/",
+        "logo": LOGO_IMAGE,
+        "image": SHARE_IMAGE,
+        "address": address,
+        "sameAs": [BUSINESS["instagram"]],
+    }
+    if BUSINESS["telephone"]:
+        store["telephone"] = BUSINESS["telephone"]
+    if BUSINESS["openingHours"]:
+        store["openingHours"] = BUSINESS["openingHours"]
+
+    website = {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": f"{SITE_URL}/#website",
+        "name": SITE_NAME,
+        "url": f"{SITE_URL}/",
+        "inLanguage": "es-ES",
+    }
+    return [website, store]
+
+
+def blog_json_ld(posts):
+    """Listado del blog: cada entrada publicada como BlogPosting."""
+    return {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "name": "Blog de " + SITE_NAME,
+        "url": f"{SITE_URL}/blog.html",
+        "inLanguage": "es-ES",
+        "publisher": organization_json_ld(),
+        "blogPost": [
+            {
+                "@type": "BlogPosting",
+                "headline": p["title"],
+                "url": f"{SITE_URL}/blog/{p['slug']}/",
+                "datePublished": p["date"],
+            }
+            for p in posts
+        ],
+    }
+
+
+def breadcrumb_json_ld(title, canonical):
+    return {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Inicio", "item": f"{SITE_URL}/"},
+            {"@type": "ListItem", "position": 2, "name": "Blog", "item": f"{SITE_URL}/blog.html"},
+            {"@type": "ListItem", "position": 3, "name": title, "item": canonical},
+        ],
+    }
+
+
 def build_home(posts):
     with open(os.path.join(BASE_DIR, "index.html"), encoding="utf-8") as f:
         template = f.read()
     cards = "".join(render_card(p) for p in posts[:3]) or (
         '<p style="color: var(--color-text-muted);">Todavía no hay entradas publicadas.</p>'
     )
-    html_out = render_placeholder_page(template, "inicio", {"<!--LATEST_POSTS-->": cards})
+    html_out = render_placeholder_page(template, "inicio", {
+        "<!--LATEST_POSTS-->": cards,
+        "<!--JSON_LD-->": json_ld_script(store_json_ld()),
+    })
     write_file(os.path.join(DIST_DIR, "index.html"), html_out)
 
 
@@ -293,7 +400,10 @@ def build_blog_listing(posts):
     cards = "".join(render_card(p) for p in posts) or (
         '<p style="color: var(--color-text-muted);">Todavía no hay entradas publicadas.</p>'
     )
-    html_out = render_placeholder_page(template, "blog", {"<!--BLOG_GRID-->": cards})
+    html_out = render_placeholder_page(template, "blog", {
+        "<!--BLOG_GRID-->": cards,
+        "<!--JSON_LD-->": json_ld_script(blog_json_ld(posts)),
+    })
     write_file(os.path.join(DIST_DIR, "blog.html"), html_out)
 
 
@@ -311,7 +421,7 @@ def build_post_pages(posts):
         if post["image"]:
             image_url = f"{SITE_URL}/{post['image']}"
             cover_html = (
-                f'<figure class="article-cover"><img src="/{post["image"]}" alt="" loading="lazy"></figure>'
+                f'<figure class="article-cover"><img src="/{post["image"]}" alt="{title}" loading="lazy"></figure>'
             )
             og_image = f'<meta property="og:image" content="{image_url}">'
             twitter_image = f'<meta name="twitter:image" content="{image_url}">'
@@ -321,22 +431,27 @@ def build_post_pages(posts):
                 '<div class="decorative-panel" role="img" aria-label="Motivo ornamental vikingo">'
                 + SHIELD_SVG + "</div>"
             )
-            # Sin foto propia, la vista previa usa el logo de la marca
-            og_image = f'<meta property="og:image" content="{SITE_URL}/images/logo.jpg">'
-            twitter_image = f'<meta name="twitter:image" content="{SITE_URL}/images/logo.jpg">'
-            twitter_card_type = "summary"
+            # Sin foto propia, la vista previa usa la imagen de marca (1200x630)
+            og_image = f'<meta property="og:image" content="{SHARE_IMAGE}">'
+            twitter_image = f'<meta name="twitter:image" content="{SHARE_IMAGE}">'
+            twitter_card_type = "summary_large_image"
 
-        json_ld = json.dumps({
+        article = {
             "@context": "https://schema.org",
-            "@type": "Article",
+            "@type": "BlogPosting",
             "headline": post["title"],
             "description": truncate(post["excerpt"], 155),
             "datePublished": post["date"],
+            "dateModified": post["date"],
             "author": {"@type": "Person", "name": post["author"]},
-            "publisher": {"@type": "Organization", "name": SITE_NAME},
+            "publisher": organization_json_ld(),
             "mainEntityOfPage": canonical,
-            **({"image": f"{SITE_URL}/{post['image']}"} if post["image"] else {}),
-        }, ensure_ascii=False, indent=2)
+            "image": f"{SITE_URL}/{post['image']}" if post["image"] else SHARE_IMAGE,
+            "inLanguage": "es-ES",
+        }
+        # Lista de datos: la entrada y la ruta de navegación (el template ya pone la etiqueta <script>)
+        json_ld = json.dumps([article, breadcrumb_json_ld(post["title"], canonical)],
+                             ensure_ascii=False, indent=2)
 
         page = template
         replacements = {
@@ -363,17 +478,30 @@ def build_post_pages(posts):
 
 def build_sitemap(posts):
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    urls = [(f"{SITE_URL}/", today), (f"{SITE_URL}/blog.html", today)]
-    for p in posts:
-        urls.append((f"{SITE_URL}/blog/{p['slug']}/", p["date"] or today))
+    # La portada y el listado cambian cuando se publica una entrada: usan la fecha de la más reciente
+    latest = max((p["date"] for p in posts if p["date"]), default=today)
 
-    entries = "\n".join(
-        f"  <url><loc>{esc(u)}</loc><lastmod>{d}</lastmod></url>" for u, d in urls
-    )
+    entries = [
+        f"  <url><loc>{esc(SITE_URL)}/</loc><lastmod>{latest}</lastmod></url>",
+        f"  <url><loc>{esc(SITE_URL)}/blog.html</loc><lastmod>{latest}</lastmod></url>",
+    ]
+    for p in posts:
+        images = ""
+        if p["image"]:
+            images = (
+                f"<image:image><image:loc>{esc(SITE_URL + '/' + p['image'])}</image:loc>"
+                f"<image:caption>{esc(p['title'])}</image:caption></image:image>"
+            )
+        entries.append(
+            f"  <url><loc>{esc(SITE_URL + '/blog/' + p['slug'] + '/')}</loc>"
+            f"<lastmod>{p['date'] or latest}</lastmod>{images}</url>"
+        )
+
     sitemap = (
         '<?xml version="1.0" encoding="UTF-8"?>\n'
-        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-        + entries + "\n</urlset>\n"
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
+        'xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n'
+        + "\n".join(entries) + "\n</urlset>\n"
     )
     write_file(os.path.join(DIST_DIR, "sitemap.xml"), sitemap)
 
@@ -437,6 +565,13 @@ def write_file(path, content):
         f.write(content)
 
 
+def build_404():
+    """Página de error propia. GitHub Pages la sirve cuando una URL no existe."""
+    with open(os.path.join(BASE_DIR, "404.html"), encoding="utf-8") as f:
+        template = f.read()
+    write_file(os.path.join(DIST_DIR, "404.html"), render_placeholder_page(template, None, {}))
+
+
 def main():
     if os.path.isdir(DIST_DIR):
         shutil.rmtree(DIST_DIR)
@@ -451,6 +586,7 @@ def main():
     build_blog_listing(posts)
     build_post_pages(posts)
     build_sitemap(posts)
+    build_404()
     copy_static_assets()
     apply_base_path(DIST_DIR, BASE_PATH)
 
