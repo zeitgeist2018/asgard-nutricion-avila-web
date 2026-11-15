@@ -331,6 +331,16 @@
   display: none;
 }
 
+/* Apertura y cierre: el fondo se funde y la ficha sube con un ligero zoom.
+   Sin la clase is-open, la ventana está en su estado inicial (invisible). */
+.product-modal {
+  transition: opacity 0.25s ease;
+}
+
+.product-modal:not(.is-open) {
+  opacity: 0;
+}
+
 .product-modal__backdrop {
   position: absolute;
   inset: 0;
@@ -345,6 +355,19 @@
   background: var(--color-surface);
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-md);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.product-modal:not(.is-open) .product-modal__dialog {
+  transform: translateY(16px) scale(0.97);
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-modal,
+  .product-modal__dialog {
+    transition: none;
+  }
 }
 
 .product-modal__close {

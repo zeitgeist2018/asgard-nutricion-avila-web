@@ -129,20 +129,31 @@
       pricesBox.innerHTML = prices ? prices.innerHTML : "";
     }
 
+    var CLOSE_MS = 250;      // duración de la animación de cierre (igual que en el CSS)
+    var closeTimer = null;
+
     function openModal(card) {
+      clearTimeout(closeTimer);
       openedFrom = card;
       fillModal(card);
       modal.hidden = false;
       document.body.style.overflow = "hidden";
+      // Forzar un repintado para que la transición de entrada parta del estado inicial
+      void modal.offsetWidth;
+      modal.classList.add("is-open");
       closeButton.focus();
     }
 
     function closeModal() {
-      if (modal.hidden) return;
-      modal.hidden = true;
+      if (!modal.classList.contains("is-open")) return;
+      modal.classList.remove("is-open");
       document.body.style.overflow = "";
       if (openedFrom) openedFrom.focus();
       openedFrom = null;
+      // Se oculta cuando termina la animación de salida
+      closeTimer = setTimeout(function () {
+        modal.hidden = true;
+      }, CLOSE_MS);
     }
 
     // Pulsar la tarjeta abre la ficha; los enlaces (p. ej. WhatsApp) siguen funcionando solos
