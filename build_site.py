@@ -474,7 +474,8 @@ def product_card(p, with_description=False):
         description = f'<p class="product-card__desc">{esc(p["descripcion"])}</p>'
 
     return (
-        f'<article class="product-card" data-category="{esc(p["categoria"])}">'
+        f'<article class="product-card" tabindex="0" data-category="{esc(p["categoria"])}" '
+        f'data-description="{esc(p["descripcion"])}">'
         f'<div class="product-card__media">{media}</div>'
         '<div class="product-card__body">'
         + category
@@ -502,6 +503,24 @@ def catalog_carousel_html(products):
     )
 
 
+def product_modal_html():
+    """Ventana emergente con la ficha completa del producto (la rellena js/catalog.js)."""
+    return (
+        '<div class="product-modal" id="product-modal" hidden role="dialog" aria-modal="true" '
+        'aria-labelledby="product-modal-title">'
+        '<div class="product-modal__backdrop" data-close></div>'
+        '<div class="product-modal__dialog">'
+        '<button type="button" class="product-modal__close" data-close aria-label="Cerrar">×</button>'
+        '<div class="product-modal__media" id="product-modal-media"></div>'
+        '<div class="product-modal__body">'
+        '<div class="product-modal__meta" id="product-modal-meta"></div>'
+        '<h2 class="product-modal__title" id="product-modal-title"></h2>'
+        '<p class="product-modal__desc" id="product-modal-desc"></p>'
+        '<div class="product-card__prices" id="product-modal-prices"></div>'
+        "</div></div></div>"
+    )
+
+
 def build_catalog_page(categories, products):
     with open(os.path.join(BASE_DIR, "catalogo.html"), encoding="utf-8") as f:
         template = f.read()
@@ -515,6 +534,7 @@ def build_catalog_page(categories, products):
     html_out = render_placeholder_page(template, "catalogo", {
         "<!--CATALOG_FILTERS-->": "".join(filters),
         "<!--CATALOG_GRID-->": grid or '<p class="catalog-empty">Todavía no hay productos en el catálogo.</p>',
+        "<!--PRODUCT_MODAL-->": product_modal_html(),
     })
     write_file(os.path.join(DIST_DIR, "catalogo.html"), html_out)
 
@@ -540,6 +560,7 @@ def build_home(posts, products):
         "<!--JSON_LD-->": json_ld_script(store_json_ld()),
         "<!--REVIEW_LINK-->": review_link_html(),
         "<!--CATALOG_CAROUSEL-->": catalog_carousel_html(products),
+        "<!--PRODUCT_MODAL-->": product_modal_html(),
     })
     write_file(os.path.join(DIST_DIR, "index.html"), html_out)
 

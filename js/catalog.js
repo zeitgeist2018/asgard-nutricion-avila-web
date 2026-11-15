@@ -94,4 +94,78 @@
       });
     });
   }
+
+  // ---------- Ficha completa del producto en una ventana emergente ----------
+  var modal = document.getElementById("product-modal");
+  if (modal) {
+    var closeButton = modal.querySelector(".product-modal__close");
+    var openedFrom = null;   // tarjeta que abrió la ventana (para devolverle el foco)
+
+    function fillModal(card) {
+      var media = card.querySelector(".product-card__media");
+      var meta = card.querySelector(".product-card__body");
+      var title = card.querySelector(".product-card__title");
+      var prices = card.querySelector(".product-card__prices");
+      var description = card.getAttribute("data-description") || "";
+
+      var mediaBox = document.getElementById("product-modal-media");
+      mediaBox.innerHTML = media ? media.innerHTML : "";
+
+      var metaBox = document.getElementById("product-modal-meta");
+      metaBox.innerHTML = "";
+      if (meta) {
+        meta.querySelectorAll(".product-card__cat, .product-card__brand").forEach(function (node) {
+          metaBox.appendChild(node.cloneNode(true));
+        });
+      }
+
+      document.getElementById("product-modal-title").textContent = title ? title.textContent : "";
+
+      var descBox = document.getElementById("product-modal-desc");
+      descBox.textContent = description;
+      descBox.hidden = !description;
+
+      var pricesBox = document.getElementById("product-modal-prices");
+      pricesBox.innerHTML = prices ? prices.innerHTML : "";
+    }
+
+    function openModal(card) {
+      openedFrom = card;
+      fillModal(card);
+      modal.hidden = false;
+      document.body.style.overflow = "hidden";
+      closeButton.focus();
+    }
+
+    function closeModal() {
+      if (modal.hidden) return;
+      modal.hidden = true;
+      document.body.style.overflow = "";
+      if (openedFrom) openedFrom.focus();
+      openedFrom = null;
+    }
+
+    // Pulsar la tarjeta abre la ficha; los enlaces (p. ej. WhatsApp) siguen funcionando solos
+    document.addEventListener("click", function (event) {
+      var card = event.target.closest(".product-card");
+      if (!card || event.target.closest("a")) return;
+      openModal(card);
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        closeModal();
+        return;
+      }
+      if ((event.key === "Enter" || event.key === " ") && event.target.classList &&
+          event.target.classList.contains("product-card")) {
+        event.preventDefault();
+        openModal(event.target);
+      }
+    });
+
+    modal.addEventListener("click", function (event) {
+      if (event.target.hasAttribute("data-close")) closeModal();
+    });
+  }
 })();
