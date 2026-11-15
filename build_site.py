@@ -57,8 +57,8 @@ SHARE_IMAGE = f"{SITE_URL}/images/share.jpg"  # 1200x630
 BUSINESS = {
     "telephone": "+34683584356",
     "instagram": "https://www.instagram.com/asgardnutricionavila",
-    "streetAddress": "",          # p. ej. "Calle Ejemplo, 1"
-    "postalCode": "",             # p. ej. "05001"
+    "streetAddress": "Pl. Sta. Ana, 2",
+    "postalCode": "05001",
     "addressLocality": "Ávila",
     "addressRegion": "Castilla y León",
     "addressCountry": "ES",
