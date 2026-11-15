@@ -91,7 +91,7 @@
         <span class="brand__name">Asgard<span>Nutrición Deportiva</span></span>
       </a>
       <nav class="main-nav" id="main-nav" aria-label="Navegación principal">
-        <ul class="main-nav__list"><li><a class="main-nav__link" href="/index.html" aria-current="page">Inicio</a></li><li><a class="main-nav__link" href="/blog.html">Blog</a></li><li><a class="main-nav__icon-link" href="https://www.instagram.com/asgardnutricionavila" target="_blank" rel="noopener noreferrer" aria-label="Instagram de Asgard Nutrición Deportiva"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r="0.9" fill="currentColor" stroke="none"/></svg></a></li></ul>
+        <ul class="main-nav__list"><li><a class="main-nav__link" href="/index.html" aria-current="page">Inicio</a></li><li><a class="main-nav__link" href="/blog.html">Blog</a></li><li><a class="main-nav__link" href="/catalogo.html">Catálogo</a></li><li><a class="main-nav__icon-link" href="https://www.instagram.com/asgardnutricionavila" target="_blank" rel="noopener noreferrer" aria-label="Instagram de Asgard Nutrición Deportiva"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r="0.9" fill="currentColor" stroke="none"/></svg></a></li></ul>
       </nav>
       <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Abrir menú de navegación">
         <span class="nav-toggle__bar nav-toggle__bar--top"></span>
@@ -146,6 +146,8 @@
         </div>
       </div>
     </section>
+
+    
 
     <!-- ===================== NUESTROS PRODUCTOS ===================== -->
     <section class="section" id="productos">
@@ -351,6 +353,8 @@
 
   </main>
 
+  <div class="product-modal" id="product-modal" hidden role="dialog" aria-modal="true" aria-labelledby="product-modal-title"><div class="product-modal__backdrop" data-close></div><div class="product-modal__dialog"><button type="button" class="product-modal__close" data-close aria-label="Cerrar">×</button><div class="product-modal__media" id="product-modal-media"></div><div class="product-modal__body"><div class="product-modal__meta" id="product-modal-meta"></div><h2 class="product-modal__title" id="product-modal-title"></h2><p class="product-modal__desc" id="product-modal-desc"></p><div class="product-card__prices" id="product-modal-prices"></div></div></div></div>
+
   <footer class="site-footer" id="site-footer">
     <div class="container site-footer__inner">
       <svg class="site-footer__rune" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -367,6 +371,7 @@
   </footer>
 
   <script src="/js/main.js"></script>
+  <script src="/js/catalog.js" defer></script>
 <a class="whatsapp-float" href="https://api.whatsapp.com/send/?phone=34683584356&text=Hola,%20me%20gustar%C3%ADa%20saber%20qu%C3%A9%20catalogo%20de%20prote%C3%ADnas%20ten%C3%A9is" target="_blank" rel="noopener noreferrer" aria-label="Escríbenos por WhatsApp"><svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16.001 3C9.106 3 3.5 8.605 3.5 15.5c0 2.385.664 4.615 1.816 6.52L3 29l7.163-2.263A12.44 12.44 0 0 0 16 28.999C22.895 29 28.5 23.394 28.5 16.5S22.895 4 16.001 3Zm7.06 17.94c-.302.85-1.51 1.56-2.47 1.77-.66.14-1.52.25-4.42-.95-3.71-1.53-6.1-5.28-6.29-5.53-.18-.25-1.5-2-1.5-3.82 0-1.82.95-2.71 1.29-3.08.3-.32.66-.4.88-.4.22 0 .44 0 .63.01.2.01.47-.08.74.56.28.66.94 2.29 1.02 2.46.08.17.13.37.03.6-.1.23-.15.37-.3.56-.15.19-.31.43-.44.58-.15.16-.31.34-.13.66.18.32 .79 1.3 1.7 2.11 1.17 1.04 2.15 1.37 2.47 1.52.32.15.51.13.7-.08.19-.21.81-.95 1.03-1.28.22-.32 .44-.27.74-.16.3.11 1.9.9 2.22 1.06.32.16.53.24.61.38.08.13.08.76-.22 1.6Z"/></svg></a>
 </body>
 </html>
