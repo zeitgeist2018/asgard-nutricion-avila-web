@@ -5,5 +5,11 @@
       "nombre": "VitoBest"
     }
   ],
+  "marcas": [
+    {
+      "id": "vitobest",
+      "nombre": "VitoBest"
+    }
+  ],
   "productos": []
 }
