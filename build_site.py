@@ -70,10 +70,10 @@ BUSINESS = {
     ],
     "latitude": 40.656396,
     "longitude": -4.689563,
-    # Enlace para dejar reseña en Google. Es la ficha pública de Maps: desde ahí se
-    # pulsa "Escribir una reseña". Si está vacío, no se muestra el enlace.
+    # Enlace para dejar reseña en Google: abre la ficha pública de Maps (desde ahí se
+    # pulsa "Escribir una reseña"). Si está vacío, no se muestra el enlace.
     # (El enlace directo "g.page/r/.../review" solo lo da Google Business Profile.)
-    "reviewUrl": "https://www.google.com/maps/place/Asgard+Nutrici%C3%B3n+Deportiva+%C3%81vila/@40.6563794,-4.6895417,17z/data=!3m1!4b1!4m6!3m5!1s0xd40f3fbe88a491f:0x7ea77b145e0d4c02!8m2!3d40.6563794!4d-4.6895417",
+    "reviewUrl": "https://www.google.com/maps/search/?api=1&query=Asgard+Nutrici%C3%B3n+Deportiva+%C3%81vila",
 }
 DEFAULT_AUTHOR = "Israel Lobo Martín"
 
