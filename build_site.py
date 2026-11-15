@@ -70,6 +70,9 @@ BUSINESS = {
     ],
     "latitude": 40.656396,
     "longitude": -4.689563,
+    # Enlace directo para dejar reseña en Google (Google Business Profile → "Obtener más reseñas").
+    # Ejemplo: "https://g.page/r/XXXXXXXX/review". Si está vacío, no se muestra el enlace.
+    "reviewUrl": "",
 }
 DEFAULT_AUTHOR = "Israel Lobo Martín"
 
@@ -394,6 +397,16 @@ def breadcrumb_json_ld(title, canonical):
     }
 
 
+def review_link_html():
+    """Enlace para dejar una reseña en Google. Vacío si no hay enlace configurado."""
+    if not BUSINESS["reviewUrl"]:
+        return ""
+    return (
+        '<p class="hero__review"><a href="' + esc(BUSINESS["reviewUrl"]) + '" '
+        'target="_blank" rel="noopener noreferrer">¿Te ha gustado? Deja una reseña en Google ★</a></p>'
+    )
+
+
 def build_home(posts):
     with open(os.path.join(BASE_DIR, "index.html"), encoding="utf-8") as f:
         template = f.read()
@@ -403,6 +416,7 @@ def build_home(posts):
     html_out = render_placeholder_page(template, "inicio", {
         "<!--LATEST_POSTS-->": cards,
         "<!--JSON_LD-->": json_ld_script(store_json_ld()),
+        "<!--REVIEW_LINK-->": review_link_html(),
     })
     write_file(os.path.join(DIST_DIR, "index.html"), html_out)
 
