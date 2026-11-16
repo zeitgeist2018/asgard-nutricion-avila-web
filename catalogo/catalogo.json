@@ -13,6 +13,10 @@
     {
       "id": "vitobest",
       "nombre": "VitoBest"
+    },
+    {
+      "id": "essential-nutrition",
+      "nombre": "Essential nutrition"
     }
   ],
   "productos": [
