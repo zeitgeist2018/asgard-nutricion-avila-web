@@ -15,6 +15,10 @@
     {
       "id": "prohormonal",
       "nombre": "Prohormonal"
+    },
+    {
+      "id": "salud",
+      "nombre": "Salud"
     }
   ],
   "marcas": [
