@@ -1,14 +1,10 @@
 {
-  "updated": "2026-11-15T18:07:11+00:00",
-  "start": "2026-10-16",
-  "end": "2026-11-16",
+  "updated": "2026-11-16T03:35:07+00:00",
+  "start": "2026-10-17",
+  "end": "2026-11-17",
   "days": 30,
-  "total": 177,
+  "total": 178,
   "daily": [
-    {
-      "day": "2026-10-16",
-      "count": 0
-    },
     {
       "day": "2026-10-17",
       "count": 0
@@ -127,10 +123,14 @@
     },
     {
       "day": "2026-11-15",
-      "count": 7
+      "count": 8
     },
     {
       "day": "2026-11-16",
+      "count": 0
+    },
+    {
+      "day": "2026-11-17",
       "count": 0
     }
   ],
@@ -139,7 +139,7 @@
       "path": "/",
       "title": "Asgard Nutrición Deportiva",
       "group": "home",
-      "count": 63
+      "count": 64
     },
     {
       "path": "/blog/navidad-en-agosto-y-otros-problemas-del-mundo",
@@ -209,7 +209,7 @@
   "locations": [
     {
       "name": "Spain",
-      "count": 140
+      "count": 141
     },
     {
       "name": "United States",
@@ -263,7 +263,7 @@
   "browsers": [
     {
       "name": "Chrome",
-      "count": 104
+      "count": 105
     },
     {
       "name": "Safari",
@@ -285,7 +285,7 @@
     },
     {
       "name": "Windows",
-      "count": 33
+      "count": 34
     },
     {
       "name": "Linux",
