@@ -53,6 +53,17 @@
       "precioReal": null,
       "imagen": "images/productos/iso-essential-nutrition-mwj4rw3s-1794825521992.jpg",
       "creado": "2026-11-16T10:38:41.994Z"
+    },
+    {
+      "id": "whey-essential-mwj4ubfg",
+      "titulo": "Whey Essential",
+      "descripcion": "Whey formato 1 kg. Sin añadidos, sabores naturales.",
+      "categoria": "proteina",
+      "marca": "essential-nutrition",
+      "precioOriginal": 50,
+      "precioReal": null,
+      "imagen": "images/productos/whey-essential-mwj4ubfg-1794825635164.jpg",
+      "creado": "2026-11-16T10:40:35.165Z"
     }
   ]
 }
