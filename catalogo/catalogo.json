@@ -21,6 +21,10 @@
     {
       "id": "dmi-nutricion",
       "nombre": "Dmi nutrición"
+    },
+    {
+      "id": "applied-nutrition",
+      "nombre": "Applied Nutrition"
     }
   ],
   "productos": [
