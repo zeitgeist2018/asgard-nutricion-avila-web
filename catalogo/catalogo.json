@@ -17,6 +17,10 @@
     {
       "id": "essential-nutrition",
       "nombre": "Essential nutrition"
+    },
+    {
+      "id": "dmi-nutricion",
+      "nombre": "Dmi nutrición"
     }
   ],
   "productos": [
