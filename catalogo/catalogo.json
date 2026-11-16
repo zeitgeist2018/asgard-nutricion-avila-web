@@ -153,6 +153,17 @@
       "precioReal": null,
       "imagen": "images/productos/clonapure-200-g-mwj5e2ab-1794826556435.jpg",
       "creado": "2026-11-16T10:55:56.436Z"
+    },
+    {
+      "id": "creatina-ultra-fresh-dmi-mwj5hmv0",
+      "titulo": "Creatina ultra fresh Dmi.",
+      "descripcion": "Creatina monohidrato enriquecida con Astragin® ,sabores piruleta o Tropical.",
+      "categoria": "vitobest",
+      "marca": "",
+      "precioOriginal": 26,
+      "precioReal": null,
+      "imagen": "images/productos/creatina-ultra-fresh-dmi-mwj5hmv0-1794826723069.jpg",
+      "creado": "2026-11-16T10:58:43.072Z"
     }
   ]
 }
