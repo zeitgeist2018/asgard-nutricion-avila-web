@@ -120,6 +120,17 @@
       "precioReal": null,
       "imagen": "images/productos/anabol-booster-dmi-mwj57qc8-1794826261016.jpg",
       "creado": "2026-11-16T10:51:01.018Z"
+    },
+    {
+      "id": "clonapure-500-g-mwj59fu9",
+      "titulo": "Clonapure 500 g",
+      "descripcion": "Fórmula enriquecida con fosfocreatina, la más eficiente del mercado.",
+      "categoria": "vitobest",
+      "marca": "vitobest",
+      "precioOriginal": 38,
+      "precioReal": null,
+      "imagen": "images/productos/clonapure-500-g-mwj59fu9-1794826340721.jpg",
+      "creado": "2026-11-16T10:52:20.723Z"
     }
   ]
 }
