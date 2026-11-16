@@ -76,6 +76,17 @@
       "precioReal": null,
       "imagen": "images/productos/whey-essential-mwj4ubfg-1794825635164.jpg",
       "creado": "2026-11-16T10:40:35.165Z"
+    },
+    {
+      "id": "iso-essential-nutrition-1-kg-mwj51lt5",
+      "titulo": "Iso Essential nutrition 1 kg",
+      "descripcion": "Proteína aislada, sin añadidos, sabores naturales",
+      "categoria": "proteina",
+      "marca": "essential-nutrition",
+      "precioOriginal": 60,
+      "precioReal": null,
+      "imagen": "images/productos/iso-essential-nutrition-1-kg-mwj51lt5-1794825975210.jpg",
+      "creado": "2026-11-16T10:46:15.213Z"
     }
   ]
 }
