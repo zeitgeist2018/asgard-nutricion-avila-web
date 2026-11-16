@@ -219,6 +219,17 @@
       "precioReal": null,
       "imagen": "images/productos/health-pack-mwj5q5cr-1794827120283.jpg",
       "creado": "2026-11-16T11:05:20.284Z"
+    },
+    {
+      "id": "omega3-doble-potencia-mwj5s2cw",
+      "titulo": "Omega3 doble potencia",
+      "descripcion": "Omega3 con doble cantidad de EPA y DHA, destilado molecular, libre metales pesados",
+      "categoria": "salud",
+      "marca": "dmi-nutricion",
+      "precioOriginal": 20,
+      "precioReal": null,
+      "imagen": "images/productos/omega3-doble-potencia-mwj5s2cw-1794827209712.jpg",
+      "creado": "2026-11-16T11:06:49.713Z"
     }
   ]
 }
