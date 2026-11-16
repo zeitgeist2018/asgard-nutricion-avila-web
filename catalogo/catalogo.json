@@ -263,6 +263,17 @@
       "precioReal": null,
       "imagen": "images/productos/caseina-quamtrax-mwj6vqvk-1794829061073.jpg",
       "creado": "2026-11-16T11:37:41.074Z"
+    },
+    {
+      "id": "harina-avena-essential-mwjj3h7q",
+      "titulo": "Harina avena Essential",
+      "descripcion": "Harina de avena, varios formatos y sabores. Ideal postres, añadido a la proteína o en bizcocho.",
+      "categoria": "",
+      "marca": "essential-nutrition",
+      "precioOriginal": 12,
+      "precioReal": null,
+      "imagen": "images/productos/harina-avena-essential-mwjj3h7q-1794849577190.jpg",
+      "creado": "2026-11-16T17:19:37.192Z"
     }
   ]
 }
