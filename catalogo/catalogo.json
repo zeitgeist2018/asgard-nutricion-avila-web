@@ -131,6 +131,17 @@
       "precioReal": null,
       "imagen": "images/productos/clonapure-500-g-mwj59fu9-1794826340721.jpg",
       "creado": "2026-11-16T10:52:20.723Z"
+    },
+    {
+      "id": "creatina-monohidrato-neutra-500g-mwj5cec1",
+      "titulo": "Creatina monohidrato neutra 500g",
+      "descripcion": "Creatina monohidrato sin sabor, perfecta disolución.",
+      "categoria": "vitobest",
+      "marca": "vitobest",
+      "precioOriginal": 25,
+      "precioReal": null,
+      "imagen": "images/productos/creatina-monohidrato-neutra-500g-mwj5cec1-1794826478737.jpg",
+      "creado": "2026-11-16T10:54:38.739Z"
     }
   ]
 }
