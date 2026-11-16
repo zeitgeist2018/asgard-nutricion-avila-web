@@ -142,6 +142,17 @@
       "precioReal": null,
       "imagen": "images/productos/creatina-monohidrato-neutra-500g-mwj5cec1-1794826478737.jpg",
       "creado": "2026-11-16T10:54:38.739Z"
+    },
+    {
+      "id": "clonapure-200-g-mwj5e2ab",
+      "titulo": "Clonapure 200 g",
+      "descripcion": "Creatina enriquecida con fosfocreatina, 200 g, la más eficiente del mercado.",
+      "categoria": "vitobest",
+      "marca": "vitobest",
+      "precioOriginal": 20,
+      "precioReal": null,
+      "imagen": "images/productos/clonapure-200-g-mwj5e2ab-1794826556435.jpg",
+      "creado": "2026-11-16T10:55:56.436Z"
     }
   ]
 }
