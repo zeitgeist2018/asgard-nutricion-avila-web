@@ -15,5 +15,17 @@
       "nombre": "VitoBest"
     }
   ],
-  "productos": []
+  "productos": [
+    {
+      "id": "whey-essential-2-kg-mwj4oc2f",
+      "titulo": "Whey Essential 2 kg",
+      "descripcion": "Proteína sin añadidos, sabores aromatizados naturales",
+      "categoria": "proteina",
+      "marca": "",
+      "precioOriginal": 70,
+      "precioReal": null,
+      "imagen": "images/productos/whey-essential-2-kg-mwj4oc2f-1794825356056.jpg",
+      "creado": "2026-11-16T10:35:56.058Z"
+    }
+  ]
 }
