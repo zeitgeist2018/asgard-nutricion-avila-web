@@ -186,6 +186,17 @@
       "precioReal": null,
       "imagen": "images/productos/c4-ultimate-mwj5krl9-1794826869165.jpg",
       "creado": "2026-11-16T11:01:09.166Z"
+    },
+    {
+      "id": "preentreno-abe-applied-nutrition-mwj5m6wn",
+      "titulo": "Preentreno ABE applied nutrition",
+      "descripcion": "Sabores espectaculares, cafeína y beta alanina ultra potente.",
+      "categoria": "preentreno",
+      "marca": "applied-nutrition",
+      "precioOriginal": 30,
+      "precioReal": null,
+      "imagen": "images/productos/preentreno-abe-applied-nutrition-mwj5m6wn-1794826935671.jpg",
+      "creado": "2026-11-16T11:02:15.672Z"
     }
   ]
 }
