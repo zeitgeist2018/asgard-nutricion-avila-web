@@ -164,6 +164,17 @@
       "precioReal": null,
       "imagen": "images/productos/creatina-ultra-fresh-dmi-mwj5hmv0-1794826723069.jpg",
       "creado": "2026-11-16T10:58:43.072Z"
+    },
+    {
+      "id": "moonstruk-2-zoomadlabs-mwj5iyu0",
+      "titulo": "Moonstruk 2 zoomadlabs",
+      "descripcion": "Preentreno mítico, potencia y buena digestión. 300 mg de cafeína.",
+      "categoria": "preentreno",
+      "marca": "",
+      "precioOriginal": 40,
+      "precioReal": null,
+      "imagen": "images/productos/moonstruk-2-zoomadlabs-mwj5iyu0-1794826785240.jpg",
+      "creado": "2026-11-16T10:59:45.241Z"
     }
   ]
 }
