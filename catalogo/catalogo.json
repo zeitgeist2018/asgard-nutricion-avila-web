@@ -208,6 +208,17 @@
       "precioReal": null,
       "imagen": "images/productos/ashwaganda-ksm-66-dmi-mwj5oh8g-1794827042370.jpg",
       "creado": "2026-11-16T11:04:02.370Z"
+    },
+    {
+      "id": "health-pack-mwj5q5cr",
+      "titulo": "Health pack",
+      "descripcion": "Multivitamínico mineral con enzimas digestivas, complejo de antioxidantes naturales.",
+      "categoria": "salud",
+      "marca": "vitobest",
+      "precioOriginal": 20,
+      "precioReal": null,
+      "imagen": "images/productos/health-pack-mwj5q5cr-1794827120283.jpg",
+      "creado": "2026-11-16T11:05:20.284Z"
     }
   ]
 }
