@@ -42,6 +42,17 @@
       "precioReal": null,
       "imagen": "images/productos/whey-essential-2-kg-mwj4oc2f-1794825356056.jpg",
       "creado": "2026-11-16T10:35:56.058Z"
+    },
+    {
+      "id": "iso-essential-nutrition-mwj4rw3s",
+      "titulo": "Iso Essential nutrition",
+      "descripcion": "Iso Essential nutrition, sin añadidos, sabores aromatizados naturales. Calidad Arla. Apta para intolerancias a la lactosa.",
+      "categoria": "proteina",
+      "marca": "essential-nutrition",
+      "precioOriginal": 90,
+      "precioReal": null,
+      "imagen": "images/productos/iso-essential-nutrition-mwj4rw3s-1794825521992.jpg",
+      "creado": "2026-11-16T10:38:41.994Z"
     }
   ]
 }
