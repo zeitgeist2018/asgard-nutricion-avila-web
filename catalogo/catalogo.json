@@ -241,6 +241,17 @@
       "precioReal": null,
       "imagen": "images/productos/artiflex-mwj5tzi0-1794827299320.jpg",
       "creado": "2026-11-16T11:08:19.321Z"
+    },
+    {
+      "id": "iso-vitobest-1-kg-mwj5vnro",
+      "titulo": "Iso vitobest 1 kg",
+      "descripcion": "La proteína aislada con mayor porcentaje real del mercado. También en neutro",
+      "categoria": "proteina",
+      "marca": "vitobest",
+      "precioOriginal": 50,
+      "precioReal": null,
+      "imagen": "images/productos/iso-vitobest-1-kg-mwj5vnro-1794827377428.jpg",
+      "creado": "2026-11-16T11:09:37.429Z"
     }
   ]
 }
