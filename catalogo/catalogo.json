@@ -230,6 +230,17 @@
       "precioReal": null,
       "imagen": "images/productos/omega3-doble-potencia-mwj5s2cw-1794827209712.jpg",
       "creado": "2026-11-16T11:06:49.713Z"
+    },
+    {
+      "id": "artiflex-mwj5tzi0",
+      "titulo": "Artiflex",
+      "descripcion": "Glucosamina, condroitina, msm, colágeno uc2, magnesio y mejillón de labio verde. El mejor producto para tus articulaciones",
+      "categoria": "salud",
+      "marca": "vitobest",
+      "precioOriginal": 30,
+      "precioReal": null,
+      "imagen": "images/productos/artiflex-mwj5tzi0-1794827299320.jpg",
+      "creado": "2026-11-16T11:08:19.321Z"
     }
   ]
 }
