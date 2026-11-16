@@ -252,6 +252,17 @@
       "precioReal": null,
       "imagen": "images/productos/iso-vitobest-1-kg-mwj5vnro-1794827377428.jpg",
       "creado": "2026-11-16T11:09:37.429Z"
+    },
+    {
+      "id": "caseina-quamtrax-mwj6vqvk",
+      "titulo": "Caseína Quamtrax",
+      "descripcion": "Caseína micelar, gran digestión y sabores",
+      "categoria": "proteina",
+      "marca": "",
+      "precioOriginal": 38,
+      "precioReal": null,
+      "imagen": "images/productos/caseina-quamtrax-mwj6vqvk-1794829061073.jpg",
+      "creado": "2026-11-16T11:37:41.074Z"
     }
   ]
 }
