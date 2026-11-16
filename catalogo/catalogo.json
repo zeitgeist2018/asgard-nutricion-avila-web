@@ -87,6 +87,17 @@
       "precioReal": null,
       "imagen": "images/productos/iso-essential-nutrition-1-kg-mwj51lt5-1794825975210.jpg",
       "creado": "2026-11-16T10:46:15.213Z"
+    },
+    {
+      "id": "isolean-dmi-900-g-mwj53avj",
+      "titulo": "Isolean Dmi 900 g",
+      "descripcion": "Aislado e hidrolizado de caseína y suero, alto porcentaje de proteína. Sin añadidos.",
+      "categoria": "proteina",
+      "marca": "dmi-nutricion",
+      "precioOriginal": 60,
+      "precioReal": null,
+      "imagen": "images/productos/isolean-dmi-900-g-mwj53avj-1794826054351.jpg",
+      "creado": "2026-11-16T10:47:34.352Z"
     }
   ]
 }
