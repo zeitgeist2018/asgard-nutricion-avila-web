@@ -175,6 +175,17 @@
       "precioReal": null,
       "imagen": "images/productos/moonstruk-2-zoomadlabs-mwj5iyu0-1794826785240.jpg",
       "creado": "2026-11-16T10:59:45.241Z"
+    },
+    {
+      "id": "c4-ultimate-mwj5krl9",
+      "titulo": "C4 Ultimate",
+      "descripcion": "Preentreno Cellucor con 300 mg de cafeína y nitratos. Varios sabores",
+      "categoria": "preentreno",
+      "marca": "",
+      "precioOriginal": 38,
+      "precioReal": null,
+      "imagen": "images/productos/c4-ultimate-mwj5krl9-1794826869165.jpg",
+      "creado": "2026-11-16T11:01:09.166Z"
     }
   ]
 }
