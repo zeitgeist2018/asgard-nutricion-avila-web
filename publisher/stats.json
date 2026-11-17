@@ -1,9 +1,9 @@
 {
-  "updated": "2026-11-17T05:32:36+00:00",
+  "updated": "2026-11-17T20:10:18+00:00",
   "start": "2026-10-18",
   "end": "2026-11-18",
   "days": 30,
-  "total": 235,
+  "total": 254,
   "daily": [
     {
       "day": "2026-10-18",
@@ -127,7 +127,7 @@
     },
     {
       "day": "2026-11-17",
-      "count": 4
+      "count": 23
     },
     {
       "day": "2026-11-18",
@@ -139,7 +139,7 @@
       "path": "/",
       "title": "Asgard Nutrición Deportiva",
       "group": "home",
-      "count": 81
+      "count": 85
     },
     {
       "path": "/blog/navidad-en-agosto-y-otros-problemas-del-mundo",
@@ -151,7 +151,7 @@
       "path": "/blog/creatina-suplemento-indispensable-o-gasto-prescindible",
       "title": "Creatina, suplemento indispensable o gasto prescindible.",
       "group": "post",
-      "count": 26
+      "count": 40
     },
     {
       "path": "/blog.html",
@@ -169,7 +169,7 @@
       "path": "/catalogo.html",
       "title": "Catálogo",
       "group": "other",
-      "count": 7
+      "count": 8
     },
     {
       "path": "/blog/ashwagandha-cortisol-y-la-vida-de-locos-que-llevamos",
@@ -210,7 +210,7 @@
   ],
   "entries": {
     "navidad-en-agosto-y-otros-problemas-del-mundo": 62,
-    "creatina-suplemento-indispensable-o-gasto-prescindible": 26,
+    "creatina-suplemento-indispensable-o-gasto-prescindible": 40,
     "principios-de-individualidad-dosis-y-frecuencias-de-entrenamiento": 24,
     "ashwagandha-cortisol-y-la-vida-de-locos-que-llevamos": 4,
     "recuerdo-de-un-pasado-mejor": 2,
@@ -222,7 +222,7 @@
   "locations": [
     {
       "name": "Spain",
-      "count": 195
+      "count": 212
     },
     {
       "name": "United States",
@@ -233,11 +233,11 @@
       "count": 4
     },
     {
-      "name": "United Kingdom",
-      "count": 3
+      "name": "Poland",
+      "count": 4
     },
     {
-      "name": "Poland",
+      "name": "United Kingdom",
       "count": 3
     },
     {
@@ -250,6 +250,10 @@
     },
     {
       "name": "Hong Kong",
+      "count": 2
+    },
+    {
+      "name": "Taiwan",
       "count": 2
     },
     {
@@ -271,20 +275,16 @@
     {
       "name": "Sweden",
       "count": 1
-    },
-    {
-      "name": "Taiwan",
-      "count": 1
     }
   ],
   "browsers": [
     {
       "name": "Chrome",
-      "count": 138
+      "count": 153
     },
     {
       "name": "Safari",
-      "count": 96
+      "count": 100
     },
     {
       "name": "Firefox",
@@ -294,19 +294,19 @@
   "systems": [
     {
       "name": "iOS",
-      "count": 96
+      "count": 100
     },
     {
       "name": "Android",
-      "count": 85
+      "count": 98
     },
     {
       "name": "Windows",
-      "count": 41
+      "count": 42
     },
     {
       "name": "Linux",
-      "count": 13
+      "count": 14
     }
   ]
 }
