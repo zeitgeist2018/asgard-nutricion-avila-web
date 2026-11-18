@@ -1,14 +1,10 @@
 {
-  "updated": "2026-11-17T20:10:18+00:00",
-  "start": "2026-10-18",
-  "end": "2026-11-18",
+  "updated": "2026-11-18T19:42:06+00:00",
+  "start": "2026-10-19",
+  "end": "2026-11-19",
   "days": 30,
-  "total": 254,
+  "total": 257,
   "daily": [
-    {
-      "day": "2026-10-18",
-      "count": 0
-    },
     {
       "day": "2026-10-19",
       "count": 0
@@ -127,10 +123,14 @@
     },
     {
       "day": "2026-11-17",
-      "count": 23
+      "count": 24
     },
     {
       "day": "2026-11-18",
+      "count": 2
+    },
+    {
+      "day": "2026-11-19",
       "count": 0
     }
   ],
@@ -139,7 +139,7 @@
       "path": "/",
       "title": "Asgard Nutrición Deportiva",
       "group": "home",
-      "count": 85
+      "count": 87
     },
     {
       "path": "/blog/navidad-en-agosto-y-otros-problemas-del-mundo",
@@ -169,7 +169,7 @@
       "path": "/catalogo.html",
       "title": "Catálogo",
       "group": "other",
-      "count": 8
+      "count": 9
     },
     {
       "path": "/blog/ashwagandha-cortisol-y-la-vida-de-locos-que-llevamos",
@@ -222,11 +222,11 @@
   "locations": [
     {
       "name": "Spain",
-      "count": 212
+      "count": 214
     },
     {
       "name": "United States",
-      "count": 18
+      "count": 19
     },
     {
       "name": "Netherlands",
@@ -280,11 +280,11 @@
   "browsers": [
     {
       "name": "Chrome",
-      "count": 153
+      "count": 154
     },
     {
       "name": "Safari",
-      "count": 100
+      "count": 102
     },
     {
       "name": "Firefox",
@@ -294,7 +294,7 @@
   "systems": [
     {
       "name": "iOS",
-      "count": 100
+      "count": 102
     },
     {
       "name": "Android",
@@ -306,7 +306,7 @@
     },
     {
       "name": "Linux",
-      "count": 14
+      "count": 15
     }
   ]
 }
