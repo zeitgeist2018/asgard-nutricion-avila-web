@@ -274,6 +274,17 @@
       "precioReal": null,
       "imagen": "images/productos/harina-avena-essential-mwjj3h7q-1794849577190.jpg",
       "creado": "2026-11-16T17:19:37.192Z"
+    },
+    {
+      "id": "mpc-essential-proteina-de-suero-con-aromas-de-mantequilla-y-suero-de-mantequilla-mwnkdh15",
+      "titulo": "Mpc Essential, proteína de suero con aromas de mantequilla y suero de mantequilla",
+      "descripcion": "Proteína de suero de leche y mantequilla, 75% de pureza y un sabor espectacular \n2kg y 1 kg",
+      "categoria": "proteina",
+      "marca": "essential-nutrition",
+      "precioOriginal": 60,
+      "precioReal": null,
+      "imagen": "images/productos/mpc-essential-proteina-de-suero-con-aromas-de-mantequilla-y-suero-de-mantequilla-mwnkdh15-1795093587834.jpg",
+      "creado": "2026-11-19T13:06:27.835Z"
     }
   ]
 }
