@@ -307,6 +307,17 @@
       "precioReal": null,
       "imagen": "images/productos/proteina-gourmet-fuente-principal-iso-whey-y-soja-con-toppings-mwnkij2u-1795093823768.jpg",
       "creado": "2026-11-19T13:10:23.771Z"
+    },
+    {
+      "id": "caseina-micelar-mtx-900g-mwnkm959",
+      "titulo": "Caseína micelar mtx 900g",
+      "descripcion": "Proteína de asimilación intermedia. 78% de pureza y sabores increíbles",
+      "categoria": "proteina",
+      "marca": "mtx",
+      "precioOriginal": 36,
+      "precioReal": null,
+      "imagen": "images/productos/caseina-micelar-mtx-900g-mwnkm959-1795093997518.jpg",
+      "creado": "2026-11-19T13:13:17.520Z"
     }
   ]
 }
