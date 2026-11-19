@@ -1,22 +1,10 @@
 {
-  "updated": "2026-11-16T03:35:07+00:00",
-  "start": "2026-10-17",
-  "end": "2026-11-17",
+  "updated": "2026-11-19T04:51:58+00:00",
+  "start": "2026-10-20",
+  "end": "2026-11-20",
   "days": 30,
-  "total": 178,
+  "total": 257,
   "daily": [
-    {
-      "day": "2026-10-17",
-      "count": 0
-    },
-    {
-      "day": "2026-10-18",
-      "count": 0
-    },
-    {
-      "day": "2026-10-19",
-      "count": 0
-    },
     {
       "day": "2026-10-20",
       "count": 0
@@ -127,10 +115,22 @@
     },
     {
       "day": "2026-11-16",
-      "count": 0
+      "count": 53
     },
     {
       "day": "2026-11-17",
+      "count": 24
+    },
+    {
+      "day": "2026-11-18",
+      "count": 2
+    },
+    {
+      "day": "2026-11-19",
+      "count": 0
+    },
+    {
+      "day": "2026-11-20",
       "count": 0
     }
   ],
@@ -139,7 +139,7 @@
       "path": "/",
       "title": "Asgard Nutrición Deportiva",
       "group": "home",
-      "count": 64
+      "count": 87
     },
     {
       "path": "/blog/navidad-en-agosto-y-otros-problemas-del-mundo",
@@ -148,16 +148,28 @@
       "count": 62
     },
     {
-      "path": "/blog/principios-de-individualidad-dosis-y-frecuencias-de-entrenamiento",
-      "title": "Principios de individualidad, dosis y frecuencias de entrenamiento.",
+      "path": "/blog/creatina-suplemento-indispensable-o-gasto-prescindible",
+      "title": "Creatina, suplemento indispensable o gasto prescindible.",
       "group": "post",
-      "count": 23
+      "count": 40
     },
     {
       "path": "/blog.html",
       "title": "Blog",
       "group": "blog",
-      "count": 19
+      "count": 25
+    },
+    {
+      "path": "/blog/principios-de-individualidad-dosis-y-frecuencias-de-entrenamiento",
+      "title": "Principios de individualidad, dosis y frecuencias de entrenamiento.",
+      "group": "post",
+      "count": 24
+    },
+    {
+      "path": "/catalogo.html",
+      "title": "Catálogo",
+      "group": "other",
+      "count": 9
     },
     {
       "path": "/blog/ashwagandha-cortisol-y-la-vida-de-locos-que-llevamos",
@@ -198,7 +210,8 @@
   ],
   "entries": {
     "navidad-en-agosto-y-otros-problemas-del-mundo": 62,
-    "principios-de-individualidad-dosis-y-frecuencias-de-entrenamiento": 23,
+    "creatina-suplemento-indispensable-o-gasto-prescindible": 40,
+    "principios-de-individualidad-dosis-y-frecuencias-de-entrenamiento": 24,
     "ashwagandha-cortisol-y-la-vida-de-locos-que-llevamos": 4,
     "recuerdo-de-un-pasado-mejor": 2,
     "la-secta-del-arroz-y-pollo": 1,
@@ -209,22 +222,22 @@
   "locations": [
     {
       "name": "Spain",
-      "count": 141
+      "count": 214
     },
     {
       "name": "United States",
-      "count": 16
+      "count": 19
     },
     {
       "name": "Netherlands",
       "count": 4
     },
     {
-      "name": "United Kingdom",
-      "count": 3
+      "name": "Poland",
+      "count": 4
     },
     {
-      "name": "Poland",
+      "name": "United Kingdom",
       "count": 3
     },
     {
@@ -237,6 +250,10 @@
     },
     {
       "name": "Hong Kong",
+      "count": 2
+    },
+    {
+      "name": "Taiwan",
       "count": 2
     },
     {
@@ -256,18 +273,18 @@
       "count": 1
     },
     {
-      "name": "Taiwan",
+      "name": "Sweden",
       "count": 1
     }
   ],
   "browsers": [
     {
       "name": "Chrome",
-      "count": 105
+      "count": 154
     },
     {
       "name": "Safari",
-      "count": 72
+      "count": 102
     },
     {
       "name": "Firefox",
@@ -277,19 +294,19 @@
   "systems": [
     {
       "name": "iOS",
-      "count": 72
+      "count": 102
     },
     {
       "name": "Android",
-      "count": 60
+      "count": 98
     },
     {
       "name": "Windows",
-      "count": 34
+      "count": 42
     },
     {
       "name": "Linux",
-      "count": 12
+      "count": 15
     }
   ]
 }
