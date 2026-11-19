@@ -296,6 +296,17 @@
       "precioReal": null,
       "imagen": "images/productos/proteina-de-concentrado-de-suero-y-de-mantequilla-sabores-espectaculares-sin-ana-mwnkfn4f-1795093689039.jpg",
       "creado": "2026-11-19T13:08:09.040Z"
+    },
+    {
+      "id": "proteina-gourmet-fuente-principal-iso-whey-y-soja-con-toppings-mwnkij2u",
+      "titulo": "Proteína gourmet, fuente principal iso, whey y soja. Con toppings",
+      "descripcion": "Proteína para darse un capricho. 70% de pureza aprox según sabor.",
+      "categoria": "proteina",
+      "marca": "",
+      "precioOriginal": 36,
+      "precioReal": null,
+      "imagen": "images/productos/proteina-gourmet-fuente-principal-iso-whey-y-soja-con-toppings-mwnkij2u-1795093823768.jpg",
+      "creado": "2026-11-19T13:10:23.771Z"
     }
   ]
 }
