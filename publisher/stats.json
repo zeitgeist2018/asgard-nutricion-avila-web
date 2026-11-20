@@ -1,14 +1,10 @@
 {
-  "updated": "2026-11-19T04:51:58+00:00",
-  "start": "2026-10-20",
-  "end": "2026-11-20",
+  "updated": "2026-11-20T04:42:15+00:00",
+  "start": "2026-10-21",
+  "end": "2026-11-21",
   "days": 30,
-  "total": 257,
+  "total": 262,
   "daily": [
-    {
-      "day": "2026-10-20",
-      "count": 0
-    },
     {
       "day": "2026-10-21",
       "count": 0
@@ -127,10 +123,14 @@
     },
     {
       "day": "2026-11-19",
-      "count": 0
+      "count": 5
     },
     {
       "day": "2026-11-20",
+      "count": 0
+    },
+    {
+      "day": "2026-11-21",
       "count": 0
     }
   ],
@@ -139,7 +139,7 @@
       "path": "/",
       "title": "Asgard Nutrición Deportiva",
       "group": "home",
-      "count": 87
+      "count": 88
     },
     {
       "path": "/blog/navidad-en-agosto-y-otros-problemas-del-mundo",
@@ -151,13 +151,13 @@
       "path": "/blog/creatina-suplemento-indispensable-o-gasto-prescindible",
       "title": "Creatina, suplemento indispensable o gasto prescindible.",
       "group": "post",
-      "count": 40
+      "count": 42
     },
     {
       "path": "/blog.html",
       "title": "Blog",
       "group": "blog",
-      "count": 25
+      "count": 26
     },
     {
       "path": "/blog/principios-de-individualidad-dosis-y-frecuencias-de-entrenamiento",
@@ -169,7 +169,7 @@
       "path": "/catalogo.html",
       "title": "Catálogo",
       "group": "other",
-      "count": 9
+      "count": 10
     },
     {
       "path": "/blog/ashwagandha-cortisol-y-la-vida-de-locos-que-llevamos",
@@ -210,7 +210,7 @@
   ],
   "entries": {
     "navidad-en-agosto-y-otros-problemas-del-mundo": 62,
-    "creatina-suplemento-indispensable-o-gasto-prescindible": 40,
+    "creatina-suplemento-indispensable-o-gasto-prescindible": 42,
     "principios-de-individualidad-dosis-y-frecuencias-de-entrenamiento": 24,
     "ashwagandha-cortisol-y-la-vida-de-locos-que-llevamos": 4,
     "recuerdo-de-un-pasado-mejor": 2,
@@ -222,7 +222,7 @@
   "locations": [
     {
       "name": "Spain",
-      "count": 214
+      "count": 219
     },
     {
       "name": "United States",
@@ -280,7 +280,7 @@
   "browsers": [
     {
       "name": "Chrome",
-      "count": 154
+      "count": 159
     },
     {
       "name": "Safari",
@@ -302,11 +302,11 @@
     },
     {
       "name": "Windows",
-      "count": 42
+      "count": 46
     },
     {
       "name": "Linux",
-      "count": 15
+      "count": 16
     }
   ]
 }
