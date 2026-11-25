@@ -1,14 +1,10 @@
 {
-  "updated": "2026-11-24T21:40:03+00:00",
-  "start": "2026-10-25",
-  "end": "2026-11-25",
+  "updated": "2026-11-25T20:47:47+00:00",
+  "start": "2026-10-26",
+  "end": "2026-11-26",
   "days": 30,
-  "total": 292,
+  "total": 311,
   "daily": [
-    {
-      "day": "2026-10-25",
-      "count": 0
-    },
     {
       "day": "2026-10-26",
       "count": 0
@@ -127,10 +123,14 @@
     },
     {
       "day": "2026-11-24",
-      "count": 15
+      "count": 16
     },
     {
       "day": "2026-11-25",
+      "count": 18
+    },
+    {
+      "day": "2026-11-26",
       "count": 0
     }
   ],
@@ -139,47 +139,59 @@
       "path": "/",
       "title": "Asgard Nutrición Deportiva",
       "group": "home",
-      "count": 101
+      "count": 105
     },
     {
       "path": "/blog/navidad-en-agosto-y-otros-problemas-del-mundo",
       "title": "Navidad en agosto y otros problemas del mundo.",
       "group": "post",
-      "count": 63
+      "count": 64
     },
     {
       "path": "/blog/creatina-suplemento-indispensable-o-gasto-prescindible",
       "title": "Creatina, suplemento indispensable o gasto prescindible.",
       "group": "post",
-      "count": 45
+      "count": 46
     },
     {
       "path": "/blog.html",
       "title": "Blog",
       "group": "blog",
-      "count": 27
+      "count": 28
     },
     {
       "path": "/blog/principios-de-individualidad-dosis-y-frecuencias-de-entrenamiento",
       "title": "Principios de individualidad, dosis y frecuencias de entrenamiento.",
       "group": "post",
-      "count": 24
+      "count": 26
     },
     {
       "path": "/catalogo.html",
       "title": "Catálogo",
       "group": "other",
-      "count": 15
+      "count": 16
     },
     {
       "path": "/blog/ashwagandha-cortisol-y-la-vida-de-locos-que-llevamos",
       "title": "Ashwagandha, cortisol, y la vida de locos que llevamos.",
       "group": "post",
-      "count": 5
+      "count": 6
+    },
+    {
+      "path": "/blog/glutamina-ese-aminoacido-que-todos-toma-y-no-saben-para-que",
+      "title": "Glutamina, ese aminoácido que todos toma y no saben para qué.",
+      "group": "post",
+      "count": 4
     },
     {
       "path": "/blog/recuerdo-de-un-pasado-mejor",
       "title": "Recuerdo de un pasado mejor.",
+      "group": "post",
+      "count": 4
+    },
+    {
+      "path": "/blog/cuando-la-motivacion-no-es-suficiente",
+      "title": "Cuando la motivación no es suficiente",
       "group": "post",
       "count": 3
     },
@@ -187,49 +199,37 @@
       "path": "/blog/la-secta-del-arroz-y-pollo",
       "title": "La secta del arroz y pollo",
       "group": "post",
-      "count": 2
+      "count": 3
     },
     {
       "path": "/blog/en-que-nos-diferenciamos-de-las-otras-tiendas-de-suplementacion",
       "title": "¿En qué nos diferenciamos de las otras tiendas de suplementación?",
       "group": "post",
-      "count": 2
-    },
-    {
-      "path": "/blog/glutamina-ese-aminoacido-que-todos-toma-y-no-saben-para-que",
-      "title": "Glutamina, ese aminoácido que todos toma y no saben para qué.",
-      "group": "post",
-      "count": 2
+      "count": 3
     },
     {
       "path": "/blog/la-realidad-de-la-suplementacion-hoy-en-dia",
       "title": "La realidad de la suplementación hoy en día.",
       "group": "post",
-      "count": 2
-    },
-    {
-      "path": "/blog/cuando-la-motivacion-no-es-suficiente",
-      "title": "Cuando la motivación no es suficiente",
-      "group": "post",
-      "count": 1
+      "count": 3
     }
   ],
   "entries": {
-    "navidad-en-agosto-y-otros-problemas-del-mundo": 63,
-    "creatina-suplemento-indispensable-o-gasto-prescindible": 45,
-    "principios-de-individualidad-dosis-y-frecuencias-de-entrenamiento": 24,
-    "ashwagandha-cortisol-y-la-vida-de-locos-que-llevamos": 5,
-    "recuerdo-de-un-pasado-mejor": 3,
-    "la-secta-del-arroz-y-pollo": 2,
-    "en-que-nos-diferenciamos-de-las-otras-tiendas-de-suplementacion": 2,
-    "glutamina-ese-aminoacido-que-todos-toma-y-no-saben-para-que": 2,
-    "la-realidad-de-la-suplementacion-hoy-en-dia": 2,
-    "cuando-la-motivacion-no-es-suficiente": 1
+    "navidad-en-agosto-y-otros-problemas-del-mundo": 64,
+    "creatina-suplemento-indispensable-o-gasto-prescindible": 46,
+    "principios-de-individualidad-dosis-y-frecuencias-de-entrenamiento": 26,
+    "ashwagandha-cortisol-y-la-vida-de-locos-que-llevamos": 6,
+    "glutamina-ese-aminoacido-que-todos-toma-y-no-saben-para-que": 4,
+    "recuerdo-de-un-pasado-mejor": 4,
+    "cuando-la-motivacion-no-es-suficiente": 3,
+    "la-secta-del-arroz-y-pollo": 3,
+    "en-que-nos-diferenciamos-de-las-otras-tiendas-de-suplementacion": 3,
+    "la-realidad-de-la-suplementacion-hoy-en-dia": 3
   },
   "locations": [
     {
       "name": "Spain",
-      "count": 233
+      "count": 234
     },
     {
       "name": "United States",
@@ -240,11 +240,19 @@
       "count": 9
     },
     {
-      "name": "Netherlands",
-      "count": 5
+      "name": "Italy",
+      "count": 9
+    },
+    {
+      "name": "Belgium",
+      "count": 8
     },
     {
       "name": "Poland",
+      "count": 6
+    },
+    {
+      "name": "Netherlands",
       "count": 5
     },
     {
@@ -295,7 +303,7 @@
   "browsers": [
     {
       "name": "Chrome",
-      "count": 181
+      "count": 200
     },
     {
       "name": "Safari",
@@ -317,15 +325,15 @@
     },
     {
       "name": "Windows",
-      "count": 51
-    },
-    {
-      "name": "Linux",
-      "count": 21
+      "count": 52
     },
     {
       "name": "macOS",
-      "count": 10
+      "count": 27
+    },
+    {
+      "name": "Linux",
+      "count": 22
     }
   ]
 }
